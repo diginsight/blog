@@ -1,0 +1,18 @@
+---
+title: "Welcome To Diginsight Blog"
+author: "Dario Airoldi"
+date: "2024-08-24"
+categories: [news]
+---
+
+**Welcome**!<br>
+This is the first post in a **Diginsight blog**. <br>
+
+here, we'll discuss and illustrate diginsight components and samples implementation.
+
+or any interesting thing we'll come across while working with **diginsight**
+
+
+![](diginsight.jpg)
+
+
