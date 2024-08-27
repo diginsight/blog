@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To Diginsight Blog",
+    "section": "",
+    "text": "Welcome! This is the first post in a Diginsight blog. \nhere, we’ll discuss and illustrate diginsight components and samples implementation.\nor any interesting thing we’ll come across while working with diginsight"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Diginsight blog",
+    "section": "",
+    "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nAug 27, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To Diginsight Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nAug 24, 2024\n\n\nDario Airoldi\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code."
+  }
+]

@@ -5,6 +5,8 @@ listing:
   sort: "date desc"
   type: default
   categories: true
+  feed:
+    categories: [news, posts]
   sort-ui: false
   filter-ui: false
 page-layout: full

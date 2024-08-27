@@ -3,6 +3,7 @@ title: "Welcome To Diginsight Blog"
 author: "Dario Airoldi"
 date: "2024-08-24"
 categories: [news]
+draft: false
 ---
 
 **Welcome**!<br>
