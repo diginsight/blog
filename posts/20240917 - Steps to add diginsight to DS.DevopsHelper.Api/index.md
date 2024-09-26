@@ -17,7 +17,7 @@ below the basic steps I followed to integrate text based streams on Log4Net and 
 I start adding the following 3 references:
 
 ``` xml
-<PackageReference Include="Diginsight.AspnetCore" Version="3.0.0-alpha.203" />
+<PackageReference Include="Diginsight.AspnetCore" Version="3.0.0-alpha.205" />
 <PackageReference Include="Diginsight.Diagnostics" Version="3.0.0-alpha.203" />
 <PackageReference Include="Diginsight.Diagnostics.Log4Net" Version="3.0.0-alpha.203" />
 ``` 
@@ -29,9 +29,9 @@ where:
 ![alt text](<002.01a - Add references to diginsight packages.png>)
 
 # STEP02: Add the Observability `ActivitySource` to your projects 
-System Diagnostics emits telemetry by means of `ActivitySource` classes.
+`System Diagnostics` emits telemetry by means of `ActivitySource` classes.
 
-In our solution we'll choose to use one `ActivitySource` class for every project:
+In our solution we'll choose to use one `ActivitySource` class for every project, defined as below:
 
 ``` c#
 internal static class Observability
@@ -44,47 +44,26 @@ internal static class Observability
 
 
 # STEP03: Configure the startup sequence
-Here we'll configure the `Log4Net` file stream logger and the `Console` logger.
-Also, we'll add logging to the startup sequence itself by means of the `DeferredLoggerFactory`.
-<br>
-<br>
-In particular, the `DeferredLoggerFactory`:<br>
-- gathers the execution flow until the the standard logging system is setup.<br>
-- Flushes recorded telemetry to standard `ILogger<>` system, as soon as possible, upon services creation.<br>
+At this point we can configure the `Log4Net` file stream logger and the `Console` logger within the service __startup sequence__.<br>
 
-here we create the deferred logger factory at application startup:
-``` c#
-public static IDeferredLoggerFactory LoggerFactory;
+we use an `AddObservability` extension method:
 
-static Program()
-{
-    DiginsightActivitiesOptions activitiesOptions = new() { LogActivities = true };
-    IDeferredLoggerFactory deferredLoggerFactory = new DeferredLoggerFactory(activitiesOptions: activitiesOptions);
-    deferredLoggerFactory.ActivitySources.Add(Observability.ActivitySource);
-    LoggerFactory = deferredLoggerFactory;
-}
-``` 
-
-
-here we use the deferred logger factory to create Ilogger for for the startup sequence:
 ``` c#
 public static void Main(string[] args)
 {
     ILogger logger = LoggerFactory.CreateLogger(typeof(Program));
 
     var app = default(WebApplication);
-    using (var activity = Observability.ActivitySource.StartMethodActivity(logger, new { args }))
-    {
-        var builder = WebApplication.CreateBuilder(args); logger.LogDebug("builder = WebApplication.CreateBuilder(args);");
-        builder.Host.ConfigureAppConfigurationNH(); logger.LogDebug("builder.Host.ConfigureAppConfigurationNH();");
+
+        var builder = WebApplication.CreateBuilder(args); 
+        builder.Host.ConfigureAppConfigurationNH(); 
+
         builder.Services.AddObservability(builder.Configuration);     // Diginsight: registers loggers
-        builder.Services.FlushOnCreateServiceProvider(LoggerFactory); // Diginsight: registers startup log flush
 
         //...
         //... register services 
         //...
 
-        var webHost = builder.Host.UseDiginsightServiceProvider(); // Diginsight: Flushes startup log and initializes standard log
         app = builder.Build(); logger.LogDebug("app = builder.Build();");
 
         logger.LogInformation("Configure the HTTP request pipeline.");
@@ -110,14 +89,163 @@ public static void Main(string[] args)
     app.Run();
 }
 ``` 
-please note that:
-- `builder.Services.AddObservability(builder.Configuration);` registers loggers for Log4net and the application Console<br>
-- `builder.Services.FlushOnCreateServiceProvider(LoggerFactory);` registers startup log flush that will happen upon builder.Build()<br>
-- `var webHost = builder.Host.UseDiginsightServiceProvider();` registers a service provider that manages deferred log flush with services creation.<br>
+
+where `builder.Services.AddObservability(builder.Configuration);` registers loggers for `Log4net` and the application `Console` as shown below:<br>
+
+```c#
+public static class AddObservabilityExtension
+{
+    public static IServiceCollection AddObservability(this IServiceCollection services, IConfiguration configuration)
+    {
+        // registers http context accessor
+        // this is used to manage dynamic logging and dynamic configuration
+        // when calls land to the controllers methods
+        services.AddHttpContextAccessor(); 
+        services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+        // registers Logging providers for the Console and Log4Net
+        services.AddLogging(
+            loggingBuilder =>
+            {
+                loggingBuilder.AddConfiguration(configuration.GetSection("Logging"));
+                loggingBuilder.ClearProviders();
+
+                if (configuration.GetValue("AppSettings:ConsoleProviderEnabled", true))
+                {
+                    // registers Logging providers for the Console
+                    loggingBuilder.AddDiginsightConsole(configuration.GetSection("Diginsight:Console").Bind);
+                }
+
+                if (configuration.GetValue("AppSettings:Log4NetProviderEnabled", false))
+                {
+                    // registers Logging providers for Log4Net
+                    loggingBuilder.AddDiginsightLog4Net(
+                        static sp =>
+                        {
+                            IHostEnvironment env = sp.GetRequiredService<IHostEnvironment>();
+                            string fileBaseDir = env.IsDevelopment()
+                                ? Environment.GetFolderPath(Environment.SpecialFolder.UserProfile, Environment.SpecialFolderOption.DoNotVerify)
+                                : $"{Path.DirectorySeparatorChar}home";
+
+                            return new IAppender[]
+                            {
+                                new RollingFileAppender()
+                                {
+                                    File = Path.Combine(fileBaseDir, "LogFiles", "Diginsight", typeof(Program).Namespace!),
+                                    AppendToFile = true,
+                                    StaticLogFileName = false,
+                                    RollingStyle = RollingFileAppender.RollingMode.Composite,
+                                    DatePattern = @".yyyyMMdd.\l\o\g",
+                                    MaxSizeRollBackups = 1000,
+                                    MaximumFileSize = "100MB",
+                                    LockingModel = new FileAppender.MinimalLock(),
+                                    Layout = new DiginsightLayout()
+                                    {
+                                        Pattern = "{Timestamp} {Category} {LogLevel} {TraceId} {Delta} {Duration} {Depth} {Indentation|-1} {Message}",
+                                    },
+                                },
+                            };
+                        },
+                        static _ => Level.All
+                    );
+                }
+            }
+        );
+
+        // Loads options for diginsight activities
+        // this decides which activities should be traced into the text based streams 
+        // for the console and Log4Net
+        services.ConfigureClassAware<DiginsightActivitiesOptions>(configuration.GetSection("Diginsight:Activities"))
+                .DynamicallyConfigureClassAwareFromHttpRequestHeaders<DiginsightActivitiesOptions>();
+
+        // Register DefaultDynamicLogLevelInjector for support of Dynamic logging
+        services.AddDynamicLogLevel<DefaultDynamicLogLevelInjector>();
+
+        return services;
+    }
+
+}
+```
+
+# STEP04: add Instrumentation to the startup sequence
+Startup sequence may be tricky and often startup issues are very difficult to debug.
+
+Diginsight __provides full observability of the startup sequence__ by means of the `DeferredLoggerFactory`.
+<br><br>
+In particular, the `DeferredLoggerFactory`:<br>
+- __gathers the execution flow until the the standard logging system is setup__.<br>
+- __Flushes recorded telemetry__ upon services creation, __as soon as `ILogger<>` providers are installed__.<br>
+
+here we create the deferred logger factory at application startup:
+``` c#
+public static IDeferredLoggerFactory LoggerFactory;
+
+static Program()
+{
+    DiginsightActivitiesOptions activitiesOptions = new() { LogActivities = true };
+    IDeferredLoggerFactory deferredLoggerFactory = new DeferredLoggerFactory(activitiesOptions: activitiesOptions);
+    deferredLoggerFactory.ActivitySourceFilter = (activitySource) => activitySource.Name.StartsWith($"DS.");
+    LoggerFactory = deferredLoggerFactory;
+}
+``` 
+deferredLoggerFactory implements in memory recording of the application flow, until ILogger services are created.
+
+After ILogger services creation, `FlushOnCreateServiceProvider` can be used to register Flush of the recorded application flow and redirection of the deferredLoggerFactory to the registered LoggerFactory.
+
+The real Log flush will is provided at services creation time by means of the __Diginsight ServiceProvider__.
+the __Diginsight ServiceProvider__ is registered yb means of `UseDiginsightServiceProvider` method as shown below.
+
+the snippet below shows the `main` method where the startup flow is made observable by means of `FlushOnCreateServiceProvider` and `UseDiginsightServiceProvider`.
+
+```c#
+public static void Main(string[] args)
+{
+    ILogger logger = LoggerFactory.CreateLogger(typeof(Program));
+
+    var app = default(WebApplication);
+    using (var activity = Observability.ActivitySource.StartMethodActivity(logger, new { args }))
+    {
+        var builder = WebApplication.CreateBuilder(args); logger.LogDebug("builder = WebApplication.CreateBuilder(args);");
+        builder.Host.ConfigureAppConfigurationNH(); logger.LogDebug("builder.Host.ConfigureAppConfigurationNH();");
+        builder.Services.AddObservability(builder.Configuration);     // Diginsight: registers loggers
+        builder.Services.FlushOnCreateServiceProvider(LoggerFactory); // Diginsight: registers startup log flush
+
+        // ... 
+        // services registration omitted.
+        // ... 
+
+        var webHost = builder.Host.UseDiginsightServiceProvider(); // Diginsight: Flushes startup log and initializes standard log
+        app = builder.Build(); logger.LogDebug("app = builder.Build();");
+
+        logger.LogInformation("Configure the HTTP request pipeline.");
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "KnowledgeAPI v1");
+                c.OAuthClientId(azureAd.ClientId);
+                c.OAuthUsePkce();
+                c.OAuthScopeSeparator(" ");
+            });
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
 
 
-# STEP04: add Instrumentation log to methods and return values
-we are now ready to add automatic instrumentation to methods and return values:
+        app.MapControllers();
+
+    }
+
+    app.Run();
+}
+```
+
+
+# STEP05: add Instrumentation log to methods and return values
+We are now ready to add automatic instrumentation to methods and return values:
 
 here is an example method start
 ```c#
@@ -134,6 +262,7 @@ here is an example method completion where the result value is added to the meth
 }
 ```
 
+the real code may looks as shown below:
 ![alt text](<003.01 - MethodActivity for automatic flow gathering.png>)
 
 here is the resulting flow for an API call:
