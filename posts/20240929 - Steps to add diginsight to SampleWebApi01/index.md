@@ -172,7 +172,7 @@ public static class AddObservabilityExtension
 Please, note that `DiginsightActivitiesOptions` are read from `Diginsight:Activities` the configuration section shown below:
 ![alt text](<003.00 DiginsightActivitiesOptions read.png>)
 
-Note that `Diginsight:Activities` settings are registered with `ConfigureClassAware` to ensure that such configurations can be specified with class level granularity (ref: [Use ClassAware configurations](https://diginsight.github.io/telemetry/src/docs/02.%20Advanced/18.00%20-%20HowTo%20-%20Use%20class%20aware%20configurations%20to%20support%20comonent%20level%20or%20class%20level%20configurations.html)) 
+Note that `Diginsight:Activities` settings are registered with `ConfigureClassAware` to ensure that such configurations can be specified with class level granularity ( ref: [Use ClassAware configurations](https://diginsight.github.io/telemetry/src/docs/02.%20Advanced/18.00%20-%20HowTo%20-%20Use%20class%20aware%20configurations%20to%20support%20comonent%20level%20or%20class%20level%20configurations.html) ) 
 <br>
 
 Also note that `AddHttpContextAccessor` and `AddDynamicLogLevel` are used to ensure support for Dynamic logging (ref: [Use dynamic logging](https://diginsight.github.io/telemetry/src/docs/01.%20Concepts/11.00%20-%20HowTo%20-%20Use%20Dynamic-Logging%20to%20manage%20loglevel%20dinamically%20at%20runtime.html)):
