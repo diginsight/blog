@@ -14,114 +14,147 @@ However, __managing these configurations in public repositories__ poses a challe
 
 This article addresses the problem of handling private configurations when testing code in public repositories and proposes a solution __using a private repository__ associated with the __original repository__.
 
-For example, consider the public repository __https://github.com/diginsight/tools__.<br> 
-We can create a corresponding private repository, __https://github.com/diginsight/toolsinternal__, to store private configurations.<br>
+For example, consider the public repository __https://github.com/diginsight/components__.<br> 
+We can create a corresponding private repository, __https://github.com/diginsight/components.internal__, to store private configurations.<br>
 
-In this scenario, the __MIPDocumentInspector tool__ exists in the public repository with public example configurations.<br>
-We can define a __MIPDocumentInspector folder__ in the private repository, mirroring the structure of the public repository, and store the private configuration within the src folder of the private repository.
+In this scenario, the __AuthenticationSampleApi__ exists in the public repository with public example configurations.<br>
+We can define a __AuthenticationSampleApi folder__ in the private repository, mirroring the structure of the public repository, and store the private configuration within the src folder of the private repository.
 
-| Tools repository  | Toolsinternal repository | 
+| public repository  | internal repository | 
 |-----------|-----------|
-| ![alt text](<001.01 MipDocumentInspector public repository.png>)       | ![alt text](<002.01 MipDocumentInspector private configurations.png>) |
+| ![alt text](<001.01 AuthenticationSampleAPI into the public repository.png>) | ![alt text](<001.02 AuthenticationSampleAPI folder with configurations into the private repository.png>) |
 
 
 
 # ADDITIONAL DETAILS
-To load and use private configurations from the public repository, we can consider two options:
-- Option 1: Load Configurations from an External Folder
-- Option 2: Use Git Submodules
+To load and use private configurations from the public repository, we can consider two steps:
+- Step 1: Load Configurations from an External Folder
+- Step 2 (optional): load configurations from __Git Submodules__
 
-## Option 1: Load Configurations from an External Folder
-In this approach, the code is instructed during the startup sequence to load configurations from an external folder specified by an externalConfigurationsFolder variable. This allows the application to dynamically load configurations from a secure location outside the public repository.
+## Step 1: Load Configurations from an External Folder
+In this step, the code is instructed during the startup sequence to load configurations from an external folder specified by an `externalConfigurationsFolder` variable. <br>
+This allows the application to dynamically load configurations from a secure location outside the public repository.
 
-Example code snippet:
+Example code from `ConfigureAppConfiguration2` in __Diginsight.Components.Configuration__ component follows this approach:
+-  an __'ExternalConfigurationFolder'__ variable is read 
+- if existing, the __environment configuration file__ is loaded from that folder instead of the current folder.<br>
+
 ```c#
-public class Startup
+public static void ConfigureAppConfiguration2(IHostEnvironment environment, IConfigurationBuilder builder, ILoggerFactory loggerFactory, Func<IDictionary<string, string>, bool>? tagsMatch = null)
 {
-    public IConfiguration Configuration { get; }
 
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
+    bool isLocal = environment.IsDevelopment();
+    var environmentName = environment.EnvironmentName;
+    int appsettingsEnvironmentIndex = GetJsonFileIndex($"appsettings.{environmentName}.json", builder);
 
-    public void ConfigureServices(IServiceCollection services)
+    var appsettingsFileName = $"appsettings.{environmentName}.json";
+    var appsettingsFilePath = appsettingsFileName;
+
+    // in case 'ExternalConfigurationFolder' variable exists, 
+    // environment Json Configuration is added from the external folder 
+    var externalConfigurationFolder = Environment.GetEnvironmentVariable("ExternalConfigurationFolder");
+    var externalConfigurationFolderExists = externalConfigurationFolder is not null && Directory.Exists(externalConfigurationFolder);
+    if (isLocal && externalConfigurationFolderExists && !File.Exists(appsettingsFilePath))
     {
-        var externalConfigurationsFolder = Environment.GetEnvironmentVariable("EXTERNAL_CONFIGURATIONS_FOLDER");
-        if (!string.IsNullOrEmpty(externalConfigurationsFolder))
+        var externalConfigurationFolderDirectoryInfo = new DirectoryInfo(externalConfigurationFolder!);
+
+        var potentialAppsettingsFolder = externalConfigurationFolderDirectoryInfo.FullName;
+        var potentialFilePath = Path.Combine(potentialAppsettingsFolder, appsettingsFileName);
+        if (File.Exists(potentialFilePath))
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(externalConfigurationsFolder)
-                .AddJsonFile("appsettings.testabb.json", optional: true, reloadOnChange: true);
-
-            Configuration = builder.Build();
+            appsettingsFilePath = potentialFilePath;
         }
 
-        services.AddSingleton(Configuration);
-        // Other service configurations
+        AppendLocalJsonFile(appsettingsFilePath, appsettingsEnvironmentIndex, builder, isLocal);
+        builder.Sources.RemoveAt(appsettingsEnvironmentIndex);
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+
+    IConfiguration configuration = builder.Build();
+
+    // after loading private configurations, 
+    // Azure Key Vault and other resources can be accessed
+    var kvUri = configuration["AzureKeyVault:Uri"];
+    if (!string.IsNullOrEmpty(kvUri))
     {
-        // Application configuration
+        var clientId = configuration["AzureKeyVault:ClientId"];
+        var tenantId = configuration["AzureKeyVault:TenantId"];
+        var clientSecret = configuration["AzureKeyVault:ClientSecret"];
+        var applicationCredentialProvider = new ApplicationCredentialProvider(environment);
+
+        var credential = applicationCredentialProvider.Get(tenantId, clientId, clientSecret);
+        builder.AddAzureKeyVault(new Uri(kvUri), credential, new KeyVaultSecretManager2(DateTimeOffset.UtcNow, tagsMatch));
     }
+
+    ...
 }
 ```
 
-## Option 2: Use Git Submodules
-In this approach, the __private repository folders are mapped as submodules of the public repository__. <br>
+The code snippet below shows `AuthenticationSampleApi` startup sequence using `ConfigureAppConfiguration2` to load configurations.<br>
+
+``` c#
+public static void Main(string[] args)
+{
+    var activitiesOptions = new DiginsightActivitiesOptions() { LogActivities = true };
+    DeferredLoggerFactory = new DeferredLoggerFactory(activitiesOptions: activitiesOptions);
+    DeferredLoggerFactory.ActivitySourceFilter = (activitySource) => true; 
+    var logger = DeferredLoggerFactory.CreateLogger<Program>();
+
+    IWebHost host;
+    using (var activity = Observability.ActivitySource.StartMethodActivity(logger, new { args }))
+    {
+        host = WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration2(DeferredLoggerFactory)
+            .UseStartup<Startup>()
+            .ConfigureServices(services =>
+            {
+                var logger = DeferredLoggerFactory.CreateLogger<Startup>();
+                using var innerActivity = Observability.ActivitySource.StartRichActivity(logger, "ConfigureServicesCallback", new { services });
+
+                services.TryAddSingleton(DeferredLoggerFactory);
+            })
+            .UseDiginsightServiceProvider()
+            .Build();
+
+        logger.LogDebug("Host built");
+    }
+
+    host.Run();
+}
+```
+For this reason, `AuthenticationSampleApi` can be run with an external configuration `Testms` from the external folder `E:\dev.darioa.live\Diginsight\components.internal\src\Samples\AuthenticationSampleApi`.
+![alt text](<001.03 AuthenticationSampleApi running with private configuration Testms.png>)
+
+
+## (Optional) Step 2: Use Git Submodules
+In this step, the __private repository folders are mapped as submodules of the public repository__. <br>
 This allows the public repository to load configurations from a custom folder within it, ensuring that sensitive configurations are kept secure in the private repository.
 
 Steps to set up Git submodules:
 
 - Add the private repository as a submodule:
   ```
-  git submodule add git@github.com:yourusername/toolsinternal.git config
+  git submodule add git@github.com:yourusername/components.internal.git config
   ```
 - Update the .gitmodules file:
   ```
   [submodule "config"]
     path = config
-    url = git@github.com:yourusername/toolsinternal.git
+    url = git@github.com:yourusername/components.internal.git
   ```
 - Initialize and update submodules when cloning the repository:
   ```
-  git clone --recurse-submodules git@github.com:yourusername/tools.git
-  cd tools
+  git clone --recurse-submodules git@github.com:yourusername/components.git
+  cd components
   git submodule update --init --recursive
   ```
 - Access the private configuration in your code:
-  ``` c#
-  public class Startup
-  {
-      public IConfiguration Configuration { get; }
-  
-      public Startup(IConfiguration configuration)
-      {
-          Configuration = configuration;
-      }
-  
-      public void ConfigureServices(IServiceCollection services)
-      {
-          var builder = new ConfigurationBuilder()
-              .SetBasePath("config/MIPDocumentInspector/src")
-              .AddJsonFile("appsettings.testabb.json", optional: true,     reloadOnChange: true);
-  
-          Configuration = builder.Build();
-  
-          services.AddSingleton(Configuration);
-          // Other service configurations
-      }
-  
-      public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-      {
-          // Application configuration
-      }
-  }
-  ```
+  configurations from the submodule can now be used just setting the
+  `externalConfigurationsFolder` variable to the submodule folder.
+
 
 # REFERENCE
-This article provides a easy solution for __managing private configurations in public repositories__ by using a private repository and Git submodules.<br>
+This article analyzes an easy solution for __managing private configurations for public code repositories__.<br>
 By following these steps, you can ensure that sensitive information remains secure while maintaining the flexibility and accessibility of your public codebase.
 
 - [How to use private Git submodules](https://docs.readthedocs.io/en/stable/guides/private-submodules.html)<br>
