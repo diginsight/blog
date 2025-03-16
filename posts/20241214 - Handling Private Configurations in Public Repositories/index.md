@@ -28,7 +28,7 @@ We can define a __AuthenticationSampleApi folder__ in the private repository, mi
 # ADDITIONAL DETAILS
 To load and use private configurations from the public repository, we can consider two steps:
 - Step 1: Load Configurations from an External Folder
-- Step 2 (optional): load the external folder configurations by means of __Git Submodules__
+- (optional) Step 2: load the external folder configurations by means of __Git Submodules__
 
 ## Step 1: Load Configurations from an External Folder
 In this step, the code is instructed during the startup sequence to load configurations from an external folder specified by an `externalConfigurationsFolder` variable. <br>
