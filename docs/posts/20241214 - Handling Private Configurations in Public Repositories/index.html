@@ -228,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level1">
 <h1>OVERVIEW</h1>
-<p>When developing applications, it’s common to use <strong>configuration</strong> files that contain <strong>sensitive information</strong>. <br> However, <strong>managing these configurations in public repositories</strong> poses a challenge, as they should not be exposed to the public.<br></p>
+<p>When developing applications in public, it’s common to use <strong>configuration</strong> files that contain <strong>sensitive information</strong>. <br> However, <strong>managing these configurations in public repositories</strong> poses a challenge, as they should not be exposed.<br></p>
 <p>This article addresses the problem of handling private configurations when testing code in public repositories and proposes a solution <strong>using a private repository</strong> associated with the <strong>original repository</strong>.</p>
 <p>For example, consider the public repository <strong>https://github.com/diginsight/components</strong>.<br> We can create a corresponding private repository, <strong>https://github.com/diginsight/components.internal</strong>, to store private configurations.<br></p>
 <p>In this scenario, the <strong>AuthenticationSampleApi</strong> exists in the public repository with public example configurations.<br> We can define a <strong>AuthenticationSampleApi folder</strong> in the private repository, mirroring the structure of the public repository, and store the private configuration within the src folder of the private repository.</p>
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="additional-details" class="level1">
 <h1>ADDITIONAL DETAILS</h1>
-<p>To load and use private configurations from the public repository, we can consider two steps: - Step 1: Load Configurations from an External Folder - Step 2 (optional): load configurations from <strong>Git Submodules</strong></p>
+<p>To load and use private configurations from the public repository, we can consider two steps: - Step 1: Load Configurations from an External Folder - Step 2 (optional): load the external folder configurations by means of <strong>Git Submodules</strong></p>
 <section id="step-1-load-configurations-from-an-external-folder" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-load-configurations-from-an-external-folder">Step 1: Load Configurations from an External Folder</h2>
 <p>In this step, the code is instructed during the startup sequence to load configurations from an external folder specified by an <code>externalConfigurationsFolder</code> variable. <br> This allows the application to dynamically load configurations from a secure location outside the public repository.</p>
