@@ -25,7 +25,6 @@ We can define a __AuthenticationSampleApi folder__ in the private repository, mi
 | ![alt text](<001.01 AuthenticationSampleAPI into the public repository.png>) | ![alt text](<001.02 AuthenticationSampleAPI folder with configurations into the private repository.png>) |
 
 
-
 # ADDITIONAL DETAILS
 To load and use private configurations from the public repository, we can consider two steps:
 - Step 1: Load Configurations from an External Folder
