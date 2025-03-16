@@ -9,8 +9,8 @@ draft: false
 
 # OVERVIEW
 
-When developing applications, it's common to use __configuration__ files that contain __sensitive information__. <br>
-However, __managing these configurations in public repositories__ poses a challenge, as they should not be exposed to the public.<br>
+When developing applications in public, it's common to use __configuration__ files that contain __sensitive information__. <br>
+However, __managing these configurations in public repositories__ poses a challenge, as they should not be exposed.<br>
 
 This article addresses the problem of handling private configurations when testing code in public repositories and proposes a solution __using a private repository__ associated with the __original repository__.
 
@@ -28,7 +28,7 @@ We can define a __AuthenticationSampleApi folder__ in the private repository, mi
 # ADDITIONAL DETAILS
 To load and use private configurations from the public repository, we can consider two steps:
 - Step 1: Load Configurations from an External Folder
-- Step 2 (optional): load configurations from __Git Submodules__
+- Step 2 (optional): load the external folder configurations by means of __Git Submodules__
 
 ## Step 1: Load Configurations from an External Folder
 In this step, the code is instructed during the startup sequence to load configurations from an external folder specified by an `externalConfigurationsFolder` variable. <br>
