@@ -157,6 +157,7 @@ Steps to set up Git submodules:
 This article analyzes an easy solution for __managing private configurations for public code repositories__.<br>
 By following these steps, you can ensure that sensitive information remains secure while maintaining the flexibility and accessibility of your public codebase.
 
+Additional resources for further reading:
 - [How to use private Git submodules](https://docs.readthedocs.io/en/stable/guides/private-submodules.html)<br>
 - [Using Private Git Submodules](https://me-readthedocs.readthedocs.io/en/latest/guides/private-submodules.html)
 
