@@ -4,7 +4,7 @@ author: "Dario Airoldi"
 date: "2025-03-31"
 categories: [news, code, deelopment]
 image: "image.jpg"
-draft: true
+draft: false
 ---
 
 # Overview
