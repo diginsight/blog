@@ -6,6 +6,15 @@ $code-bg: #f4f4f4;
 $code-color: #c7254e;
 $font-family-sans-serif: 'Segoe UI', 'Roboto', Arial, sans-serif;
 
+// Make the main container wider on large screens
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 1100px,
+  xl: 1320px,
+  xxl: 1500px
+);
+
 /*-- scss:rules --*/
 body {
   background: $body-bg;
