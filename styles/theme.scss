@@ -1,0 +1,57 @@
+/*-- scss:defaults --*/
+$body-bg: #f8fafc;
+$body-color: #222;
+$link-color: #0078d4;
+$code-bg: #f4f4f4;
+$code-color: #c7254e;
+$font-family-sans-serif: 'Segoe UI', 'Roboto', Arial, sans-serif;
+
+/*-- scss:rules --*/
+body {
+  background: $body-bg;
+  color: $body-color;
+  font-family: $font-family-sans-serif;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  color: #1a237e;
+  margin-top: 1.5em;
+}
+
+a {
+  color: $link-color;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: darken($link-color, 10%);
+}
+
+pre, code {
+  background: $code-bg;
+  color: $code-color;
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+}
+
+blockquote {
+  border-left: 4px solid #0078d4;
+  background: #eef6fb;
+  padding: 0.8em 1em;
+  margin: 1em 0;
+  color: #333;
+}
+
+table {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+img {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin: 1em 0;
+  max-width: 100%;
+}

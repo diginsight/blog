@@ -3,7 +3,7 @@ title: "Use Risk-Driven Branching to mitigate the integration crunch"
 author: "Dario Airoldi"
 date: "2025-03-31"
 categories: [news, code, deelopment]
-image: "image.jpg"
+image: "image.png"
 draft: false
 ---
 

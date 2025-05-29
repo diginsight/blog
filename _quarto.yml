@@ -16,10 +16,19 @@ website:
         href: https://github.com/
       - icon: twitter
         href: https://twitter.com
+  sidebar:
+    style: floating
+    search: true
 format:
   html:
-    theme: cosmo
+    theme:
+      - cosmo
+      - styles/theme.scss
     css: styles.css
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
 
 
 
