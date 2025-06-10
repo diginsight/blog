@@ -412,7 +412,7 @@ Builds and deployments always use the latest, secure configs—no secrets in the
 <section id="troubleshooting-faq" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting-faq">Troubleshooting &amp; FAQ</h2>
 <p><strong>Q: What if the private repo is not accessible?</strong><br>
-A: Only configuration files from the public repository are considered by the startup sequence. So the developer can adjust them replacing placeholders as reported by the public repository documentation and run the application without the private repository.</p>
+A: Only configuration files from the public repository are considered by the startup sequence.<br> As with any public repository, the developer can adjust them replacing placeholders as reported by the documentation and run the application without the private repository.</p>
 <p><strong>Q: What if configs are missing at runtime?</strong><br>
 A: The app should log a clear error. Check that the environment variable or CI/CD copy step is correct.</p>
 <p><strong>Q: How do I handle multiple environments (dev, prod, etc.)?</strong><br>

@@ -130,7 +130,7 @@
     "href": "posts/20241214 - Handling Private Configurations in Public Repositories/index.html#troubleshooting-faq",
     "title": "HowTo: Manage Sensitive Configurations with Config Injection from Private Repositories",
     "section": "Troubleshooting & FAQ",
-    "text": "Troubleshooting & FAQ\nQ: What if the private repo is not accessible?\nA: Only configuration files from the public repository are considered by the startup sequence. So the developer can adjust them replacing placeholders as reported by the public repository documentation and run the application without the private repository.\nQ: What if configs are missing at runtime?\nA: The app should log a clear error. Check that the environment variable or CI/CD copy step is correct.\nQ: How do I handle multiple environments (dev, prod, etc.)?\nA: Store environment-specific configs in the private repo, and load the appropriate one based on environment variables."
+    "text": "Troubleshooting & FAQ\nQ: What if the private repo is not accessible?\nA: Only configuration files from the public repository are considered by the startup sequence. As with any public repository, the developer can adjust them replacing placeholders as reported by the documentation and run the application without the private repository.\nQ: What if configs are missing at runtime?\nA: The app should log a clear error. Check that the environment variable or CI/CD copy step is correct.\nQ: How do I handle multiple environments (dev, prod, etc.)?\nA: Store environment-specific configs in the private repo, and load the appropriate one based on environment variables."
   },
   {
     "objectID": "posts/20241214 - Handling Private Configurations in Public Repositories/index.html#references",
