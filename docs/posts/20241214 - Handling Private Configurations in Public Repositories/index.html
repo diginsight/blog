@@ -242,19 +242,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">OVERVIEW</a></li>
-  <li><a href="#a-practical-example" id="toc-a-practical-example" class="nav-link" data-scroll-target="#a-practical-example">A PRACTICAL EXAMPLE</a></li>
-  <li><a href="#additional-details" id="toc-additional-details" class="nav-link" data-scroll-target="#additional-details">ADDITIONAL DETAILS</a>
+  <li><a href="#how-to-manage-sensitive-configurations-in-public-repositories" id="toc-how-to-manage-sensitive-configurations-in-public-repositories" class="nav-link active" data-scroll-target="#how-to-manage-sensitive-configurations-in-public-repositories">How to Manage Sensitive Configurations in Public Repositories</a>
   <ul class="collapse">
-  <li><a href="#step-1-safety-merge-config-files-from-an-external-folder-at-application-startup" id="toc-step-1-safety-merge-config-files-from-an-external-folder-at-application-startup" class="nav-link" data-scroll-target="#step-1-safety-merge-config-files-from-an-external-folder-at-application-startup">Step 1 (Safety): merge config files from an external folder, at application startup</a></li>
-  <li><a href="#step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps" id="toc-step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps" class="nav-link" data-scroll-target="#step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps">Step 2 (Automation): Inject configuration files from an external repository, during GitHub actions build steps</a>
-  <ul class="collapse">
-  <li><a href="#step-2.a-checkout-the-private-repo" id="toc-step-2.a-checkout-the-private-repo" class="nav-link" data-scroll-target="#step-2.a-checkout-the-private-repo">Step 2.a: Checkout the private repo</a></li>
-  <li><a href="#step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository" id="toc-step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository" class="nav-link" data-scroll-target="#step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository">Step 2.b: copy configuration files from the private repository to the public repository</a></li>
+  <li><a href="#table-of-contents" id="toc-table-of-contents" class="nav-link" data-scroll-target="#table-of-contents">Table of Contents</a></li>
+  <li><a href="#why-is-this-a-problem" id="toc-why-is-this-a-problem" class="nav-link" data-scroll-target="#why-is-this-a-problem">Why Is This a Problem?</a></li>
+  <li><a href="#solution-overview" id="toc-solution-overview" class="nav-link" data-scroll-target="#solution-overview">Solution Overview</a></li>
+  <li><a href="#practical-example-diginsight-approach" id="toc-practical-example-diginsight-approach" class="nav-link" data-scroll-target="#practical-example-diginsight-approach">Practical Example: Diginsight Approach</a></li>
+  <li><a href="#step-1-safe-local-development-with-external-configurations" id="toc-step-1-safe-local-development-with-external-configurations" class="nav-link" data-scroll-target="#step-1-safe-local-development-with-external-configurations">Step 1: Safe Local Development with External Configurations</a></li>
+  <li><a href="#step-2-automated-config-injection-in-cicd" id="toc-step-2-automated-config-injection-in-cicd" class="nav-link" data-scroll-target="#step-2-automated-config-injection-in-cicd">Step 2: Automated Config Injection in CI/CD</a></li>
+  <li><a href="#benefits-and-best-practices" id="toc-benefits-and-best-practices" class="nav-link" data-scroll-target="#benefits-and-best-practices">Benefits and Best Practices</a></li>
+  <li><a href="#troubleshooting-faq" id="toc-troubleshooting-faq" class="nav-link" data-scroll-target="#troubleshooting-faq">Troubleshooting &amp; FAQ</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">CONCLUSION</a></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">REFERENCE</a></li>
   </ul>
 </nav>
     </div>
@@ -265,222 +264,168 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="overview" class="level1">
-<h1>OVERVIEW</h1>
-<p>When developing applications in public, it’s common to use <strong>configuration files</strong> that contain sensitive information.<br> However, <strong>managing these configurations in public repositories</strong> poses a challenge, as they should not be exposed. <br></p>
-<p>This guide introduces a <strong>robust solution to the problem</strong>: <strong>using a separate private repository for sensitive configuration files</strong> and <strong>injecting those files during build time and at runtime</strong> to avoid the need of duplicating or manually copying them during build or development time.<br></p>
-<p>This article demonstrates how:</p>
-<ul>
-<li>‘<strong>injecting configurations from a private repository</strong>’ can be achieved with a few GitHub Actions steps.<br></li>
-<li>‘<strong>loading configurations from an external folder</strong>’ can be achieved with a simple code change in the application startup sequence.<br></li>
-</ul>
-<p>Code for loading configurations from an ‘<strong>ExternalConfigurationFolder</strong>’ folder is already available in the <strong>Diginsight.Components</strong> component <code>WebHostBuilderExtensions.ConfigureAppConfiguration2</code> method.<br> This code, or similar, can be easily integrated into any application startup sequence.<br></p>
+<section id="how-to-manage-sensitive-configurations-in-public-repositories" class="level1">
+<h1>How to Manage Sensitive Configurations in Public Repositories</h1>
+<p>When developing applications in public repositories, handling sensitive configuration files (such as secrets, keys, or internal URLs) is a common challenge. Exposing these files can lead to security risks, while omitting them complicates development and deployment.</p>
+<p>This guide presents a robust, practical solution: <strong>store sensitive configurations in a private repository and inject them automatically during build and runtime</strong>. This approach keeps your public codebase clean and secure, while ensuring a smooth developer experience.</p>
+<hr>
+<section id="table-of-contents" class="level2">
+<h2 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#why-is-this-a-problem">Why Is This a Problem?</a></li>
+<li><a href="#solution-overview">Solution Overview</a></li>
+<li><a href="#practical-example-diginsight-approach">Practical Example: Diginsight Approach</a></li>
+<li><a href="#step-1-safe-local-development-with-external-configurations">Step 1: Safe Local Development with External Configurations</a></li>
+<li><a href="#step-2-automated-config-injection-in-cicd">Step 2: Automated Config Injection in CI/CD</a></li>
+<li><a href="#benefits-and-best-practices">Benefits and Best Practices</a></li>
+<li><a href="#troubleshooting--faq">Troubleshooting &amp; FAQ</a></li>
+<li><a href="#references">References</a></li>
+</ol>
+<hr>
 </section>
-<section id="a-practical-example" class="level1">
-<h1>A PRACTICAL EXAMPLE</h1>
-<p>The approach proposed by this guide is used on our <strong>diginsight repositories</strong>.<br> For every repository such as:<br><strong><a href="https://github.com/diginsight/components">https://github.com/diginsight/components</a></strong><br> a corresponding ‘<strong>.internal</strong>’ (private) repository:<br><strong><a href="https://github.com/diginsight/components.internal">https://github.com/diginsight/components.internal</a></strong><br> mirroring the folder structure of the public repository, is used to hold sensitive configurations.<br></p>
-<p>As an example, the <strong>AuthenticationSampleApi</strong> exists in the public repository, under folder ‘<strong>src/samples</strong>’.<br> Configurations for that sample are stored within the corresponding <strong>AuthenticationSampleApi</strong> folder in the private repository (under ‘<strong>src/samples</strong>’ folder, within the ‘<strong>.internal</strong>’ repository).</p>
+<section id="why-is-this-a-problem" class="level2">
+<h2 class="anchored" data-anchor-id="why-is-this-a-problem">Why Is This a Problem?</h2>
+<ul>
+<li><strong>Accidental Exposure:</strong> Sensitive files can be mistakenly committed and leaked. Even if deleted, git history may retain them.</li>
+<li><strong>Lack of Versioning:</strong> Excluding configs from git means lost change history and poor team coordination.</li>
+<li><strong>Complex Setup:</strong> Developers must manually obtain and copy configs, leading to onboarding friction and errors.</li>
+<li><strong>Mix of Secret/Non-Secret Data:</strong> Not all private data fits in a vault; some are just internal settings that shouldn’t be public.</li>
+</ul>
+<hr>
+</section>
+<section id="solution-overview" class="level2">
+<h2 class="anchored" data-anchor-id="solution-overview">Solution Overview</h2>
+<p><strong>Keep sensitive configurations in a private repository</strong> that mirrors your public repo’s structure.<br>
+<strong>Inject these files automatically</strong> during local development and CI/CD builds, so no manual copying is needed and no secrets are ever committed to the public repo.</p>
+<p><strong>Key points:</strong></p>
+<ul>
+<li>Public repo contains only example configs (no secrets).</li>
+<li>Private repo holds real configs, versioned and secured.</li>
+<li>Application and CI/CD pipeline are configured to load/merge configs from the private repo at runtime/build time.</li>
+</ul>
+<hr>
+</section>
+<section id="practical-example-diginsight-approach" class="level2">
+<h2 class="anchored" data-anchor-id="practical-example-diginsight-approach">Practical Example: Diginsight Approach</h2>
+<p>For every public repository (e.g., <a href="https://github.com/diginsight/components">diginsight/components</a>), there is a corresponding private repository (e.g., <a href="https://github.com/diginsight/components.internal">diginsight/components.internal</a>) with the same folder structure, holding sensitive configs.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 48%">
+<col style="width: 51%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>public repository</th>
-<th>internal repository</th>
+<th>Public Repository</th>
+<th>Internal Repository</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><img src="001.01 AuthenticationSampleAPI into the public repository.png" class="img-fluid" alt="alt text"></td>
-<td><img src="001.02 AuthenticationSampleAPI folder with configurations into the private repository.png" class="img-fluid" alt="alt text"></td>
+<td><img src="001.01 AuthenticationSampleAPI into the public repository.png" class="img-fluid" alt="Public repo"></td>
+<td><img src="001.02 AuthenticationSampleAPI folder with configurations into the private repository.png" class="img-fluid" alt="Private repo"></td>
 </tr>
 </tbody>
 </table>
-<p>The ‘<strong>diginsight/components</strong>’ public repo contains only example configurations, with no sensitive data.<br> The real samples configuration files are stored into the ‘<strong>diginsight/components.internal</strong>’ repository, with proper versioning and security.<br></p>
-<p>The following paragraphs explain how:</p>
 <ul>
-<li><strong>CI/CD GitHub Actions</strong> can easily inject the configuration files from the ‘<strong>.internal</strong>’ repository before deploying code to the desired azure resources.<br></li>
-<li>the <strong>application startup sequence</strong> can be easily customized to allow merging configuration files from an ‘<strong>ExternalConfigurationFolder</strong>’ environment variable.<br> In this way, developers only need to clone the ‘<strong>components</strong>’ and ‘<strong>components.internal</strong>’ repositories, and the code will work immediately.</li>
+<li>Public repo: only example configs, no secrets.</li>
+<li>Private repo: real configs, versioned and secure.</li>
 </ul>
-<p>The image below shows the <strong>AuthenticationSampleApi</strong> running with a private configuration ‘<strong>Testms</strong>’ from the external folder ‘<strong>........Diginsight.internal</strong>’.<br> <img src="002.01 - Diginsight_components_loading_config_from_external_folder.png" class="img-fluid" alt="alt text"></p>
-<p>The developer just needs to open and run the sample, without any manual steps to copy configuration files from the private repository to the public repository.<br></p>
+<hr>
 </section>
-<section id="additional-details" class="level1">
-<h1>ADDITIONAL DETAILS</h1>
-<p>Before diving into the solution, let’s recap why handling sensitive config in public repos can be a problem:</p>
+<section id="step-1-safe-local-development-with-external-configurations" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-safe-local-development-with-external-configurations">Step 1: Safe Local Development with External Configurations</h2>
+<p><strong>Goal:</strong> Allow developers to run the app locally with private configs, without copying files into the public repo.</p>
+<p><strong>How:</strong><br>
+- Set an environment variable (e.g., <code>ExternalConfigurationFolder</code>) pointing to the private config folder. - Application startup code loads configs from this external folder if available.</p>
+<p><strong>Sample code:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ...existing code...</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">var</span> externalConfigurationFolder <span class="op">=</span> Environment<span class="op">.</span><span class="fu">GetEnvironmentVariable</span><span class="op">(</span><span class="st">"ExternalConfigurationFolder"</span><span class="op">);</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="op">(</span>isLocal <span class="op">&amp;&amp;</span> Directory<span class="op">.</span><span class="fu">Exists</span><span class="op">(</span>externalConfigurationFolder<span class="op">))</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Load config from external folder</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ...existing code...</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">// ...existing code...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Result:</strong><br>
+Developers just clone both repos, set the environment variable, and run the app—no manual copying required.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="002.01 - Diginsight_components_loading_config_from_external_folder.png" class="img-fluid figure-img"></p>
+<figcaption>App running with private config</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="step-2-automated-config-injection-in-cicd" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-automated-config-injection-in-cicd">Step 2: Automated Config Injection in CI/CD</h2>
+<p><strong>Goal:</strong> During CI/CD builds (e.g., GitHub Actions), automatically inject private configs before building and deploying.</p>
+<p><strong>How:</strong></p>
+<ol type="1">
+<li>Checkout both the public and private repos in the workflow.</li>
+<li>Copy config files from the private repo to the appropriate locations in the public repo.</li>
+<li>Proceed with build and deployment.</li>
+</ol>
+<p><strong>Sample GitHub Actions steps:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout public repo</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout private repo</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">repository</span><span class="kw">:</span><span class="at"> diginsight/components.internal</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">path</span><span class="kw">:</span><span class="at"> components.internal</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">token</span><span class="kw">:</span><span class="at"> ${{ secrets.INTERNAL_REPOSITORY_TOKEN }}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Copy configs</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    cp components.internal/src/Samples/AuthenticationSampleApi/appsettings.*.json src/Samples/AuthenticationSampleApi/</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    # ...repeat for other configs...</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">run</span><span class="kw">:</span><span class="at"> dotnet build src/Diginsight.Components.sln --configuration Release</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Result:</strong><br>
+Builds and deployments always use the latest, secure configs—no secrets in the public repo, no manual steps.</p>
+<hr>
+</section>
+<section id="benefits-and-best-practices" class="level2">
+<h2 class="anchored" data-anchor-id="benefits-and-best-practices">Benefits and Best Practices</h2>
 <ul>
-<li><strong>Accidental Exposure</strong>: It’s frighteningly easy for someone to mistakenly commit a file with passwords or keys. Once pushed to a public repo, secrets can be immediately compromised. Even if removed later, history might still contain them.<br></li>
-<li><strong>Lack of Versioning</strong>: When we exclude configs from git, we lose the ability to track changes. Teams might struggle to keep everyone’s config in sync, and changes to secrets (e.g., rotating a key) aren’t documented in code.<br></li>
-<li><strong>Complex Setup</strong>: Developers need a reliable way to get the required config values to run the app. Without a good system, onboarding new contributors or deploying to new environments can be error-prone (passing around config files manually, etc.).<br></li>
-<li><strong>Mix of Secret/Non-Secret Data</strong>: Not all sensitive info is a “secret” that can go into a vault. Some are just private identifiers or settings (client IDs, internal URLs, personal data) that you don’t want public. These need protection too, but handling them differs from handling, say, passwords.<br></li>
+<li><strong>Security by Design:</strong> No secrets in public code, no risk of accidental leaks.</li>
+<li><strong>Versioning:</strong> Private configs are tracked and auditable.</li>
+<li><strong>Developer Experience:</strong> No manual copying; onboarding is easy.</li>
+<li><strong>Automation:</strong> CI/CD pipelines handle config injection seamlessly.</li>
 </ul>
-<p>Keeping our sensitive configurations in a private repo ensures by design:</p>
+<p><strong>Best Practices:</strong></p>
 <ul>
-<li><strong>Isolation</strong>: keep sensitive data out of the public repo by default<br></li>
-<li><strong>Version Control</strong>: still track and manage those configs in a secure way<br><br> This approach works as long as we provide:<br></li>
-<li><strong>Safety</strong>: configs are automatically loaded at application startup, without requiring the developer to manually copy them to the public repository file system clone, that would bring the risk of accidental exposure.</li>
-<li><strong>Automation</strong>: configs are automatically injected during builds and development with no manual steps.<br></li>
+<li>Never commit real secrets to the public repo.</li>
+<li>Use environment variables or CI/CD secrets to access the private repo.</li>
+<li>Document the setup for new team members.</li>
+<li>Consider adding a simple diagram to illustrate the workflow.</li>
 </ul>
-<section id="step-1-safety-merge-config-files-from-an-external-folder-at-application-startup" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-safety-merge-config-files-from-an-external-folder-at-application-startup">Step 1 (Safety): merge config files from an external folder, at application startup</h2>
-<p>Application code can be easily instructed during the startup sequence to load configurations from an external folder specified by an <code>externalConfigurationsFolder</code> variable. This allows the application to dynamically load configurations from a secure location outside the public repository.</p>
-<p>Example code from <code>ConfigureAppConfiguration2</code> in <strong>Diginsight.Components</strong> component follows this approach:</p>
+<hr>
+</section>
+<section id="troubleshooting-faq" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting-faq">Troubleshooting &amp; FAQ</h2>
+<p><strong>Q: What if the private repo is not accessible?</strong><br>
+A: The build or local run will fail to find configs. Ensure access tokens are set up and the repo is cloned.</p>
+<p><strong>Q: What if configs are missing at runtime?</strong><br>
+A: The app should log a clear error. Check that the environment variable or CI/CD copy step is correct.</p>
+<p><strong>Q: How do I handle multiple environments (dev, prod, etc.)?</strong><br>
+A: Store environment-specific configs in the private repo, and load the appropriate one based on environment variables.</p>
+<hr>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
-<li>an <strong>‘ExternalConfigurationFolder’</strong> variable is read</li>
-<li>if it exists, the <strong>environment configuration file</strong> is loaded from that folder instead of the current folder.<br></li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c# code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="dt">void</span> <span class="fu">ConfigureAppConfiguration2</span><span class="op">(</span>IHostEnvironment environment<span class="op">,</span> IConfigurationBuilder builder<span class="op">,</span> ILoggerFactory loggerFactory<span class="op">,</span> Func<span class="op">&lt;</span>IDictionary<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;,</span> <span class="dt">bool</span><span class="op">&gt;?</span> tagsMatch <span class="op">=</span> <span class="kw">null</span><span class="op">)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> isLocal <span class="op">=</span> environment<span class="op">.</span><span class="fu">IsDevelopment</span><span class="op">();</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> environmentName <span class="op">=</span> environment<span class="op">.</span><span class="fu">EnvironmentName</span><span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> appsettingsEnvironmentIndex <span class="op">=</span> <span class="fu">GetJsonFileIndex</span><span class="op">(</span>$<span class="st">"appsettings.{environmentName}.json"</span><span class="op">,</span> builder<span class="op">);</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> appsettingsFileName <span class="op">=</span> $<span class="st">"appsettings.{environmentName}.json"</span><span class="op">;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> appsettingsFilePath <span class="op">=</span> appsettingsFileName<span class="op">;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// in case 'ExternalConfigurationFolder' variable exists, </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// environment Json Configuration is added from the external folder </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> externalConfigurationFolder <span class="op">=</span> Environment<span class="op">.</span><span class="fu">GetEnvironmentVariable</span><span class="op">(</span><span class="st">"ExternalConfigurationFolder"</span><span class="op">);</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> externalConfigurationFolderExists <span class="op">=</span> externalConfigurationFolder <span class="kw">is</span> not <span class="kw">null</span> <span class="op">&amp;&amp;</span> Directory<span class="op">.</span><span class="fu">Exists</span><span class="op">(</span>externalConfigurationFolder<span class="op">);</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="op">(</span>isLocal <span class="op">&amp;&amp;</span> externalConfigurationFolderExists <span class="op">&amp;&amp;</span> <span class="op">!</span>File<span class="op">.</span><span class="fu">Exists</span><span class="op">(</span>appsettingsFilePath<span class="op">))</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> externalConfigurationFolderDirectoryInfo <span class="op">=</span> <span class="kw">new</span> <span class="fu">DirectoryInfo</span><span class="op">(</span>externalConfigurationFolder<span class="op">!);</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> potentialAppsettingsFolder <span class="op">=</span> externalConfigurationFolderDirectoryInfo<span class="op">.</span><span class="fu">FullName</span><span class="op">;</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> potentialFilePath <span class="op">=</span> Path<span class="op">.</span><span class="fu">Combine</span><span class="op">(</span>potentialAppsettingsFolder<span class="op">,</span> appsettingsFileName<span class="op">);</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>File<span class="op">.</span><span class="fu">Exists</span><span class="op">(</span>potentialFilePath<span class="op">))</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            appsettingsFilePath <span class="op">=</span> potentialFilePath<span class="op">;</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AppendLocalJsonFile</span><span class="op">(</span>appsettingsFilePath<span class="op">,</span> appsettingsEnvironmentIndex<span class="op">,</span> builder<span class="op">,</span> isLocal<span class="op">);</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        builder<span class="op">.</span><span class="fu">Sources</span><span class="op">.</span><span class="fu">RemoveAt</span><span class="op">(</span>appsettingsEnvironmentIndex<span class="op">);</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    IConfiguration configuration <span class="op">=</span> builder<span class="op">.</span><span class="fu">Build</span><span class="op">();</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">// after loading private configurations, </span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Azure Key Vault and other resources can be accessed</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> kvUri <span class="op">=</span> configuration<span class="op">[</span><span class="st">"AzureKeyVault:Uri"</span><span class="op">];</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="op">(!</span><span class="dt">string</span><span class="op">.</span><span class="fu">IsNullOrEmpty</span><span class="op">(</span>kvUri<span class="op">))</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> clientId <span class="op">=</span> configuration<span class="op">[</span><span class="st">"AzureKeyVault:ClientId"</span><span class="op">];</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> tenantId <span class="op">=</span> configuration<span class="op">[</span><span class="st">"AzureKeyVault:TenantId"</span><span class="op">];</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> clientSecret <span class="op">=</span> configuration<span class="op">[</span><span class="st">"AzureKeyVault:ClientSecret"</span><span class="op">];</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> applicationCredentialProvider <span class="op">=</span> <span class="kw">new</span> <span class="fu">ApplicationCredentialProvider</span><span class="op">(</span>environment<span class="op">);</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> credential <span class="op">=</span> applicationCredentialProvider<span class="op">.</span><span class="fu">Get</span><span class="op">(</span>tenantId<span class="op">,</span> clientId<span class="op">,</span> clientSecret<span class="op">);</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        builder<span class="op">.</span><span class="fu">AddAzureKeyVault</span><span class="op">(</span><span class="kw">new</span> <span class="fu">Uri</span><span class="op">(</span>kvUri<span class="op">),</span> credential<span class="op">,</span> <span class="kw">new</span> <span class="fu">KeyVaultSecretManager2</span><span class="op">(</span>DateTimeOffset<span class="op">.</span><span class="fu">UtcNow</span><span class="op">,</span> tagsMatch<span class="op">));</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The code snippet below shows <code>AuthenticationSampleApi</code> startup sequence using <code>ConfigureAppConfiguration2</code> to load configurations.<br></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c# code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="dt">void</span> <span class="fu">Main</span><span class="op">(</span><span class="dt">string</span><span class="op">[]</span> args<span class="op">)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> activitiesOptions <span class="op">=</span> <span class="kw">new</span> <span class="fu">DiginsightActivitiesOptions</span><span class="op">()</span> <span class="op">{</span> LogActivities <span class="op">=</span> <span class="kw">true</span> <span class="op">};</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    DeferredLoggerFactory <span class="op">=</span> <span class="kw">new</span> <span class="fu">DeferredLoggerFactory</span><span class="op">(</span>activitiesOptions<span class="op">:</span> activitiesOptions<span class="op">);</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    DeferredLoggerFactory<span class="op">.</span><span class="fu">ActivitySourceFilter</span> <span class="op">=</span> <span class="op">(</span>activitySource<span class="op">)</span> <span class="op">=&gt;</span> <span class="kw">true</span><span class="op">;</span> </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> logger <span class="op">=</span> DeferredLoggerFactory<span class="op">.</span><span class="fu">CreateLogger</span><span class="op">&lt;</span>Program<span class="op">&gt;();</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    IWebHost host<span class="op">;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="op">(</span><span class="dt">var</span> activity <span class="op">=</span> Observability<span class="op">.</span><span class="fu">ActivitySource</span><span class="op">.</span><span class="fu">StartMethodActivity</span><span class="op">(</span>logger<span class="op">,</span> <span class="kw">new</span> <span class="op">{</span> args <span class="op">}))</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        host <span class="op">=</span> WebHost<span class="op">.</span><span class="fu">CreateDefaultBuilder</span><span class="op">(</span>args<span class="op">)</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="fu">ConfigureAppConfiguration2</span><span class="op">(</span>DeferredLoggerFactory<span class="op">)</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="fu">UseStartup</span><span class="op">&lt;</span>Startup<span class="op">&gt;()</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="fu">ConfigureServices</span><span class="op">(</span>services <span class="op">=&gt;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                <span class="dt">var</span> logger <span class="op">=</span> DeferredLoggerFactory<span class="op">.</span><span class="fu">CreateLogger</span><span class="op">&lt;</span>Startup<span class="op">&gt;();</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                <span class="kw">using</span> <span class="dt">var</span> innerActivity <span class="op">=</span> Observability<span class="op">.</span><span class="fu">ActivitySource</span><span class="op">.</span><span class="fu">StartRichActivity</span><span class="op">(</span>logger<span class="op">,</span> <span class="st">"ConfigureServicesCallback"</span><span class="op">,</span> <span class="kw">new</span> <span class="op">{</span> services <span class="op">});</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                services<span class="op">.</span><span class="fu">TryAddSingleton</span><span class="op">(</span>DeferredLoggerFactory<span class="op">);</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>            <span class="op">})</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="fu">UseDiginsightServiceProvider</span><span class="op">()</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="fu">Build</span><span class="op">();</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        logger<span class="op">.</span><span class="fu">LogDebug</span><span class="op">(</span><span class="st">"Host built"</span><span class="op">);</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    host<span class="op">.</span><span class="fu">Run</span><span class="op">();</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>For this reason, <code>AuthenticationSampleApi</code> can be run with an external configuration <code>Testms</code> from the external folder <code>components.internal\src\Samples\AuthenticationSampleApi</code>. <img src="001.03 AuthenticationSampleApi running with private configuration Testms.png" class="img-fluid" alt="alt text"></p>
-<p>The developer can run the sample without needing to copy the configuration files from the private repository to the public repository.<br></p>
-</section>
-<section id="step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps">Step 2 (Automation): Inject configuration files from an external repository, during GitHub actions build steps</h2>
-<p>At build time, the application (or CI pipeline) can pull the config from the private repo and merge it with the application.<br> Essentially, the app loads its normal configuration from the public files, then overrides or supplements those settings with values from the private repository.<br></p>
-<p>The following yml code shows the <strong>GitHub actions</strong> steps to inject the configuration files from the private repository into the public repository during build time.<br></p>
-<section id="step-2.a-checkout-the-private-repo" class="level3">
-<h3 class="anchored" data-anchor-id="step-2.a-checkout-the-private-repo">Step 2.a: Checkout the private repo</h3>
-<p>The following yml code from diginsight/components samples shows the github action: - checkout of the current repo and - checkout of the <strong>.internal</strong> repo<br></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout Repository</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout 'components.internal' Repository</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">repository</span><span class="kw">:</span><span class="at"> diginsight/components.internal</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> components.internal</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">token</span><span class="kw">:</span><span class="at"> ${{ secrets.INTERNAL_REPOSITORY_TOKEN }}</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">      # If the repo is private, you need a token with access:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository" class="level3">
-<h3 class="anchored" data-anchor-id="step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository">Step 2.b: copy configuration files from the private repository to the public repository</h3>
-<p>After dotnet restore, before the build step, the following code copies the configuration files from the private repository to the public repository.<br></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Restore Samples </span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> dotnet restore --interactive src/Diginsight.Components.sln</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Copy AuthenticationSampleApi appsettings.*.json from components.internal</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">    run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      cp components.internal/src/Samples/AuthenticationSampleApi/appsettings.*.json src/Samples/AuthenticationSampleApi/</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Copy AuthenticationSampleServerApi appsettings.*.json from components.internal</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">    run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      cp components.internal/src/Samples/AuthenticationSampleServerApi/appsettings.*.json src/Samples/AuthenticationSampleServerApi/</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build Samples</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> dotnet build src/Diginsight.Components.sln --configuration Release</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>At this point, the sample configuration files are merged with the Diginsight Components files, so the GitHub Action can continue with the build and publish steps as usual.</p>
-</section>
-</section>
-</section>
-<section id="conclusion" class="level1">
-<h1>CONCLUSION</h1>
-<p>Managing sensitive configurations via config injection from a private repository offers <strong>ease of use</strong> and <strong>security by design</strong>.<br></p>
-<p>By separating sensitive config into its own version-controlled private repo and integrating it into your app’s workflow, you get the best of both worlds:</p>
-<ul>
-<li><strong>public code remains clean</strong> and safe</li>
-<li><strong>private data is handled in a controlled, auditable manner</strong>.</li>
-<li><strong>Versioning</strong> is achieved through the private config repo (no more lost change history on configs).</li>
-</ul>
-<p>This guide explains how we can eliminate the pain points for this approach:</p>
-<ul>
-<li><strong>Development experience is ensured</strong>: the application startup can be customized to load configuration files from the private repository. This allows developers to run the application with the private configuration files without needing to copy configuration files with sensitive information from the private to the public repository.</li>
-</ul>
-<p>Code to load configuration files from an external folder (‘<strong>ExternalConfigurationFolder</strong>’) is available in the <strong>Diginsight.Components</strong> component, in the <code>WebHostBuilderExtensions.ConfigureAppConfiguration2</code> method. This code, or similar, can be easily integrated into any application’s startup sequence.</p>
-<ul>
-<li><p><strong>Automation is preserved</strong> as the pipeline can be customized to load configuration files from the private repository during the build process.</p></li>
-<li><p><strong>Accidental leaks are eliminated by design</strong> as the developer can use the public repository without needing to copy configuration files with sensitive information into it.</p></li>
-</ul>
-<p>Setting up dual repositories and configuration file injection requires some initial effort, but once in place, it streamlines your workflow and fortifies your project’s security posture.</p>
-<p>If you are developing an application with a public (or widely shared) codebase that needs to handle private configuration data, consider structuring it with a private configuration file repository and injection mechanism.</p>
-<p>It will give you control over your sensitive information, traceability of changes, and confidence during deployments—all while keeping your public repository truly public and clean.</p>
-<p>This “HowTo” method ensures that sensitive configuration files are managed wisely, reducing risk and making life easier for developers and DevOps engineers alike.</p>
-</section>
-<section id="reference" class="level1">
-<h1>REFERENCE</h1>
-<p>This article analyzes an easy solution for <strong>managing private configurations for public code repositories</strong>.<br> By following these steps, you can ensure that sensitive information remains secure while maintaining the flexibility and accessibility of your public codebase.</p>
-<p>Additional resources for further reading:</p>
-<ul>
-<li><a href="https://docs.readthedocs.io/en/stable/guides/private-submodules.html">How to use private Git submodules</a><br></li>
+<li><a href="https://docs.readthedocs.io/en/stable/guides/private-submodules.html">How to use private Git submodules</a></li>
 <li><a href="https://me-readthedocs.readthedocs.io/en/latest/guides/private-submodules.html">Using Private Git Submodules</a></li>
 </ul>
+<hr>
+<p>This approach ensures your sensitive configuration files are managed wisely, reducing risk and making life easier for developers and DevOps engineers alike.</p>
+<hr>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
