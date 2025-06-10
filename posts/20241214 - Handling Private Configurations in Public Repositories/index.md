@@ -67,7 +67,8 @@ For every public repository (e.g., [diginsight/components](https://github.com/di
 
 **Goal:** Allow developers to run the app locally with private configs, without copying files into the public repo.
 
-**How:**  
+**How:**
+
 - Set an environment variable (e.g., `ExternalConfigurationFolder`) pointing to the private config folder.
 - Application startup code loads configs from this external folder if available.
 
@@ -86,6 +87,10 @@ if (isLocal && Directory.Exists(externalConfigurationFolder))
 
 **Result:**  
 Developers just clone both repos, set the environment variable, and run the app—no manual copying required.
+
+> Code for loading configurations from an '__ExternalConfigurationFolder__' folder is already available in the __Diginsight.Components__ component `WebHostBuilderExtensions.ConfigureAppConfiguration2` method.<br>
+This code, or similar, can be easily integrated into any application startup sequence.<br>
+
 
 ![App running with private config](<002.01 - Diginsight_components_loading_config_from_external_folder.png>)
 

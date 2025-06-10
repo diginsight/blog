@@ -335,8 +335,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-1-safe-local-development-with-external-configurations" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-safe-local-development-with-external-configurations">Step 1: Safe Local Development with External Configurations</h2>
 <p><strong>Goal:</strong> Allow developers to run the app locally with private configs, without copying files into the public repo.</p>
-<p><strong>How:</strong><br>
-- Set an environment variable (e.g., <code>ExternalConfigurationFolder</code>) pointing to the private config folder. - Application startup code loads configs from this external folder if available.</p>
+<p><strong>How:</strong></p>
+<ul>
+<li>Set an environment variable (e.g., <code>ExternalConfigurationFolder</code>) pointing to the private config folder.</li>
+<li>Application startup code loads configs from this external folder if available.</li>
+</ul>
 <p><strong>Sample code:</strong></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ...existing code...</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">var</span> externalConfigurationFolder <span class="op">=</span> Environment<span class="op">.</span><span class="fu">GetEnvironmentVariable</span><span class="op">(</span><span class="st">"ExternalConfigurationFolder"</span><span class="op">);</span></span>
@@ -348,6 +351,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">// ...existing code...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Result:</strong><br>
 Developers just clone both repos, set the environment variable, and run the app—no manual copying required.</p>
+<blockquote class="blockquote">
+<p>Code for loading configurations from an ‘<strong>ExternalConfigurationFolder</strong>’ folder is already available in the <strong>Diginsight.Components</strong> component <code>WebHostBuilderExtensions.ConfigureAppConfiguration2</code> method.<br> This code, or similar, can be easily integrated into any application startup sequence.<br></p>
+</blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="002.01 - Diginsight_components_loading_config_from_external_folder.png" class="img-fluid figure-img"></p>
