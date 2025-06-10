@@ -1,40 +1,83 @@
 ---
-title: "HowTo: Handle Private Configurations in Public Repositories"
+title: "HowTo: Manage Sensitive Configurations with Config Injection from Private Repositories"
 author: "Dario Airoldi"
 date: "2024-12-14"
-categories: [news, code, deelopment]
+categories: [news, code, development]
 image: "image.jpg"
 draft: false
 ---
 
 # OVERVIEW
+When developing applications in public, it’s common to use __configuration files__ that contain sensitive information.<br>
+However, __managing these configurations in public repositories__ poses a challenge, as they should not be exposed.
+<br>
 
-When developing applications in public, it's common to use __configuration__ files that contain __sensitive information__. <br>
-However, __managing these configurations in public repositories__ poses a challenge, as they should not be exposed.<br>
+This guide introduces a __robust solution to the problem__: __using a separate private repository for sensitive configuration files__ and __injecting those files during build time and at runtime__ to avoid the need of duplicating or manually copying them during build or development time.<br>
 
-This article addresses the problem of handling private configurations when testing code in public repositories and proposes a solution __using a private repository__ associated with the __original repository__.
+This article demonstrates how:
 
-For example, consider the public repository __https://github.com/diginsight/components__.<br> 
-We can create a corresponding private repository, __https://github.com/diginsight/components.internal__, to store private configurations.<br>
+- '__injecting configurations from a private repository__' can be achieved with a few GitHub Actions steps.<br>
+- '__loading configurations from an external folder__' can be achieved with a simple code change in the application startup sequence.<br>
 
-In this scenario, the __AuthenticationSampleApi__ exists in the public repository with public example configurations.<br>
-We can define a __AuthenticationSampleApi folder__ in the private repository, mirroring the structure of the public repository, and store the private configuration within the src folder of the private repository.
+Code for loading configurations from an '__ExternalConfigurationFolder__' folder is already available in the __Diginsight.Components__ component `WebHostBuilderExtensions.ConfigureAppConfiguration2` method.<br>
+This code, or similar, can be easily integrated into any application startup sequence.<br>
+
+
+# A PRACTICAL EXAMPLE
+
+The approach proposed by this guide is used on our __diginsight repositories__.<br>
+For every repository such as:<br>__[https://github.com/diginsight/components](https://github.com/diginsight/components)__<br>
+a corresponding '__.internal__' (private) repository:<br>__[https://github.com/diginsight/components.internal](https://github.com/diginsight/components.internal)__<br> 
+mirroring the folder structure of the public repository, is used to hold sensitive configurations.<br>
+
+As an example, the __AuthenticationSampleApi__ exists in the public repository, under folder '__src/samples__'.<br>
+Configurations for that sample are stored within the corresponding __AuthenticationSampleApi__ folder in the private repository (under '__src/samples__' folder, within the '__.internal__' repository).
+
 
 | public repository  | internal repository | 
 |-----------|-----------|
 | ![alt text](<001.01 AuthenticationSampleAPI into the public repository.png>) | ![alt text](<001.02 AuthenticationSampleAPI folder with configurations into the private repository.png>) |
 
 
+The '__diginsight/components__' public repo contains only example configurations, with no sensitive data.<br>
+The real samples configuration files are stored into the '__diginsight/components.internal__' repository, with proper versioning and security.<br>
+
+The following paragraphs explain how:
+
+- __CI/CD GitHub Actions__ can easily inject the configuration files from the '__.internal__' repository before deploying code to the desired azure resources.<br>
+- the __application startup sequence__ can be easily customized to allow merging configuration files from an '__ExternalConfigurationFolder__' environment variable.<br>
+In this way, developers only need to clone the '__components__' and '__components.internal__' repositories, and the code will work immediately.
+
+The image below shows the __AuthenticationSampleApi__ running with a private configuration '__Testms__' from the external folder '__..\..\..\..Diginsight\components.internal\src\Samples\AuthenticationSampleApi__'.<br>
+![alt text](<002.01 - Diginsight_components_loading_config_from_external_folder.png>)
+
+The developer just needs to open and run the sample, without any manual steps to copy configuration files from the private repository to the public repository.<br>
+
+
 # ADDITIONAL DETAILS
-To load and use private configurations from the public repository, we can consider two steps:
-- Step 1: Load Configurations from an External Folder
-- (optional) Step 2: load the external folder configurations by means of __Git Submodules__
 
-## Step 1: Load Configurations from an External Folder
-In this step, the code is instructed during the startup sequence to load configurations from an external folder specified by an `externalConfigurationsFolder` variable. <br>
-This allows the application to dynamically load configurations from a secure location outside the public repository.
+Before diving into the solution, let’s recap why handling sensitive config in public repos can be a problem:
 
-Example code from `ConfigureAppConfiguration2` in __Diginsight.Components.Configuration__ component follows this approach:
+- __Accidental Exposure__: It’s frighteningly easy for someone to mistakenly commit a file with passwords or keys. Once pushed to a public repo, secrets can be immediately compromised. Even if removed later, history might still contain them.<br>
+- __Lack of Versioning__: When we exclude configs from git, we lose the ability to track changes. Teams might struggle to keep everyone’s config in sync, and changes to secrets (e.g., rotating a key) aren’t documented in code.<br>
+- __Complex Setup__: Developers need a reliable way to get the required config values to run the app. Without a good system, onboarding new contributors or deploying to new environments can be error-prone (passing around config files manually, etc.).<br>
+- __Mix of Secret/Non-Secret Data__: Not all sensitive info is a “secret” that can go into a vault. Some are just private identifiers or settings (client IDs, internal URLs, personal data) that you don’t want public. These need protection too, but handling them differs from handling, say, passwords.<br> 
+
+Keeping our sensitive configurations in a private repo ensures by design:
+
+- __Isolation__: keep sensitive data out of the public repo by default,<br>
+- __Version Control__: still track and manage those configs in a secure way,<br><br>
+This approach works as long as we provide:<br>
+- __Safety__: configs are automatically loaded at application startup, without requiring the developer to manually copy them to the public repository file system clone, that would bring the risk of accidental exposure.
+- __Automation__: configs are automatically injected during builds developments with no manual steps.<br>
+
+
+## Step 1 (Safety): merge config files from an external folder, at application startup
+
+Applications code can be easily instructed during the startup sequence to load configurations from an external folder specified by an `externalConfigurationsFolder` variable. This allows the application to dynamically load configurations from a secure location outside the public repository.
+This enables the application to load configurations from a secure location outside the public repository.
+
+Example code from `ConfigureAppConfiguration2` in __Diginsight.Components__ component follows this approach:
 -  an __'ExternalConfigurationFolder'__ variable is read 
 - if existing, the __environment configuration file__ is loaded from that folder instead of the current folder.<br>
 
@@ -121,35 +164,88 @@ public static void Main(string[] args)
     host.Run();
 }
 ```
-For this reason, `AuthenticationSampleApi` can be run with an external configuration `Testms` from the external folder `E:\dev.darioa.live\Diginsight\components.internal\src\Samples\AuthenticationSampleApi`.
+For this reason, `AuthenticationSampleApi` can be run with an external configuration `Testms` from the external folder `components.internal\src\Samples\AuthenticationSampleApi`.
 ![alt text](<001.03 AuthenticationSampleApi running with private configuration Testms.png>)
 
+The developer can run the sample without need of copying the configuration files from the private repository to the public repository.<br>
 
-## (Optional) Step 2: Use Git Submodules
-In this step, the __private repository folders are mapped as submodules of the public repository__. <br>
-This allows the public repository to load configurations from a custom folder within it, ensuring that sensitive configurations are kept secure in the private repository.
 
-Steps to set up Git submodules:
+## Step 2 (Automation): Inject configuration files from an external repository, during GitHub actions build steps
 
-- Add the private repository as a submodule:
-  ```
-  git submodule add git@github.com:yourusername/components.internal.git config
-  ```
-- Update the .gitmodules file:
-  ```
-  [submodule "config"]
-    path = config
-    url = git@github.com:yourusername/components.internal.git
-  ```
-- Initialize and update submodules when cloning the repository:
-  ```
-  git clone --recurse-submodules git@github.com:yourusername/components.git
-  cd components
-  git submodule update --init --recursive
-  ```
-- Access the private configuration in your code:
-  configurations from the submodule can now be used just setting the
-  `externalConfigurationsFolder` variable to the submodule folder.
+At build time, the application (or CI pipeline) can pull in the config from the private repo and merge it with the application.<br> Essentially, the app loads its normal configuration from the public files, then overrides or supplements those settings with values from the private repository.<br> 
+
+The following yml code shows the __GitHub actions__ steps to inject the configuration files from the private repository into the public repository during build time.<br>
+
+### step1 : Checkout the private repo
+
+The following yml code from diginsight/components samples shows the github action:
+- checkout of the current repo and 
+- checkout of the __.internal__ repo<br>
+
+```yaml
+  - name: Checkout Repository
+    uses: actions/checkout@v4
+
+  - name: Checkout 'components.internal' Repository
+    uses: actions/checkout@v4
+    with:
+      repository: diginsight/components.internal
+      path: components.internal
+      token: ${{ secrets.INTERNAL_REPOSITORY_TOKEN }}
+      # If the repo is private, you need a token with access:
+```
+
+### step2 : copy configuration files from the private repository to the public repository
+After dotnet restore, before the build step, 
+the following code copies the configuration files from the private repository to the public repository.<br>
+
+```yaml
+  - name: Restore Samples 
+    run: dotnet restore --interactive src/Diginsight.Components.sln
+
+  - name: Copy AuthenticationSampleApi appsettings.*.json from components.internal
+    run: |
+      cp components.internal/src/Samples/AuthenticationSampleApi/appsettings.*.json src/Samples/AuthenticationSampleApi/
+  - name: Copy AuthenticationSampleServerApi appsettings.*.json from components.internal
+    run: |
+      cp components.internal/src/Samples/AuthenticationSampleServerApi/appsettings.*.json src/Samples/AuthenticationSampleServerApi/
+
+  - name: Build Samples
+    run: dotnet build src/Diginsight.Components.sln --configuration Release
+```
+
+At this point, the sample configuration files are merged with the Diginsight Components files, so the GitHub Action can continue with the build and publish steps as usual.
+
+# CONCLUSION
+
+Managing sensitive configurations via config injection from a private repository offers __ease of use__ and __security by design__.<br>
+
+By separating sensitive config into its own version-controlled private repo and integrating it into your app’s workflow, you get the best of both worlds: 
+
+- __public code remains clean__ and safe
+- __private data is handled in a controlled, auditable manner__.
+- __Versioning__ is achieved through the private config repo (no more lost change history on configs).
+
+This guide explains how we can eliminate the pain points for this approach:
+
+- __Development experience is ensured__: the application startup can be customized to load configuration files from the private repository.
+This allows developers to run the application with the private configuration files without needing to copy configuration files with sensitive information from the private to the public repository.
+
+Code to load configuration files from an external folder ('__ExternalConfigurationFolder__') is available in the __Diginsight.Components__ component, in the `WebHostBuilderExtensions.ConfigureAppConfiguration2` method.
+This code, or similar, can be easily integrated into any application's startup sequence.
+
+- __Automation is preserved__ as the pipeline can be customized to load configuration files from the private repository during the build process.
+
+- __Accidental leaks are eliminated by design__ as the developer can use the public repository without needing to copy configuration files with sensitive information into it.
+
+Setting up dual repositories and configuration file injection requires some initial effort, but once in place, it streamlines your workflow and fortifies your project’s security posture.
+
+If you are developing an application with a public (or widely shared) codebase that needs to handle private configuration data, consider structuring it with a private configuration file repository and injection mechanism.
+
+It will give you control over your sensitive information, traceability of changes, and confidence during deployments—all while keeping your public repository truly public and clean.
+
+This “HowTo” method ensures that sensitive configuration files are managed wisely, reducing risk and making life easier for developers and DevOps engineers alike.
+
 
 
 # REFERENCE
@@ -157,6 +253,7 @@ This article analyzes an easy solution for __managing private configurations for
 By following these steps, you can ensure that sensitive information remains secure while maintaining the flexibility and accessibility of your public codebase.
 
 Additional resources for further reading:
+
 - [How to use private Git submodules](https://docs.readthedocs.io/en/stable/guides/private-submodules.html)<br>
 - [Using Private Git Submodules](https://me-readthedocs.readthedocs.io/en/latest/guides/private-submodules.html)
 

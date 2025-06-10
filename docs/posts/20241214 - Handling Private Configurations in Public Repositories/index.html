@@ -9,7 +9,7 @@
 <meta name="author" content="Dario Airoldi">
 <meta name="dcterms.date" content="2024-12-14">
 
-<title>HowTo: Handle Private Configurations in Public Repositories – diginsight blog</title>
+<title>HowTo: Manage Sensitive Configurations with Config Injection from Private Repositories – diginsight blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-7ff8a0647843ca0f05ce81e46744cb75.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-df23bac319c9a051477aacb69b4c1ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">HowTo: Handle Private Configurations in Public Repositories</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">HowTo: Manage Sensitive Configurations with Config Injection from Private Repositories</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -167,11 +167,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">HowTo: Handle Private Configurations in Public Repositories</h1>
+      <h1 class="title">HowTo: Manage Sensitive Configurations with Config Injection from Private Repositories</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">news</div>
                 <div class="quarto-category">code</div>
-                <div class="quarto-category">deelopment</div>
+                <div class="quarto-category">development</div>
               </div>
                   </div>
   </div>
@@ -243,11 +243,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">OVERVIEW</a></li>
+  <li><a href="#a-practical-example" id="toc-a-practical-example" class="nav-link" data-scroll-target="#a-practical-example">A PRACTICAL EXAMPLE</a></li>
   <li><a href="#additional-details" id="toc-additional-details" class="nav-link" data-scroll-target="#additional-details">ADDITIONAL DETAILS</a>
   <ul class="collapse">
-  <li><a href="#step-1-load-configurations-from-an-external-folder" id="toc-step-1-load-configurations-from-an-external-folder" class="nav-link" data-scroll-target="#step-1-load-configurations-from-an-external-folder">Step 1: Load Configurations from an External Folder</a></li>
-  <li><a href="#optional-step-2-use-git-submodules" id="toc-optional-step-2-use-git-submodules" class="nav-link" data-scroll-target="#optional-step-2-use-git-submodules">(Optional) Step 2: Use Git Submodules</a></li>
+  <li><a href="#step-1-safety-merge-config-files-from-an-external-folder-at-application-startup" id="toc-step-1-safety-merge-config-files-from-an-external-folder-at-application-startup" class="nav-link" data-scroll-target="#step-1-safety-merge-config-files-from-an-external-folder-at-application-startup">Step 1 (Safety): merge config files from an external folder, at application startup</a></li>
+  <li><a href="#step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps" id="toc-step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps" class="nav-link" data-scroll-target="#step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps">Step 2 (Automation): Inject configuration files from an external repository, during GitHub actions build steps</a>
+  <ul class="collapse">
+  <li><a href="#step1-checkout-the-private-repo" id="toc-step1-checkout-the-private-repo" class="nav-link" data-scroll-target="#step1-checkout-the-private-repo">step1 : Checkout the private repo</a></li>
+  <li><a href="#step2-copy-configuration-files-from-the-private-repository-to-the-public-repository" id="toc-step2-copy-configuration-files-from-the-private-repository-to-the-public-repository" class="nav-link" data-scroll-target="#step2-copy-configuration-files-from-the-private-repository-to-the-public-repository">step2 : copy configuration files from the private repository to the public repository</a></li>
   </ul></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">CONCLUSION</a></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">REFERENCE</a></li>
   </ul>
 </nav>
@@ -261,10 +267,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level1">
 <h1>OVERVIEW</h1>
-<p>When developing applications in public, it’s common to use <strong>configuration</strong> files that contain <strong>sensitive information</strong>. <br> However, <strong>managing these configurations in public repositories</strong> poses a challenge, as they should not be exposed.<br></p>
-<p>This article addresses the problem of handling private configurations when testing code in public repositories and proposes a solution <strong>using a private repository</strong> associated with the <strong>original repository</strong>.</p>
-<p>For example, consider the public repository <strong>https://github.com/diginsight/components</strong>.<br> We can create a corresponding private repository, <strong>https://github.com/diginsight/components.internal</strong>, to store private configurations.<br></p>
-<p>In this scenario, the <strong>AuthenticationSampleApi</strong> exists in the public repository with public example configurations.<br> We can define a <strong>AuthenticationSampleApi folder</strong> in the private repository, mirroring the structure of the public repository, and store the private configuration within the src folder of the private repository.</p>
+<p>When developing applications in public, it’s common to use <strong>configuration files</strong> that contain sensitive information.<br> However, <strong>managing these configurations in public repositories</strong> poses a challenge, as they should not be exposed. <br></p>
+<p>This guide introduces a <strong>robust solution to the problem</strong>: <strong>using a separate private repository for sensitive configuration files</strong> and <strong>injecting those files during build time and at runtime</strong> to avoid the need of duplicating or manually copying them during build or development time.<br></p>
+<p>This article demonstrates how:</p>
+<ul>
+<li>‘<strong>injecting configurations from a private repository</strong>’ can be achieved with a few GitHub Actions steps.<br></li>
+<li>‘<strong>loading configurations from an external folder</strong>’ can be achieved with a simple code change in the application startup sequence.<br></li>
+</ul>
+<p>Code for loading configurations from an ‘<strong>ExternalConfigurationFolder</strong>’ folder is already available in the <strong>Diginsight.Components</strong> component <code>WebHostBuilderExtensions.ConfigureAppConfiguration2</code> method.<br> This code, or similar, can be easily integrated into any application startup sequence.<br></p>
+</section>
+<section id="a-practical-example" class="level1">
+<h1>A PRACTICAL EXAMPLE</h1>
+<p>The approach proposed by this guide is used on our <strong>diginsight repositories</strong>.<br> For every repository such as:<br><strong><a href="https://github.com/diginsight/components">https://github.com/diginsight/components</a></strong><br> a corresponding ‘<strong>.internal</strong>’ (private) repository:<br><strong><a href="https://github.com/diginsight/components.internal">https://github.com/diginsight/components.internal</a></strong><br> mirroring the folder structure of the public repository, is used to hold sensitive configurations.<br></p>
+<p>As an example, the <strong>AuthenticationSampleApi</strong> exists in the public repository, under folder ‘<strong>src/samples</strong>’.<br> Configurations for that sample are stored within the corresponding <strong>AuthenticationSampleApi</strong> folder in the private repository (under ‘<strong>src/samples</strong>’ folder, within the ‘<strong>.internal</strong>’ repository).</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -283,14 +298,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<p>The ‘<strong>diginsight/components</strong>’ public repo contains only example configurations, with no sensitive data.<br> The real samples configuration files are stored into the ‘<strong>diginsight/components.internal</strong>’ repository, with proper versioning and security.<br></p>
+<p>The following paragraphs explain how:</p>
+<ul>
+<li><strong>CI/CD GitHub Actions</strong> can easily inject the configuration files from the ‘<strong>.internal</strong>’ repository before deploying code to the desired azure resources.<br></li>
+<li>the <strong>application startup sequence</strong> can be easily customized to allow merging configuration files from an ‘<strong>ExternalConfigurationFolder</strong>’ environment variable.<br> In this way, developers only need to clone the ‘<strong>components</strong>’ and ‘<strong>components.internal</strong>’ repositories, and the code will work immediately.</li>
+</ul>
+<p>The image below shows the <strong>AuthenticationSampleApi</strong> running with a private configuration ‘<strong>Testms</strong>’ from the external folder ‘<strong>........Diginsight.internal</strong>’.<br> <img src="002.01 - Diginsight_components_loading_config_from_external_folder.png" class="img-fluid" alt="alt text"></p>
+<p>The developer just needs to open and run the sample, without any manual steps to copy configuration files from the private repository to the public repository.<br></p>
 </section>
 <section id="additional-details" class="level1">
 <h1>ADDITIONAL DETAILS</h1>
-<p>To load and use private configurations from the public repository, we can consider two steps: - Step 1: Load Configurations from an External Folder - (optional) Step 2: load the external folder configurations by means of <strong>Git Submodules</strong></p>
-<section id="step-1-load-configurations-from-an-external-folder" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-load-configurations-from-an-external-folder">Step 1: Load Configurations from an External Folder</h2>
-<p>In this step, the code is instructed during the startup sequence to load configurations from an external folder specified by an <code>externalConfigurationsFolder</code> variable. <br> This allows the application to dynamically load configurations from a secure location outside the public repository.</p>
-<p>Example code from <code>ConfigureAppConfiguration2</code> in <strong>Diginsight.Components.Configuration</strong> component follows this approach: - an <strong>‘ExternalConfigurationFolder’</strong> variable is read - if existing, the <strong>environment configuration file</strong> is loaded from that folder instead of the current folder.<br></p>
+<p>Before diving into the solution, let’s recap why handling sensitive config in public repos can be a problem:</p>
+<ul>
+<li><strong>Accidental Exposure</strong>: It’s frighteningly easy for someone to mistakenly commit a file with passwords or keys. Once pushed to a public repo, secrets can be immediately compromised. Even if removed later, history might still contain them.<br></li>
+<li><strong>Lack of Versioning</strong>: When we exclude configs from git, we lose the ability to track changes. Teams might struggle to keep everyone’s config in sync, and changes to secrets (e.g., rotating a key) aren’t documented in code.<br></li>
+<li><strong>Complex Setup</strong>: Developers need a reliable way to get the required config values to run the app. Without a good system, onboarding new contributors or deploying to new environments can be error-prone (passing around config files manually, etc.).<br></li>
+<li><strong>Mix of Secret/Non-Secret Data</strong>: Not all sensitive info is a “secret” that can go into a vault. Some are just private identifiers or settings (client IDs, internal URLs, personal data) that you don’t want public. These need protection too, but handling them differs from handling, say, passwords.<br></li>
+</ul>
+<p>Keeping our sensitive configurations in a private repo ensures by design:</p>
+<ul>
+<li><strong>Isolation</strong>: keep sensitive data out of the public repo by default,<br></li>
+<li><strong>Version Control</strong>: still track and manage those configs in a secure way,<br><br> This approach works as long as we provide:<br></li>
+<li><strong>Safety</strong>: configs are automatically loaded at application startup, without requiring the developer to manually copy them to the public repository file system clone, that would bring the risk of accidental exposure.</li>
+<li><strong>Automation</strong>: configs are automatically injected during builds developments with no manual steps.<br></li>
+</ul>
+<section id="step-1-safety-merge-config-files-from-an-external-folder-at-application-startup" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-safety-merge-config-files-from-an-external-folder-at-application-startup">Step 1 (Safety): merge config files from an external folder, at application startup</h2>
+<p>Applications code can be easily instructed during the startup sequence to load configurations from an external folder specified by an <code>externalConfigurationsFolder</code> variable. This allows the application to dynamically load configurations from a secure location outside the public repository. This enables the application to load configurations from a secure location outside the public repository.</p>
+<p>Example code from <code>ConfigureAppConfiguration2</code> in <strong>Diginsight.Components</strong> component follows this approach: - an <strong>‘ExternalConfigurationFolder’</strong> variable is read - if existing, the <strong>environment configuration file</strong> is loaded from that folder instead of the current folder.<br></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c# code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="dt">void</span> <span class="fu">ConfigureAppConfiguration2</span><span class="op">(</span>IHostEnvironment environment<span class="op">,</span> IConfigurationBuilder builder<span class="op">,</span> ILoggerFactory loggerFactory<span class="op">,</span> Func<span class="op">&lt;</span>IDictionary<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;,</span> <span class="dt">bool</span><span class="op">&gt;?</span> tagsMatch <span class="op">=</span> <span class="kw">null</span><span class="op">)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -368,31 +404,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    host<span class="op">.</span><span class="fu">Run</span><span class="op">();</span></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>For this reason, <code>AuthenticationSampleApi</code> can be run with an external configuration <code>Testms</code> from the external folder <code>E:\dev.darioa.live\Diginsight\components.internal\src\Samples\AuthenticationSampleApi</code>. <img src="001.03 AuthenticationSampleApi running with private configuration Testms.png" class="img-fluid" alt="alt text"></p>
+<p>For this reason, <code>AuthenticationSampleApi</code> can be run with an external configuration <code>Testms</code> from the external folder <code>components.internal\src\Samples\AuthenticationSampleApi</code>. <img src="001.03 AuthenticationSampleApi running with private configuration Testms.png" class="img-fluid" alt="alt text"></p>
+<p>The developer can run the sample without need of copying the configuration files from the private repository to the public repository.<br></p>
 </section>
-<section id="optional-step-2-use-git-submodules" class="level2">
-<h2 class="anchored" data-anchor-id="optional-step-2-use-git-submodules">(Optional) Step 2: Use Git Submodules</h2>
-<p>In this step, the <strong>private repository folders are mapped as submodules of the public repository</strong>. <br> This allows the public repository to load configurations from a custom folder within it, ensuring that sensitive configurations are kept secure in the private repository.</p>
-<p>Steps to set up Git submodules:</p>
+<section id="step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps">Step 2 (Automation): Inject configuration files from an external repository, during GitHub actions build steps</h2>
+<p>At build time, the application (or CI pipeline) can pull in the config from the private repo and merge it with the application.<br> Essentially, the app loads its normal configuration from the public files, then overrides or supplements those settings with values from the private repository.<br></p>
+<p>The following yml code shows the <strong>GitHub actions</strong> steps to inject the configuration files from the private repository into the public repository during build time.<br></p>
+<section id="step1-checkout-the-private-repo" class="level3">
+<h3 class="anchored" data-anchor-id="step1-checkout-the-private-repo">step1 : Checkout the private repo</h3>
+<p>The following yml code from diginsight/components samples shows the github action: - checkout of the current repo and - checkout of the <strong>.internal</strong> repo<br></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout Repository</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout 'components.internal' Repository</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">repository</span><span class="kw">:</span><span class="at"> diginsight/components.internal</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> components.internal</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">token</span><span class="kw">:</span><span class="at"> ${{ secrets.INTERNAL_REPOSITORY_TOKEN }}</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">      # If the repo is private, you need a token with access:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step2-copy-configuration-files-from-the-private-repository-to-the-public-repository" class="level3">
+<h3 class="anchored" data-anchor-id="step2-copy-configuration-files-from-the-private-repository-to-the-public-repository">step2 : copy configuration files from the private repository to the public repository</h3>
+<p>After dotnet restore, before the build step, the following code copies the configuration files from the private repository to the public repository.<br></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Restore Samples </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> dotnet restore --interactive src/Diginsight.Components.sln</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Copy AuthenticationSampleApi appsettings.*.json from components.internal</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">    run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      cp components.internal/src/Samples/AuthenticationSampleApi/appsettings.*.json src/Samples/AuthenticationSampleApi/</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Copy AuthenticationSampleServerApi appsettings.*.json from components.internal</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">    run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      cp components.internal/src/Samples/AuthenticationSampleServerApi/appsettings.*.json src/Samples/AuthenticationSampleServerApi/</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build Samples</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> dotnet build src/Diginsight.Components.sln --configuration Release</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>At this point, the sample configuration files are merged with the Diginsight Components files, so the GitHub Action can continue with the build and publish steps as usual.</p>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>CONCLUSION</h1>
+<p>Managing sensitive configurations via config injection from a private repository offers <strong>ease of use</strong> and <strong>security by design</strong>.<br></p>
+<p>By separating sensitive config into its own version-controlled private repo and integrating it into your app’s workflow, you get the best of both worlds:</p>
 <ul>
-<li><p>Add the private repository as a submodule:</p>
-<pre><code>git submodule add git@github.com:yourusername/components.internal.git config</code></pre></li>
-<li><p>Update the .gitmodules file:</p>
-<pre><code>[submodule "config"]
-  path = config
-  url = git@github.com:yourusername/components.internal.git</code></pre></li>
-<li><p>Initialize and update submodules when cloning the repository:</p>
-<pre><code>git clone --recurse-submodules git@github.com:yourusername/components.git
-cd components
-git submodule update --init --recursive</code></pre></li>
-<li><p>Access the private configuration in your code: configurations from the submodule can now be used just setting the <code>externalConfigurationsFolder</code> variable to the submodule folder.</p></li>
+<li><strong>public code remains clean</strong> and safe</li>
+<li><strong>private data is handled in a controlled, auditable manner</strong>.</li>
+<li><strong>Versioning</strong> is achieved through the private config repo (no more lost change history on configs).</li>
 </ul>
-</section>
+<p>This guide explains how we can eliminate the pain points for this approach:</p>
+<ul>
+<li><strong>Development experience is ensured</strong>: the application startup can be customized to load configuration files from the private repository. This allows developers to run the application with the private configuration files without needing to copy configuration files with sensitive information from the private to the public repository.</li>
+</ul>
+<p>Code to load configuration files from an external folder (‘<strong>ExternalConfigurationFolder</strong>’) is available in the <strong>Diginsight.Components</strong> component, in the <code>WebHostBuilderExtensions.ConfigureAppConfiguration2</code> method. This code, or similar, can be easily integrated into any application’s startup sequence.</p>
+<ul>
+<li><p><strong>Automation is preserved</strong> as the pipeline can be customized to load configuration files from the private repository during the build process.</p></li>
+<li><p><strong>Accidental leaks are eliminated by design</strong> as the developer can use the public repository without needing to copy configuration files with sensitive information into it.</p></li>
+</ul>
+<p>Setting up dual repositories and configuration file injection requires some initial effort, but once in place, it streamlines your workflow and fortifies your project’s security posture.</p>
+<p>If you are developing an application with a public (or widely shared) codebase that needs to handle private configuration data, consider structuring it with a private configuration file repository and injection mechanism.</p>
+<p>It will give you control over your sensitive information, traceability of changes, and confidence during deployments—all while keeping your public repository truly public and clean.</p>
+<p>This “HowTo” method ensures that sensitive configuration files are managed wisely, reducing risk and making life easier for developers and DevOps engineers alike.</p>
 </section>
 <section id="reference" class="level1">
 <h1>REFERENCE</h1>
 <p>This article analyzes an easy solution for <strong>managing private configurations for public code repositories</strong>.<br> By following these steps, you can ensure that sensitive information remains secure while maintaining the flexibility and accessibility of your public codebase.</p>
-<p>Additional resources for further reading: - <a href="https://docs.readthedocs.io/en/stable/guides/private-submodules.html">How to use private Git submodules</a><br> - <a href="https://me-readthedocs.readthedocs.io/en/latest/guides/private-submodules.html">Using Private Git Submodules</a></p>
+<p>Additional resources for further reading:</p>
+<ul>
+<li><a href="https://docs.readthedocs.io/en/stable/guides/private-submodules.html">How to use private Git submodules</a><br></li>
+<li><a href="https://me-readthedocs.readthedocs.io/en/latest/guides/private-submodules.html">Using Private Git Submodules</a></li>
+</ul>
 
 
 </section>
