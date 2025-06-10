@@ -7,7 +7,7 @@ image: "image.jpg"
 draft: false
 ---
 
-# How to Manage Sensitive Configurations in Public Repositories
+## How to Manage Sensitive Configurations in Public Repositories
 
 When developing applications in public repositories, handling sensitive configuration files (such as secrets, keys, or internal URLs) is a common challenge. Exposing these files can lead to security risks, while omitting them complicates development and deployment.
 
@@ -152,7 +152,8 @@ Builds and deployments always use the latest, secure configs—no secrets in the
 ## Troubleshooting & FAQ
 
 **Q: What if the private repo is not accessible?**  
-A: The build or local run will fail to find configs. Ensure access tokens are set up and the repo is cloned.
+A: Only configuration files from the public repository are considered by the startup sequence.
+So the developer can adjust them replacing placeholders as reported by the public repository documentation and run the application without the private repository.
 
 **Q: What if configs are missing at runtime?**  
 A: The app should log a clear error. Check that the environment variable or CI/CD copy step is correct.

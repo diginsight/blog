@@ -242,8 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#how-to-manage-sensitive-configurations-in-public-repositories" id="toc-how-to-manage-sensitive-configurations-in-public-repositories" class="nav-link active" data-scroll-target="#how-to-manage-sensitive-configurations-in-public-repositories">How to Manage Sensitive Configurations in Public Repositories</a>
-  <ul class="collapse">
+  <li><a href="#how-to-manage-sensitive-configurations-in-public-repositories" id="toc-how-to-manage-sensitive-configurations-in-public-repositories" class="nav-link active" data-scroll-target="#how-to-manage-sensitive-configurations-in-public-repositories">How to Manage Sensitive Configurations in Public Repositories</a></li>
   <li><a href="#table-of-contents" id="toc-table-of-contents" class="nav-link" data-scroll-target="#table-of-contents">Table of Contents</a></li>
   <li><a href="#why-is-this-a-problem" id="toc-why-is-this-a-problem" class="nav-link" data-scroll-target="#why-is-this-a-problem">Why Is This a Problem?</a></li>
   <li><a href="#solution-overview" id="toc-solution-overview" class="nav-link" data-scroll-target="#solution-overview">Solution Overview</a></li>
@@ -253,7 +252,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#benefits-and-best-practices" id="toc-benefits-and-best-practices" class="nav-link" data-scroll-target="#benefits-and-best-practices">Benefits and Best Practices</a></li>
   <li><a href="#troubleshooting-faq" id="toc-troubleshooting-faq" class="nav-link" data-scroll-target="#troubleshooting-faq">Troubleshooting &amp; FAQ</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -264,11 +262,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="how-to-manage-sensitive-configurations-in-public-repositories" class="level1">
-<h1>How to Manage Sensitive Configurations in Public Repositories</h1>
+<section id="how-to-manage-sensitive-configurations-in-public-repositories" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-manage-sensitive-configurations-in-public-repositories">How to Manage Sensitive Configurations in Public Repositories</h2>
 <p>When developing applications in public repositories, handling sensitive configuration files (such as secrets, keys, or internal URLs) is a common challenge. Exposing these files can lead to security risks, while omitting them complicates development and deployment.</p>
 <p>This guide presents a robust, practical solution: <strong>store sensitive configurations in a private repository and inject them automatically during build and runtime</strong>. This approach keeps your public codebase clean and secure, while ensuring a smooth developer experience.</p>
 <hr>
+</section>
 <section id="table-of-contents" class="level2">
 <h2 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h2>
 <ol type="1">
@@ -413,7 +412,7 @@ Builds and deployments always use the latest, secure configs—no secrets in the
 <section id="troubleshooting-faq" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting-faq">Troubleshooting &amp; FAQ</h2>
 <p><strong>Q: What if the private repo is not accessible?</strong><br>
-A: The build or local run will fail to find configs. Ensure access tokens are set up and the repo is cloned.</p>
+A: Only configuration files from the public repository are considered by the startup sequence. So the developer can adjust them replacing placeholders as reported by the public repository documentation and run the application without the private repository.</p>
 <p><strong>Q: What if configs are missing at runtime?</strong><br>
 A: The app should log a clear error. Check that the environment variable or CI/CD copy step is correct.</p>
 <p><strong>Q: How do I handle multiple environments (dev, prod, etc.)?</strong><br>
@@ -431,7 +430,6 @@ A: Store environment-specific configs in the private repo, and load the appropri
 <hr>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
