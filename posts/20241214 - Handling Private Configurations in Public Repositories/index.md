@@ -65,21 +65,21 @@ Before diving into the solution, let’s recap why handling sensitive config in 
 
 Keeping our sensitive configurations in a private repo ensures by design:
 
-- __Isolation__: keep sensitive data out of the public repo by default,<br>
-- __Version Control__: still track and manage those configs in a secure way,<br><br>
+- __Isolation__: keep sensitive data out of the public repo by default<br>
+- __Version Control__: still track and manage those configs in a secure way<br><br>
 This approach works as long as we provide:<br>
 - __Safety__: configs are automatically loaded at application startup, without requiring the developer to manually copy them to the public repository file system clone, that would bring the risk of accidental exposure.
-- __Automation__: configs are automatically injected during builds developments with no manual steps.<br>
+- __Automation__: configs are automatically injected during builds and development with no manual steps.<br>
 
 
 ## Step 1 (Safety): merge config files from an external folder, at application startup
 
-Applications code can be easily instructed during the startup sequence to load configurations from an external folder specified by an `externalConfigurationsFolder` variable. This allows the application to dynamically load configurations from a secure location outside the public repository.
-This enables the application to load configurations from a secure location outside the public repository.
+Application code can be easily instructed during the startup sequence to load configurations from an external folder specified by an `externalConfigurationsFolder` variable. This allows the application to dynamically load configurations from a secure location outside the public repository.
 
 Example code from `ConfigureAppConfiguration2` in __Diginsight.Components__ component follows this approach:
--  an __'ExternalConfigurationFolder'__ variable is read 
-- if existing, the __environment configuration file__ is loaded from that folder instead of the current folder.<br>
+
+- an __'ExternalConfigurationFolder'__ variable is read 
+- if it exists, the __environment configuration file__ is loaded from that folder instead of the current folder.<br>
 
 ```c#
 public static void ConfigureAppConfiguration2(IHostEnvironment environment, IConfigurationBuilder builder, ILoggerFactory loggerFactory, Func<IDictionary<string, string>, bool>? tagsMatch = null)
@@ -167,16 +167,17 @@ public static void Main(string[] args)
 For this reason, `AuthenticationSampleApi` can be run with an external configuration `Testms` from the external folder `components.internal\src\Samples\AuthenticationSampleApi`.
 ![alt text](<001.03 AuthenticationSampleApi running with private configuration Testms.png>)
 
-The developer can run the sample without need of copying the configuration files from the private repository to the public repository.<br>
+The developer can run the sample without needing to copy the configuration files from the private repository to the public repository.<br>
 
 
 ## Step 2 (Automation): Inject configuration files from an external repository, during GitHub actions build steps
 
-At build time, the application (or CI pipeline) can pull in the config from the private repo and merge it with the application.<br> Essentially, the app loads its normal configuration from the public files, then overrides or supplements those settings with values from the private repository.<br> 
+At build time, the application (or CI pipeline) can pull the config from the private repo and merge it with the application.<br>
+Essentially, the app loads its normal configuration from the public files, then overrides or supplements those settings with values from the private repository.<br> 
 
 The following yml code shows the __GitHub actions__ steps to inject the configuration files from the private repository into the public repository during build time.<br>
 
-### step1 : Checkout the private repo
+### Step 2.a: Checkout the private repo
 
 The following yml code from diginsight/components samples shows the github action:
 - checkout of the current repo and 
@@ -195,7 +196,7 @@ The following yml code from diginsight/components samples shows the github actio
       # If the repo is private, you need a token with access:
 ```
 
-### step2 : copy configuration files from the private repository to the public repository
+### Step 2.b: copy configuration files from the private repository to the public repository
 After dotnet restore, before the build step, 
 the following code copies the configuration files from the private repository to the public repository.<br>
 

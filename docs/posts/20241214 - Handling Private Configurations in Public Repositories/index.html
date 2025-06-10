@@ -249,8 +249,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#step-1-safety-merge-config-files-from-an-external-folder-at-application-startup" id="toc-step-1-safety-merge-config-files-from-an-external-folder-at-application-startup" class="nav-link" data-scroll-target="#step-1-safety-merge-config-files-from-an-external-folder-at-application-startup">Step 1 (Safety): merge config files from an external folder, at application startup</a></li>
   <li><a href="#step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps" id="toc-step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps" class="nav-link" data-scroll-target="#step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps">Step 2 (Automation): Inject configuration files from an external repository, during GitHub actions build steps</a>
   <ul class="collapse">
-  <li><a href="#step1-checkout-the-private-repo" id="toc-step1-checkout-the-private-repo" class="nav-link" data-scroll-target="#step1-checkout-the-private-repo">step1 : Checkout the private repo</a></li>
-  <li><a href="#step2-copy-configuration-files-from-the-private-repository-to-the-public-repository" id="toc-step2-copy-configuration-files-from-the-private-repository-to-the-public-repository" class="nav-link" data-scroll-target="#step2-copy-configuration-files-from-the-private-repository-to-the-public-repository">step2 : copy configuration files from the private repository to the public repository</a></li>
+  <li><a href="#step-2.a-checkout-the-private-repo" id="toc-step-2.a-checkout-the-private-repo" class="nav-link" data-scroll-target="#step-2.a-checkout-the-private-repo">Step 2.a: Checkout the private repo</a></li>
+  <li><a href="#step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository" id="toc-step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository" class="nav-link" data-scroll-target="#step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository">Step 2.b: copy configuration files from the private repository to the public repository</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">CONCLUSION</a></li>
@@ -318,15 +318,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Keeping our sensitive configurations in a private repo ensures by design:</p>
 <ul>
-<li><strong>Isolation</strong>: keep sensitive data out of the public repo by default,<br></li>
-<li><strong>Version Control</strong>: still track and manage those configs in a secure way,<br><br> This approach works as long as we provide:<br></li>
+<li><strong>Isolation</strong>: keep sensitive data out of the public repo by default<br></li>
+<li><strong>Version Control</strong>: still track and manage those configs in a secure way<br><br> This approach works as long as we provide:<br></li>
 <li><strong>Safety</strong>: configs are automatically loaded at application startup, without requiring the developer to manually copy them to the public repository file system clone, that would bring the risk of accidental exposure.</li>
-<li><strong>Automation</strong>: configs are automatically injected during builds developments with no manual steps.<br></li>
+<li><strong>Automation</strong>: configs are automatically injected during builds and development with no manual steps.<br></li>
 </ul>
 <section id="step-1-safety-merge-config-files-from-an-external-folder-at-application-startup" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-safety-merge-config-files-from-an-external-folder-at-application-startup">Step 1 (Safety): merge config files from an external folder, at application startup</h2>
-<p>Applications code can be easily instructed during the startup sequence to load configurations from an external folder specified by an <code>externalConfigurationsFolder</code> variable. This allows the application to dynamically load configurations from a secure location outside the public repository. This enables the application to load configurations from a secure location outside the public repository.</p>
-<p>Example code from <code>ConfigureAppConfiguration2</code> in <strong>Diginsight.Components</strong> component follows this approach: - an <strong>‘ExternalConfigurationFolder’</strong> variable is read - if existing, the <strong>environment configuration file</strong> is loaded from that folder instead of the current folder.<br></p>
+<p>Application code can be easily instructed during the startup sequence to load configurations from an external folder specified by an <code>externalConfigurationsFolder</code> variable. This allows the application to dynamically load configurations from a secure location outside the public repository.</p>
+<p>Example code from <code>ConfigureAppConfiguration2</code> in <strong>Diginsight.Components</strong> component follows this approach:</p>
+<ul>
+<li>an <strong>‘ExternalConfigurationFolder’</strong> variable is read</li>
+<li>if it exists, the <strong>environment configuration file</strong> is loaded from that folder instead of the current folder.<br></li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c# code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="dt">void</span> <span class="fu">ConfigureAppConfiguration2</span><span class="op">(</span>IHostEnvironment environment<span class="op">,</span> IConfigurationBuilder builder<span class="op">,</span> ILoggerFactory loggerFactory<span class="op">,</span> Func<span class="op">&lt;</span>IDictionary<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;,</span> <span class="dt">bool</span><span class="op">&gt;?</span> tagsMatch <span class="op">=</span> <span class="kw">null</span><span class="op">)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -405,14 +409,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    host<span class="op">.</span><span class="fu">Run</span><span class="op">();</span></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>For this reason, <code>AuthenticationSampleApi</code> can be run with an external configuration <code>Testms</code> from the external folder <code>components.internal\src\Samples\AuthenticationSampleApi</code>. <img src="001.03 AuthenticationSampleApi running with private configuration Testms.png" class="img-fluid" alt="alt text"></p>
-<p>The developer can run the sample without need of copying the configuration files from the private repository to the public repository.<br></p>
+<p>The developer can run the sample without needing to copy the configuration files from the private repository to the public repository.<br></p>
 </section>
 <section id="step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-automation-inject-configuration-files-from-an-external-repository-during-github-actions-build-steps">Step 2 (Automation): Inject configuration files from an external repository, during GitHub actions build steps</h2>
-<p>At build time, the application (or CI pipeline) can pull in the config from the private repo and merge it with the application.<br> Essentially, the app loads its normal configuration from the public files, then overrides or supplements those settings with values from the private repository.<br></p>
+<p>At build time, the application (or CI pipeline) can pull the config from the private repo and merge it with the application.<br> Essentially, the app loads its normal configuration from the public files, then overrides or supplements those settings with values from the private repository.<br></p>
 <p>The following yml code shows the <strong>GitHub actions</strong> steps to inject the configuration files from the private repository into the public repository during build time.<br></p>
-<section id="step1-checkout-the-private-repo" class="level3">
-<h3 class="anchored" data-anchor-id="step1-checkout-the-private-repo">step1 : Checkout the private repo</h3>
+<section id="step-2.a-checkout-the-private-repo" class="level3">
+<h3 class="anchored" data-anchor-id="step-2.a-checkout-the-private-repo">Step 2.a: Checkout the private repo</h3>
 <p>The following yml code from diginsight/components samples shows the github action: - checkout of the current repo and - checkout of the <strong>.internal</strong> repo<br></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout Repository</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
@@ -425,8 +429,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">token</span><span class="kw">:</span><span class="at"> ${{ secrets.INTERNAL_REPOSITORY_TOKEN }}</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">      # If the repo is private, you need a token with access:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="step2-copy-configuration-files-from-the-private-repository-to-the-public-repository" class="level3">
-<h3 class="anchored" data-anchor-id="step2-copy-configuration-files-from-the-private-repository-to-the-public-repository">step2 : copy configuration files from the private repository to the public repository</h3>
+<section id="step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository" class="level3">
+<h3 class="anchored" data-anchor-id="step-2.b-copy-configuration-files-from-the-private-repository-to-the-public-repository">Step 2.b: copy configuration files from the private repository to the public repository</h3>
 <p>After dotnet restore, before the build step, the following code copies the configuration files from the private repository to the public repository.<br></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Restore Samples </span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> dotnet restore --interactive src/Diginsight.Components.sln</span></span>
