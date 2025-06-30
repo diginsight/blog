@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dario Airoldi">
-<meta name="dcterms.date" content="2024-12-14">
+<meta name="dcterms.date" content="2025-06-29">
 
 <title>HowTo: Maximize GitHub Copilot’s Code Understanding of your repository – diginsight blog</title>
 <style>
@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 14, 2024</p>
+        <p class="date">June 29, 2025</p>
       </div>
     </div>
     
@@ -248,6 +248,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#add-strategic-code-comments" id="toc-add-strategic-code-comments" class="nav-link" data-scroll-target="#add-strategic-code-comments">1.1. Add Strategic Code Comments</a></li>
   <li><a href="#organize-workspace-with-information-for-ai" id="toc-organize-workspace-with-information-for-ai" class="nav-link" data-scroll-target="#organize-workspace-with-information-for-ai">1.2. Organize Workspace with information for AI</a></li>
+  <li><a href="#external-links-and-references" id="toc-external-links-and-references" class="nav-link" data-scroll-target="#external-links-and-references">External Links and References</a></li>
   <li><a href="#semantic-naming-for-ai-understanding" id="toc-semantic-naming-for-ai-understanding" class="nav-link" data-scroll-target="#semantic-naming-for-ai-understanding">1.3. Semantic Naming for AI Understanding</a></li>
   <li><a href="#domain-concept-documentation" id="toc-domain-concept-documentation" class="nav-link" data-scroll-target="#domain-concept-documentation">1.4. Domain Concept Documentation</a></li>
   <li><a href="#code-patterns-and-conventions" id="toc-code-patterns-and-conventions" class="nav-link" data-scroll-target="#code-patterns-and-conventions">1.5. Code Patterns and Conventions</a></li>
@@ -270,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#architecture-decision-records" id="toc-architecture-decision-records" class="nav-link" data-scroll-target="#architecture-decision-records">3.3. Architecture Decision Records</a></li>
   </ul></li>
   <li><a href="#best-practices-summary" id="toc-best-practices-summary" class="nav-link" data-scroll-target="#best-practices-summary">4. Best Practices Summary</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">6. References</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">5. References</a></li>
   </ul>
 </nav>
     </div>
@@ -281,26 +282,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This document <strong>analyzes some strategies we are using for enhancing GitHub Copilot’s understanding of our Diginsight codebases</strong>.</p>
+<p>This document <strong>analyzes some strategies we are using to enhance GitHub Copilot’s understanding of our Diginsight codebases</strong>.</p>
 <p>Proper documentation techniques significantly improve Copilot’s ability to generate contextually appropriate code suggestions and provide meaningful answers to code-related questions.</p>
 <section id="table-of-contents" class="level2">
 <h2 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h2>
 <ol type="1">
 <li><a href="#1-most-impactful-strategies">Most Impactful Strategies</a>
 <ul>
-<li>1.1. <a href="#11-add-strategic-code-comments">Add Strategic Code Comments</a>
-<ul>
-<li>1.1.1. <a href="#111-strategic-business-and-domain-context">Strategic Business and Domain Context</a></li>
-<li>1.1.2. <a href="#112-method-overview-comments">Method Overview Comments</a></li>
-</ul></li>
-<li>1.2. <a href="#12-organize-workspace-with-information-for-ai">Organize Workspace with information for AI</a>
-<ul>
-<li>1.2.1. <a href="#121-strategic-file-structure">Strategic File Structure</a></li>
-<li>1.2.2. <a href="#122-architecture-documentation">Architecture Documentation</a></li>
-<li>1.2.3. <a href="#123-dedicated-context-files-copilotmd">Dedicated Context Files (.copilot.md)</a></li>
-<li>1.2.4. <a href="#124-readme-integration-strategy">README Integration Strategy</a></li>
-<li>1.2.5. <a href="#125-documentation-header-hierarchy">Documentation Header Hierarchy</a></li>
-</ul></li>
+<li>1.1. <a href="#11-add-strategic-code-comments">Add Strategic Code Comments</a></li>
+<li>1.2. <a href="#12-organize-workspace-with-information-for-ai">Organize Workspace with information for AI</a></li>
 <li>1.3. <a href="#13-semantic-naming-for-ai-understanding">Semantic Naming for AI Understanding</a></li>
 <li>1.4. <a href="#14-domain-concept-documentation">Domain Concept Documentation</a></li>
 <li>1.5. <a href="#15-code-patterns-and-conventions">Code Patterns and Conventions</a></li>
@@ -329,7 +319,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="add-strategic-code-comments" class="level3">
 <h3 class="anchored" data-anchor-id="add-strategic-code-comments">1.1. Add Strategic Code Comments</h3>
 <p><strong>What you can do:</strong> Add strategic comments that provide business context, domain constraints, and architectural decisions that help Copilot understand not just what the code does, but why it does it.</p>
-<p><strong>Why this improves Copilot understanding:</strong> Strategic comments provide context that isn’t visible from code structure alone. Comments explaining business rules, domain constraints, and architectural decisions help Copilot understand not just what the code does, but why it does it and what business/system constraints it operates under.</p>
+<p><strong>Why this improves Copilot understanding:</strong> Strategic comments provide context that isn’t visible from the code structure alone. Comments explaining business rules, domain constraints, and architectural decisions help Copilot understand not just what the code does, but why it does it and under what business/system constraints it operates.</p>
 <p><strong>Impact on suggestion relevance:</strong> Strategic business and domain context enables Copilot to suggest code that respects business rules, performance constraints, and architectural decisions, leading to suggestions that are contextually appropriate for your specific domain rather than generic solutions.</p>
 <section id="strategic-business-and-domain-context" class="level4">
 <h4 class="anchored" data-anchor-id="strategic-business-and-domain-context">1.1.1. Strategic Business and Domain Context</h4>
@@ -407,10 +397,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 │   ├── Diginsight.Diagnostics.copilot.md
 │   └── examples/               # Reference implementations
 └── _quarto.yml                 # Quarto configuration</code></pre>
-<p><strong>Best Practice:</strong> Place markdown documentation in source directories (<code>src/docs/</code>) rather than generated output (<code>docs/</code>), as Copilot can access and analyze source files but not build outputs.</p>
+<p><strong>Best Practice:</strong> Place markdown documentation in source directories (<code>src/docs/</code>) rather than generated output directories (<code>docs/</code>), as Copilot can access and analyze source files but not build outputs.</p>
 </section>
-<section id="external-links-and-references" class="level4">
-<h4 class="anchored" data-anchor-id="external-links-and-references">External Links and References</h4>
+</section>
+<section id="external-links-and-references" class="level3">
+<h3 class="anchored" data-anchor-id="external-links-and-references">External Links and References</h3>
 <p><strong>Important Limitation:</strong> Copilot cannot access external URLs, wikis, or online documentation during code generation. However, you can still reference them strategically:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># .copilot/architecture.md</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -437,7 +428,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Extract essential patterns</strong> into your local documentation</li>
 <li><strong>Copy critical code examples</strong> rather than linking to them</li>
 </ol>
-</section>
 <section id="documentation-header-hierarchy" class="level4">
 <h4 class="anchored" data-anchor-id="documentation-header-hierarchy">1.2.5. Documentation Header Hierarchy</h4>
 <p>Use consistent header hierarchies to establish clear information structure:</p>
@@ -694,38 +684,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="period-helper-methods" class="level4">
 <h4 class="anchored" data-anchor-id="period-helper-methods">Period Helper Methods</h4>
 <p>Extract common period calculation code:</p>
-<pre><code>/// &lt;summary&gt;
-/// Configures period formats and ranges based on the period type
-/// &lt;/summary&gt;
-/// &lt;param name="periodType"&gt;The selected period (Today, Yesterday, CurrentWeek, etc.)&lt;/param&gt;
-/// &lt;param name="projectLocalNow"&gt;The current time in project's local timezone&lt;/param&gt;
-/// &lt;returns&gt;Configuration for the selected period&lt;/returns&gt;
-private (Diginsight.Common.Querying.AggregationRange Range, string Format, string TitleFormat) 
-    ConfigurePeriod(string periodType, DateTime projectLocalNow)
-{
-    switch (periodType)
-    {
-        case "Today":
-        case "Yesterday":
-            return (Diginsight.Common.Querying.AggregationRange.Hour, "HH:mm", "dd MMM yyyy - HH:mm");
-        // Additional cases...
-    }
-}</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Configures period formats and ranges based on the period type</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"periodType"</span><span class="kw">&gt;</span><span class="co">The selected period (Today, Yesterday, CurrentWeek, etc.)</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"projectLocalNow"</span><span class="kw">&gt;</span><span class="co">The current time in the project's local timezone</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;returns&gt;</span><span class="co">Configuration for the selected period</span><span class="kw">&lt;/returns&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="op">(</span>Diginsight<span class="op">.</span><span class="fu">Common</span><span class="op">.</span><span class="fu">Querying</span><span class="op">.</span><span class="fu">AggregationRange</span> Range<span class="op">,</span> <span class="dt">string</span> Format<span class="op">,</span> <span class="dt">string</span> TitleFormat<span class="op">)</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ConfigurePeriod</span><span class="op">(</span><span class="dt">string</span> periodType<span class="op">,</span> DateTime projectLocalNow<span class="op">)</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">switch</span> <span class="op">(</span>periodType<span class="op">)</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> <span class="st">"Today"</span><span class="op">:</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> <span class="st">"Yesterday"</span><span class="op">:</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>            <span class="kw">return</span> <span class="op">(</span>Diginsight<span class="op">.</span><span class="fu">Common</span><span class="op">.</span><span class="fu">Querying</span><span class="op">.</span><span class="fu">AggregationRange</span><span class="op">.</span><span class="fu">Hour</span><span class="op">,</span> <span class="st">"HH:mm"</span><span class="op">,</span> <span class="st">"dd MMM yyyy - HH:mm"</span><span class="op">);</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Additional cases...</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="data-source-batch-processing" class="level4">
 <h4 class="anchored" data-anchor-id="data-source-batch-processing">Data Source Batch Processing</h4>
-<pre><code>/// &lt;summary&gt;
-/// Retrieves and processes all data sources for a project in a single batch operation
-/// &lt;/summary&gt;
-/// &lt;param name="projectId"&gt;The project ID&lt;/param&gt;
-/// &lt;param name="group"&gt;The entity group to analyze&lt;/param&gt;
-/// &lt;param name="dateRange"&gt;Date range for data retrieval&lt;/param&gt;
-/// &lt;returns&gt;Dictionary mapping source types to their data&lt;/returns&gt;
-private async Task&lt;Dictionary&lt;string, GroupAggregation&lt;AggregateValues&gt;&gt;&gt; 
-    GetBatchData(Guid projectId, DiginsightClasses.IGroup group, DateRange dateRange)
-{
-    // Implementation that reduces API calls through batching
-}</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Retrieves and processes all data sources for a project in a single batch operation</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"projectId"</span><span class="kw">&gt;</span><span class="co">The project ID</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"group"</span><span class="kw">&gt;</span><span class="co">The entity group to analyze</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"dateRange"</span><span class="kw">&gt;</span><span class="co">Date range for data retrieval</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;returns&gt;</span><span class="co">Dictionary mapping source types to their data</span><span class="kw">&lt;/returns&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> async Task<span class="op">&lt;</span>Dictionary<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> GroupAggregation<span class="op">&lt;</span>AggregateValues<span class="op">&gt;&gt;&gt;</span> </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">GetBatchData</span><span class="op">(</span>Guid projectId<span class="op">,</span> DiginsightClasses<span class="op">.</span><span class="fu">IGroup</span> group<span class="op">,</span> DateRange dateRange<span class="op">)</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Implementation that reduces API calls through batching</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="data-model-documentation" class="level3">
@@ -735,37 +725,37 @@ private async Task&lt;Dictionary&lt;string, GroupAggregation&lt;AggregateValues&
 <p><strong>Impact on suggestion relevance:</strong> With clear data model documentation, Copilot can suggest proper entity mappings, database queries, and data processing patterns that respect your schema constraints and business rules, reducing bugs and improving code quality.</p>
 <section id="key-data-models" class="level4">
 <h4 class="anchored" data-anchor-id="key-data-models">Key Data Models</h4>
-<pre><code># Core Data Models
-
-## DiginsightData
-Primary response model with hierarchical structure:
-
-- DiginsightData
-  - DataQuality (validity warnings)
-  - Detail
-    - Chart[] (time series data)
-    - DataGroup (aggregated values)
-  - PeriodDate (date ranges)</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Core Data Models</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## DiginsightData</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>Primary response model with hierarchical structure:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>DiginsightData</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>DataQuality (validity warnings)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Detail</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Chart[] (time series data)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>DataGroup (aggregated values)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>PeriodDate (date ranges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="database-structure" class="level4">
 <h4 class="anchored" data-anchor-id="database-structure">Database Structure</h4>
-<pre><code># Database Structure
-
-## Azure Cosmos DB (diginsightdb)
-- **Collection: data**
-  - Projects (key: id)
-    - Example: "id": "12345678-0c85-4592-8396-3f3e8656ed03", "name": "Diginsight Sample Project"
-  - Entities (partitioned by projectId)
-  - Groups (custom entity groups)
-
-## Sample Documents
-```json
-{
-  "id": "12345678-0c85-4592-8396-3f3e8656ed03",
-  "name": "Diginsight Sample Project",
-  "type": "project",
-  "_etag": "\"00000000-0000-0000-0000-000000000000\""
-}</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Database Structure</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Azure Cosmos DB (diginsightdb)</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Collection: data**</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Projects (key: id)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Example: "id": "12345678-0c85-4592-8396-3f3e8656ed03", "name": "Diginsight Sample Project"</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Entities (partitioned by projectId)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Groups (custom entity groups)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sample Documents</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"12345678-0c85-4592-8396-3f3e8656ed03"</span><span class="fu">,</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Diginsight Sample Project"</span><span class="fu">,</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"project"</span><span class="fu">,</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"_etag"</span><span class="fu">:</span> <span class="st">"</span><span class="ch">\"</span><span class="st">00000000-0000-0000-0000-000000000000</span><span class="ch">\"</span><span class="st">"</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="api-and-interface-documentation" class="level3">
@@ -781,21 +771,21 @@ Primary response model with hierarchical structure:
 <p><strong>Impact on suggestion relevance:</strong> Clear relationship documentation enables Copilot to suggest code that respects your architecture, follows dependency flow patterns, and maintains proper separation of concerns, leading to more maintainable and consistent code suggestions.</p>
 <section id="class-dependencies" class="level4">
 <h4 class="anchored" data-anchor-id="class-dependencies">Class Dependencies</h4>
-<pre><code># Component Relationships
-
-## Service Layer
-- DiginsightService 
-  → IDataSourceRepository (CosmosDB data access)
-  → IEntityAdapter (entity access)
-  → IGroupAdapter (group management)
-
-## Data Flow
-1. Widget request → ProcessTelemetryDataAsync
-2. Period calculation and group resolution
-3. For each data source type:
-   - Filter entities by data source
-   - Fetch data
-   - Process into chart format</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Component Relationships</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Service Layer</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>DiginsightService </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  → IDataSourceRepository (CosmosDB data access)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  → IEntityAdapter (entity access)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  → IGroupAdapter (group management)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Flow</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Widget request → ProcessTelemetryDataAsync</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Period calculation and group resolution</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>For each data source type:</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Filter entities by data source</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Fetch data</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Process into chart format</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="visual-documentation" class="level4">
 <h4 class="anchored" data-anchor-id="visual-documentation">Visual Documentation</h4>
@@ -811,17 +801,17 @@ Primary response model with hierarchical structure:
 <p><strong>What you can do:</strong> Document performance constraints, bottlenecks, and optimization strategies that are specific to your application domain.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Performance constraints and optimization strategies are critical context for code generation. When Copilot understands that <code>ProcessTelemetryDataAsync</code> has performance considerations for batch processing, it can suggest optimizations like parallel processing, sampling, or async patterns that address these specific telemetry concerns.</p>
 <p><strong>Impact on suggestion relevance:</strong> Performance documentation helps Copilot suggest code that considers scalability, efficiency, and resource usage from the start, preventing performance issues rather than requiring later optimization.</p>
-<pre><code># Performance Considerations
-
-## Current Bottlenecks
-- ProcessTelemetryDataAsync processes telemetry batches with proper instrumentation
-- Current load: ~20 calls/sec in production
-- Each data source creates a new filtered group object
-
-## Optimization Strategies
-- Batch data source calls where possible
-- Cache filtered groups for reuse
-- Implement more efficient filtering to reduce API calls</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Performance Considerations</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Current Bottlenecks</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ProcessTelemetryDataAsync processes telemetry batches with proper instrumentation</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Current load: ~20 calls/sec in production</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each data source creates a new filtered group object</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optimization Strategies</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Batch data source calls where possible</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cache filtered groups for reuse</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Implement more efficient filtering to reduce API calls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="important-but-less-direct-impact" class="level2">
@@ -835,23 +825,24 @@ Primary response model with hierarchical structure:
 <section id="configuration-files-documentation" class="level4">
 <h4 class="anchored" data-anchor-id="configuration-files-documentation">Configuration Files Documentation</h4>
 <p>Document configuration patterns and environment-specific settings:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Configuration Management</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## appsettings.json Structure</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Diginsight"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Telemetry"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"DefaultLogLevel"</span><span class="fu">:</span> <span class="st">"Information"</span><span class="fu">,</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"EnableDynamicLogging"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"SamplingRate"</span><span class="fu">:</span> <span class="dv">0</span><span class="er">.</span><span class="dv">1</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"OpenTelemetry"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"ServiceName"</span><span class="fu">:</span> <span class="st">"Diginsight.Sample"</span><span class="fu">,</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"ServiceVersion"</span><span class="fu">:</span> <span class="st">"1.0.0"</span></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Configuration Management</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## appsettings.json Structure</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Diginsight"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Telemetry"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"DefaultLogLevel"</span><span class="fu">:</span> <span class="st">"Information"</span><span class="fu">,</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"EnableDynamicLogging"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"SamplingRate"</span><span class="fu">:</span> <span class="dv">0</span><span class="er">.</span><span class="dv">1</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"OpenTelemetry"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"ServiceName"</span><span class="fu">:</span> <span class="st">"Diginsight.Sample"</span><span class="fu">,</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"ServiceVersion"</span><span class="fu">:</span> <span class="st">"1.0.0"</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="environment-variables" class="level3">
@@ -1025,7 +1016,7 @@ Primary response model with hierarchical structure:
 </ol>
 </section>
 <section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">6. References</h2>
+<h2 class="anchored" data-anchor-id="references">5. References</h2>
 <hr>
 <ul>
 <li><p><a href="https://docs.github.com/en/copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot">Getting Code Suggestions in Your IDE with GitHub Copilot</a></p>

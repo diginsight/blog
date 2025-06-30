@@ -1,7 +1,7 @@
 ---
 title: "HowTo: Maximize GitHub Copilot's Code Understanding of your repository"
 author: "Dario Airoldi"
-date: "2024-12-14"
+date: "2025-06-29"
 categories: [news, code, copilot, development]
 image: "image.jpg"
 draft: false
