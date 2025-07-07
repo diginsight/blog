@@ -15,11 +15,12 @@ Proper documentation techniques significantly improve Copilot's ability to gener
 ## Table of Contents
 
 1. [Most Impactful Strategies](#1-most-impactful-strategies)
-    - 1.1. [Add Strategic Code Comments](#11-add-strategic-code-comments)
-    - 1.2. [Organize Workspace with information for AI](#12-organize-workspace-with-information-for-ai)
-    - 1.3. [Semantic Naming for AI Understanding](#13-semantic-naming-for-ai-understanding)
-    - 1.4. [Domain Concept Documentation](#14-domain-concept-documentation)
-    - 1.5. [Code Patterns and Conventions](#15-code-patterns-and-conventions)
+    - 1.1. [Organize Workspace with Information for AI](#11-organize-workspace-with-information-for-ai)
+    - 1.2. [Semantic Naming for AI Understanding](#12-semantic-naming-for-ai-understanding)
+    - 1.3. [Domain Concept Documentation](#13-domain-concept-documentation)
+    - 1.4. [Code Patterns and Conventions](#14-code-patterns-and-conventions)
+    - 1.5. [Effective Prompting Strategies](#15-effective-prompting-strategies)
+    - 1.6. [Code Annotations for AI Tools](#16-code-annotations-for-ai-tools)
 
 2. [Medium Impact](#2-medium-impact)
     - 2.1. [AI-Optimized Code Comments](#21-ai-optimized-code-comments)
@@ -40,15 +41,32 @@ Proper documentation techniques significantly improve Copilot's ability to gener
 
 These strategies have the most direct and immediate impact on GitHub Copilot's ability to understand your code context and generate relevant suggestions.
 
-### 1.1. Add Strategic Code Comments
+### 1.1. Organize Workspace with Information for AI
 
-**What you can do:** Add strategic comments that provide business context, domain constraints, and architectural decisions that help Copilot understand not just what the code does, but why it does it.
+**What we can do:** Structure our **project files, documentation, and code comments** in a way that maximizes Copilot's ability to understand our project architecture, patterns, and domain knowledge.
 
-**Why this improves Copilot understanding:** Strategic comments provide context that isn't visible from the code structure alone. Comments explaining business rules, domain constraints, and architectural decisions help Copilot understand not just what the code does, but why it does it and under what business/system constraints it operates.
+**Why this improves Copilot understanding:** Workspace organization is the foundational strategy that encompasses all aspects of structuring your project for AI comprehension. This includes code comments, documentation placement, specialized AI-guidance files, and strategic organization that maximizes Copilot's ability to understand your project's context and domain knowledge.
 
-**Impact on suggestion relevance:** Strategic business and domain context enables Copilot to suggest code that respects business rules, performance constraints, and architectural decisions, leading to suggestions that are contextually appropriate for your specific domain rather than generic solutions.
+**Impact on suggestion relevance:** Proper workspace organization has the highest impact because it provides the structural foundation for all other AI understanding techniques. When your workspace is organized for AI comprehension, Copilot can access and correlate information across multiple sources, leading to more contextually appropriate and architecturally sound suggestions.
 
-#### 1.1.1. Strategic Business and Domain Context
+#### 1.1.1. Method Overview Comments
+
+Provide domain context and decision-making rules to help Copilot understand your business logic:
+
+```csharp
+// DOMAIN: This method handles period selection for data aggregation
+// The aggregation range is determined based on the time period:
+// - Today/Yesterday: Hourly aggregation
+// - Week/Month: Daily aggregation
+// - Semester/Year: Monthly aggregation
+// The range directly affects data resolution and API performance
+private (AggregationRange range, string format) ConfigurePeriodFormats(string periodType)
+{
+    // Implementation...
+}
+```
+
+#### 1.1.2. Strategic Code Comments
 
 **Focus on what Copilot cannot infer:** While Copilot can generate standard XML documentation, it cannot understand your specific business rules, performance constraints, or domain-specific patterns. Focus your comments on providing this unique context.
 
@@ -89,55 +107,167 @@ public async Task<ProcessingResult> ProcessTelemetryDataAsync(TelemetryBatch bat
 }
 ```
 
-#### 1.1.2. Method Overview Comments
+#### 1.1.3. Directive Comments
+
+Add explicit directives that guide Copilot's code generation with prefixes like "COPILOT":
 
 ```csharp
-// DOMAIN: This method handles period selection for data aggregation
-// The aggregation range is determined based on the time period:
-// - Today/Yesterday: Hourly aggregation
-// - Week/Month: Daily aggregation
-// - Semester/Year: Monthly aggregation
-// The range directly affects data resolution and API performance
-private (AggregationRange range, string format) ConfigurePeriodFormats(string periodType)
+// COPILOT: Standard Diginsight telemetry instrumentation pattern for service methods
+// PATTERN: Activity creation with proper scoping and error handling
+// DEPENDENCIES: Requires ActivitySource, ILogger<T>
+// PERFORMANCE: Minimal overhead - activity creation is lightweight
+public async Task<ProcessingResult> ProcessTelemetryDataAsync(TelemetryRequest request)
 {
-    // Implementation...
+    // COPILOT: Always start with activity creation before any processing
+    using var activity = _activitySource.StartActivity("ProcessTelemetryData");
+    activity?.SetTag("request.type", request.Type);
+    
+    // Method implementation...
 }
 ```
 
-### 1.2. Organize Workspace with information for AI
+#### 1.1.4. Dedicated AI Context Files
 
-**What you can do:** Structure your project files and documentation in a way that maximizes Copilot's ability to understand your project architecture, patterns, and domain knowledge.
+Create a layered documentation structure that places relevant information close to where developers work:
 
-**Why this improves Copilot understanding:** Workspace organization is the foundational strategy that encompasses all aspects of structuring your project for AI comprehension. This includes file organization, documentation placement, architecture documentation, and dedicated context files that maximize Copilot's ability to understand your project's structure, patterns, and domain knowledge.
+**Recommended Structure:**
 
-**Impact on suggestion relevance:** Proper workspace organization has the highest impact because it provides the structural foundation for all other AI understanding techniques. When your workspace is organized for AI comprehension, Copilot can access and correlate information across multiple sources, leading to more contextually appropriate and architecturally sound suggestions.
-
-#### 1.2.1. Strategic File Structure
-
-Organize files and directories to maximize AI comprehension:
-
-```
-/Diginsight.Telemetry/
-├── .copilot/                   # Dedicated context files
-│   ├── architecture.md         # High-level system design
-│   ├── patterns.md             # Common code patterns
-│   └── troubleshooting.md      # Common issues and solutions
-├── docs/                       # Generated HTML documentation (Quarto output)
-│   ├── index.html
-│   └── site_libs/
+```text
+/MyProject/
+├── .copilot/                          # Project-wide AI context
+│   ├── architecture.md
+│   └── patterns.md
 ├── src/
-│   ├── docs/                   # Source markdown documentation (AI-accessible)
+│   ├── docs/                          # Comprehensive documentation
 │   │   ├── api-reference.md
 │   │   └── domain-concepts.md
-│   ├── Diginsight.Core.copilot.md
-│   ├── Diginsight.Diagnostics.copilot.md
-│   └── examples/               # Reference implementations
-└── _quarto.yml                 # Quarto configuration
+│   ├── Services/
+│   │   ├── README.md                  # Services module overview
+│   │   ├── TelemetryService/
+│   │   │   ├── README.md              # TelemetryService specific docs
+│   │   │   ├── TelemetryService.cs
+│   │   │   └── ITelemetryService.cs
+│   │   └── LoggingService/
+│   │       ├── README.md              # LoggingService specific docs
+│   │       └── LoggingService.cs
+│   └── Models/
+│       ├── README.md                  # Data models overview
+│       └── TelemetryModels.cs
+└── README.md                          # Project root documentation
 ```
 
-**Best Practice:** Place markdown documentation in source directories (`src/docs/`) rather than generated output directories (`docs/`), as Copilot can access and analyze source files but not build outputs.
+**Types of Documentation Files to Distribute:**
 
-### External Links and References
+1. **Project Root `README.md`**: High-level project overview, setup instructions, and quick Copilot prompts
+2. **`.copilot/` Folder**: Dedicated AI context files for architecture decisions, coding patterns, and troubleshooting guides
+3. **`src/docs/` Folder**: Comprehensive API references, domain concepts, and technical specifications
+4. **Module-Level `README.md`**: Overview of each major code module (Services/, Models/, etc.)
+5. **Component-Level `README.md`**: Specific documentation for individual services or components
+6. **`.copilot.md` Files**: Specialized AI guidance files next to major components (e.g., `TelemetryService.copilot.md`)
+
+**Key Benefits:**
+
+- **Layered Context**: Copilot accesses the most relevant documentation based on where you're working
+- **Easy Maintenance**: Documentation stays close to the code it describes
+- **Focused Information**: Each file addresses specific concerns without overwhelming detail
+
+#### 1.1.5. Component-Specific Documentation
+
+Create targeted context files with the `.copilot.md` extension that provide domain-specific knowledge for individual components:
+
+```markdown
+# Diginsight.Telemetry.copilot.md
+
+DATABASE: diginsightdb (CosmosDB)
+COLLECTIONS:
+- data (projects, entities)
+- data-sources (source types)
+
+KEY CONCEPTS:
+- Project ID 12345678-0c85-4592-8396-3f3e8656ed03 = "Diginsight Sample Project"
+- Data Types: Activity Events, Telemetry, Configuration
+- Period aggregation affects data granularity and API performance
+
+ANTI-PATTERNS:
+- Avoid dynamic activity names (high cardinality)
+- Don't use generic logger categories
+- Never log sensitive data in telemetry
+```
+
+#### 1.1.6. Architecture Documentation
+
+Create comprehensive architecture documentation that provides system-level context:
+
+```markdown
+# .copilot/architecture.md - Diginsight Telemetry System Architecture
+
+## System Overview
+Diginsight Telemetry is a distributed observability platform built on OpenTelemetry standards.
+
+## Core Components
+- **Activity Sources**: Distributed tracing entry points
+- **Telemetry Processors**: Data transformation and enrichment
+- **Export Pipeline**: Batching and transmission to observability backends
+- **Configuration System**: Dynamic settings and sampling controls
+
+## Component Interactions
+```text
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│ Application     │───▶│ ActivitySource  │───▶│ Telemetry       │
+│ Code            │    │ (Instrumentation)│    │ Processor       │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                        │
+                                                        ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│ Azure Monitor / │◀───│ Export Pipeline │◀───│ Batch Processor │
+│ Other Backends  │    │ (OTLP)          │    │ (Sampling)      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+#### Key Architectural Decisions
+
+- **OpenTelemetry Standard**: Vendor-neutral observability
+- **Push-based Collection**: Better performance than pull-based
+- **Structured Logging**: Correlation with distributed traces
+- **Sampling Strategy**: Cost control while maintaining visibility
+
+#### 1.1.7. Documentation Header Hierarchy
+
+Use consistent header hierarchies to establish clear information structure:
+
+```markdown
+# Diginsight Telemetry System
+## Core Components
+### Data Retrieval Flow
+#### ProcessTelemetryDataAsync Method
+```
+
+This hierarchical structure helps Copilot understand the relationship between concepts and suggest code that follows the same organizational patterns.
+
+#### 1.1.8. README Integration Strategy
+
+Create AI-friendly project documentation in your README files:
+
+```markdown
+# Diginsight Telemetry - AI Development Guide
+
+## For GitHub Copilot Users
+
+This project uses OpenTelemetry for distributed tracing. Common patterns:
+
+1. **Activity Creation**: Always use `_activitySource.StartActivity()`
+2. **Error Handling**: Set activity status on exceptions
+3. **Tagging**: Use semantic tag names following OpenTelemetry conventions
+4. **Logging**: Correlate logs with activities using structured logging
+
+## Quick Copilot Queries
+
+- "Generate a new telemetry service following Diginsight patterns"
+- "Add error handling to this method using our standard approach"
+- "Create unit tests for telemetry methods with proper mocking"
+```
+
+#### 1.1.9. External References Strategy
 
 **Important Limitation:** Copilot cannot access external URLs, wikis, or online documentation during code generation. However, you can still reference them strategically:
 
@@ -169,105 +299,9 @@ Organize files and directories to maximize AI comprehension:
 3. **Extract essential patterns** into your local documentation
 4. **Copy critical code examples** rather than linking to them
 
-#### 1.2.5. Documentation Header Hierarchy
+### 1.2. Semantic Naming for AI Understanding
 
-Use consistent header hierarchies to establish clear information structure:
-
-```markdown
-# Diginsight Telemetry System
-## Core Components
-### Data Retrieval Flow
-#### ProcessTelemetryDataAsync Method
-```
-
-This hierarchical structure helps Copilot understand the relationship between concepts and suggest code that follows the same organizational patterns.
-
-#### 1.2.2. Architecture Documentation
-
-Create comprehensive architecture documentation that provides system-level context:
-
-```markdown
-# .copilot/architecture.md - Diginsight Telemetry System Architecture
-
-## System Overview
-Diginsight Telemetry is a distributed observability platform built on OpenTelemetry standards.
-
-## Core Components
-- **Activity Sources**: Distributed tracing entry points
-- **Telemetry Processors**: Data transformation and enrichment
-- **Export Pipeline**: Batching and transmission to observability backends
-- **Configuration System**: Dynamic settings and sampling controls
-
-## Component Interactions
-```text
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│ Application     │───▶│ ActivitySource  │───▶│ Telemetry       │
-│ Code            │    │ (Instrumentation)│    │ Processor       │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                                        │
-                                                        ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│ Azure Monitor / │◀───│ Export Pipeline │◀───│ Batch Processor │
-│ Other Backends  │    │ (OTLP)          │    │ (Sampling)      │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
-
-#### Key Architectural Decisions
-- **OpenTelemetry Standard**: Vendor-neutral observability
-- **Push-based Collection**: Better performance than pull-based
-- **Structured Logging**: Correlation with distributed traces
-- **Sampling Strategy**: Cost control while maintaining visibility
-
-
-#### 1.2.3. Dedicated Context Files (.copilot.md)
-
-Create targeted context files that provide domain-specific knowledge:
-
-```markdown
-# Diginsight.Telemetry.copilot.md
-
-DATABASE: diginsightdb (CosmosDB)
-COLLECTIONS:
-- data (projects, entities)
-- data-sources (source types)
-
-KEY CONCEPTS:
-- Project ID 12345678-0c85-4592-8396-3f3e8656ed03 = "Diginsight Sample Project"
-- Data Types: Activity Events, Telemetry, Configuration
-- Period aggregation affects data granularity and API performance
-
-ANTI-PATTERNS:
-- Avoid dynamic activity names (high cardinality)
-- Don't use generic logger categories
-- Never log sensitive data in telemetry
-```
-
-#### 1.2.4. README Integration Strategy
-
-Create AI-friendly project documentation:
-
-```markdown
-# Diginsight Telemetry - AI Development Guide
-
-## For GitHub Copilot Users
-
-This project uses OpenTelemetry for distributed tracing. Common patterns:
-
-1. **Activity Creation**: Always use `_activitySource.StartActivity()`
-2. **Error Handling**: Set activity status on exceptions
-3. **Tagging**: Use semantic tag names following OpenTelemetry conventions
-4. **Logging**: Correlate logs with activities using structured logging
-
-## Quick Copilot Queries
-
-- "Generate a new telemetry service following Diginsight patterns"
-- "Add error handling to this method using our standard approach"
-- "Create unit tests for telemetry methods with proper mocking"
-```
-
-### 1.3. Semantic Naming for AI Understanding
-
-**What you can do:** Use descriptive, hierarchical naming conventions for methods, classes, and variables that clearly convey intent and relationships within your codebase.
+**What we can do:** Use descriptive, hierarchical naming conventions for methods, classes, and variables that clearly convey intent and relationships within our codebase.
 
 **Why this improves Copilot understanding:** Descriptive, hierarchical naming conventions help Copilot understand the intent and relationships within your codebase. When method names, class names, and variable names follow consistent patterns that convey meaning, Copilot can better predict what related code should look like and suggest appropriate completions.
 
@@ -302,9 +336,9 @@ var hourlyDataRetrieval = new TelemetryDataRetrieval();
 // Copilot understands: dailyDataRetrieval, weeklyDataRetrieval should follow
 ```
 
-### 1.4. Domain Concept Documentation
+### 1.3. Domain Concept Documentation
 
-**What you can do:** Clearly define and document your domain-specific terminology, business concepts, and their relationships to help Copilot understand your business logic.
+**What we can do:** Clearly define and document our domain-specific terminology, business concepts, and their relationships to help Copilot understand our business logic.
 
 **Why this improves Copilot understanding:** Domain-specific terminology and concepts are crucial for Copilot to understand your business logic. When you clearly define terms like "Data Sources," "Groups," and "Activity Events," Copilot can better understand the context of your code and suggest domain-appropriate solutions rather than generic programming patterns.
 
@@ -351,9 +385,9 @@ switch (settings.Period)
 }
 ```
 
-### 1.5. Code Patterns and Conventions
+### 1.4. Code Patterns and Conventions
 
-**What you can do:** Establish and document consistent code patterns, naming conventions, error handling approaches, and architectural patterns that should be applied throughout your codebase.
+**What we can do:** Establish and document consistent code patterns, naming conventions, error handling approaches, and architectural patterns that should be applied throughout our codebase.
 
 **Why this improves Copilot understanding:** Establishing and documenting code patterns and conventions helps Copilot understand your team's preferred approaches to common programming tasks. This includes naming conventions, error handling patterns, logging strategies, and architectural patterns that should be consistently applied.
 
@@ -407,13 +441,124 @@ public async Task<Result> ProcessAsync(Request request)
 }
 ```
 
+### 1.5. Effective Prompting Strategies
+
+**What we can do:** Develop and document standardized prompting patterns that help developers leverage the documentation in our codebase when working with Copilot.
+
+**Why this improves Copilot understanding:** While other strategies focus on making your codebase more understandable to Copilot, effective prompting strategies create a crucial feedback loop between your documentation and AI interaction. When developers know how to reference existing patterns, naming conventions, and architectural decisions in their prompts, Copilot can locate and apply this contextual information more effectively.
+
+**Impact on suggestion relevance:** Strategic prompting dramatically improves Copilot's ability to generate code that aligns with your established patterns and architectural constraints. By teaching developers how to prompt effectively, you create a multiplier effect that enhances the value of all your other documentation efforts.
+
+#### Reference-Based Prompts
+
+Train your team to reference specific documentation in prompts:
+
+```text
+// Example prompt: "Create a telemetry method following the patterns in Diginsight.Core.copilot.md"
+// Example prompt: "Add error handling similar to ProcessTelemetryDataAsync"
+```
+
+#### Pattern-Driven Prompts
+
+Create a "prompt dictionary" that developers can reference:
+
+```markdown
+# Effective Copilot Prompts
+
+## For Telemetry Instrumentation
+- "Create a method that processes [data type] with standard Diginsight telemetry instrumentation"
+- "Add proper activity tracking to this method following our distributed tracing pattern"
+
+## For Error Handling
+- "Implement our standard error handling pattern with proper activity status in this method"
+- "Update this method to include structured logging with our telemetry correlation pattern"
+```
+
+#### Component-Specific Prompts
+
+Document component-specific prompting patterns:
+
+```markdown
+# Telemetry Service Prompts
+
+When working with telemetry services, use these specific prompts:
+
+- "Create a new telemetry processor that handles [data type] following our sampling pattern"
+- "Implement a batch processing method for telemetry data that follows our performance guidelines"
+- "Generate unit tests for this telemetry method with proper activity source mocking"
+```
+
+### 1.6. Code Annotations for AI Tools
+
+**What we can do:** Implement a consistent annotation system specifically designed to guide AI tools like Copilot, using distinct markers that highlight patterns, constraints, and relationships.
+
+**Why this improves Copilot understanding:** Standard comments are helpful, but specialized AI annotations create a targeted communication channel with Copilot. These annotations stand out from regular comments and provide structured guidance that Copilot can more easily identify and follow when generating suggestions.
+
+**Impact on suggestion relevance:** AI-specific annotations dramatically improve Copilot's ability to understand your code's unique constraints, patterns, and relationships. They serve as clear signposts that help Copilot navigate your codebase and generate suggestions that align perfectly with your team's expectations.
+
+#### AI Directive Annotations
+
+Create standardized AI directive annotations:
+
+```csharp
+// @ai:pattern - This class follows the Repository pattern with CosmosDB integration
+// @ai:constraint - This method must maintain correlation IDs across service boundaries
+// @ai:relationship - This service depends on IDataSourceRepository and IEntityAdapter
+public class DiginsightService
+{
+    // @ai:example - Standard constructor injection pattern
+    public DiginsightService(IDataSourceRepository repo, IEntityAdapter adapter)
+    {
+        // Implementation...
+    }
+
+    // @ai:pattern - Standard telemetry method with proper instrumentation
+    // @ai:performance - Batch operations for >100 items to reduce API calls
+    public async Task<Result> ProcessDataAsync(Request request)
+    {
+        // Implementation...
+    }
+}
+```
+
+#### Schema Annotations
+
+Add structured schema annotations to complex data models:
+
+```csharp
+// @ai:schema - ProjectEntity schema
+// @ai:property id - GUID format, globally unique identifier
+// @ai:property name - User-visible project name, max 100 chars
+// @ai:property type - Must be "project", used for CosmosDB querying
+public class ProjectEntity
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Type { get; } = "project";
+}
+```
+
+#### Relationship Annotations
+
+Document component relationships with special annotations:
+
+```csharp
+// @ai:depends-on - ILogger<T>, ActivitySource
+// @ai:consumed-by - TelemetryService, MetricsService
+// @ai:implements - OpenTelemetry.ActivitySource pattern
+public class DiginsightActivitySource
+{
+    // Implementation...
+}
+```
+
 ## 2. Medium Impact
 
 These strategies provide substantial improvements to Copilot's understanding, particularly for code structure, patterns, and domain-specific implementations.
 
 ### 2.1. AI-Optimized Code Comments
 
-**What you can do:** Structure your code comments specifically to provide AI with tactical context about implementation details, dependencies, and performance considerations.
+**What we can do:** Structure our code comments specifically to provide AI with tactical context about implementation details, dependencies, and performance considerations.
 
 **Why this improves Copilot understanding:** Strategic code comments provide tactical context that helps Copilot understand specific implementation details, dependencies, and performance considerations. While less impactful than architecture documentation, they provide valuable hints for method-level code generation.
 
@@ -452,7 +597,7 @@ public async Task<ProcessingResult> ProcessTelemetryDataAsync(TelemetryRequest r
 
 ### 2.2. Implementation Examples
 
-**What you can do:** Provide concrete implementation examples that demonstrate your preferred patterns and coding styles, serving as templates for Copilot to follow.
+**What we can do:** Provide concrete implementation examples that demonstrate our preferred patterns and coding styles, serving as templates for Copilot to follow.
 
 **Why this improves Copilot understanding:** Concrete implementation examples show Copilot the preferred patterns and coding styles for your project. When Copilot sees how you handle period calculations or batch processing, it can suggest similar patterns for new functionality, maintaining consistency across your codebase.
 
@@ -501,7 +646,7 @@ private async Task<Dictionary<string, GroupAggregation<AggregateValues>>>
 
 ### 2.3. Data Model Documentation
 
-**What you can do:** Document your data structures, relationships, and database schema to help Copilot understand how data flows through your application.
+**What we can do:** Document our data structures, relationships, and database schema to help Copilot understand how data flows through our application.
 
 **Why this improves Copilot understanding:** Data models are the foundation of any application. When Copilot understands your data structures, relationships, and database schema, it can suggest appropriate CRUD operations, data transformations, and validation logic. This is especially critical for telemetry systems where data flows through multiple transformation stages.
 
@@ -549,7 +694,7 @@ Primary response model with hierarchical structure:
 
 ### 2.4. API and Interface Documentation
 
-**What you can do:** Document your API contracts, method signatures, and interface boundaries to help Copilot understand system contracts and expected behaviors.
+**What we can do:** Document our API contracts, method signatures, and interface boundaries to help Copilot understand system contracts and expected behaviors.
 
 **Why this improves Copilot understanding:** Clear API and interface documentation helps Copilot understand the contracts and boundaries within your system. When Copilot knows the signatures, parameters, and expected behavior of your public APIs, it can suggest proper implementations and usage patterns.
 
@@ -557,7 +702,7 @@ Primary response model with hierarchical structure:
 
 ### 2.5. Code Relationship Documentation
 
-**What you can do:** Document how different classes, services, and components interact with each other, including dependency flows and architectural patterns.
+**What we can do:** Document how different classes, services, and components interact with each other, including dependency flows and architectural patterns.
 
 **Why this improves Copilot understanding:** Understanding how different classes, services, and components interact is crucial for Copilot to suggest appropriate design patterns and architectural solutions. When Copilot knows that `DiginsightService` depends on `IDataSourceRepository`, it can suggest proper dependency injection patterns and interface implementations.
 
@@ -585,7 +730,7 @@ Primary response model with hierarchical structure:
 
 #### Visual Documentation
 
-```
+```text
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 │ Data Sources    │────▶│ Entity Group    │────▶│ Data            │
 │ (Telemetry,     │     │ (Custom or      │     │ (Activity,      │
@@ -595,7 +740,7 @@ Primary response model with hierarchical structure:
 
 ### Performance Considerations
 
-**What you can do:** Document performance constraints, bottlenecks, and optimization strategies that are specific to your application domain.
+**What we can do:** Document performance constraints, bottlenecks, and optimization strategies that are specific to our application domain.
 
 **Why this improves Copilot understanding:** Performance constraints and optimization strategies are critical context for code generation. When Copilot understands that `ProcessTelemetryDataAsync` has performance considerations for batch processing, it can suggest optimizations like parallel processing, sampling, or async patterns that address these specific telemetry concerns.
 
@@ -621,7 +766,7 @@ These strategies provide foundational improvements that support overall code com
 
 ### 3.1. Configuration and Environment Documentation
 
-**What you can do:** Document your configuration structures, environment variables, and dependency injection patterns to help Copilot understand how your application behaves in different environments.
+**What we can do:** Document our configuration structures, environment variables, and dependency injection patterns to help Copilot understand how our application behaves in different environments.
 
 **Why this improves Copilot understanding:** Configuration is critical for understanding how an application behaves in different environments. When Copilot understands your configuration structure, environment variables, and dependency injection patterns, it can suggest code that properly handles configuration changes and environment-specific behavior.
 
@@ -672,7 +817,7 @@ services.AddDiginsightTelemetry(options =>
 
 ### 3.2. Testing Strategy and Error Patterns
 
-**What you can do:** Document common error scenarios, testing patterns, and expected behaviors to help Copilot suggest robust code that handles edge cases appropriately.
+**What we can do:** Document common error scenarios, testing patterns, and expected behaviors to help Copilot suggest robust code that handles edge cases appropriately.
 
 **Why this improves Copilot understanding:** Testing documentation and error patterns help Copilot understand expected behavior and common failure scenarios. This knowledge is crucial for suggesting robust code that handles edge cases and follows established testing patterns in your project.
 
@@ -721,7 +866,7 @@ public async Task Should_Generate_Telemetry_For_Method_Execution()
 
 ### API and Interface Documentation
 
-**What you can do:** Document public API contracts, method signatures, and interface behaviors to ensure Copilot suggests code that correctly implements your system's contracts.
+**What we can do:** Document public API contracts, method signatures, and interface behaviors to ensure Copilot suggests code that correctly implements our system's contracts.
 
 **Why this improves Copilot understanding:** Clear API and interface documentation helps Copilot understand the contracts and boundaries within your system. When Copilot knows the signatures, parameters, and expected behavior of your public APIs, it can suggest proper implementations and usage patterns.
 
@@ -770,7 +915,7 @@ public static class TelemetryExtensions
 
 ### 3.3. Architecture Decision Records
 
-**What you can do:** Create Architecture Decision Records (ADRs) that document why certain technical choices were made, providing historical context for architectural decisions.
+**What we can do:** Create Architecture Decision Records (ADRs) that document why certain technical choices were made, providing historical context for architectural decisions.
 
 **Why this improves Copilot understanding:** Architecture Decision Records (ADRs) provide context about why certain technical choices were made. This historical context helps Copilot understand not just what patterns to follow, but why they were chosen, enabling it to suggest solutions that align with your architectural philosophy and constraints.
 

@@ -246,12 +246,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#table-of-contents" id="toc-table-of-contents" class="nav-link active" data-scroll-target="#table-of-contents">Table of Contents</a></li>
   <li><a href="#most-impactful-strategies" id="toc-most-impactful-strategies" class="nav-link" data-scroll-target="#most-impactful-strategies">1. Most Impactful Strategies</a>
   <ul class="collapse">
-  <li><a href="#add-strategic-code-comments" id="toc-add-strategic-code-comments" class="nav-link" data-scroll-target="#add-strategic-code-comments">1.1. Add Strategic Code Comments</a></li>
-  <li><a href="#organize-workspace-with-information-for-ai" id="toc-organize-workspace-with-information-for-ai" class="nav-link" data-scroll-target="#organize-workspace-with-information-for-ai">1.2. Organize Workspace with information for AI</a></li>
-  <li><a href="#external-links-and-references" id="toc-external-links-and-references" class="nav-link" data-scroll-target="#external-links-and-references">External Links and References</a></li>
-  <li><a href="#semantic-naming-for-ai-understanding" id="toc-semantic-naming-for-ai-understanding" class="nav-link" data-scroll-target="#semantic-naming-for-ai-understanding">1.3. Semantic Naming for AI Understanding</a></li>
-  <li><a href="#domain-concept-documentation" id="toc-domain-concept-documentation" class="nav-link" data-scroll-target="#domain-concept-documentation">1.4. Domain Concept Documentation</a></li>
-  <li><a href="#code-patterns-and-conventions" id="toc-code-patterns-and-conventions" class="nav-link" data-scroll-target="#code-patterns-and-conventions">1.5. Code Patterns and Conventions</a></li>
+  <li><a href="#organize-workspace-with-information-for-ai" id="toc-organize-workspace-with-information-for-ai" class="nav-link" data-scroll-target="#organize-workspace-with-information-for-ai">1.1. Organize Workspace with Information for AI</a></li>
+  <li><a href="#semantic-naming-for-ai-understanding" id="toc-semantic-naming-for-ai-understanding" class="nav-link" data-scroll-target="#semantic-naming-for-ai-understanding">1.2. Semantic Naming for AI Understanding</a></li>
+  <li><a href="#domain-concept-documentation" id="toc-domain-concept-documentation" class="nav-link" data-scroll-target="#domain-concept-documentation">1.3. Domain Concept Documentation</a></li>
+  <li><a href="#code-patterns-and-conventions" id="toc-code-patterns-and-conventions" class="nav-link" data-scroll-target="#code-patterns-and-conventions">1.4. Code Patterns and Conventions</a></li>
+  <li><a href="#effective-prompting-strategies" id="toc-effective-prompting-strategies" class="nav-link" data-scroll-target="#effective-prompting-strategies">1.5. Effective Prompting Strategies</a></li>
+  <li><a href="#code-annotations-for-ai-tools" id="toc-code-annotations-for-ai-tools" class="nav-link" data-scroll-target="#code-annotations-for-ai-tools">1.6. Code Annotations for AI Tools</a></li>
   </ul></li>
   <li><a href="#medium-impact" id="toc-medium-impact" class="nav-link" data-scroll-target="#medium-impact">2. Medium Impact</a>
   <ul class="collapse">
@@ -289,11 +289,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><a href="#1-most-impactful-strategies">Most Impactful Strategies</a>
 <ul>
-<li>1.1. <a href="#11-add-strategic-code-comments">Add Strategic Code Comments</a></li>
-<li>1.2. <a href="#12-organize-workspace-with-information-for-ai">Organize Workspace with information for AI</a></li>
-<li>1.3. <a href="#13-semantic-naming-for-ai-understanding">Semantic Naming for AI Understanding</a></li>
-<li>1.4. <a href="#14-domain-concept-documentation">Domain Concept Documentation</a></li>
-<li>1.5. <a href="#15-code-patterns-and-conventions">Code Patterns and Conventions</a></li>
+<li>1.1. <a href="#11-organize-workspace-with-information-for-ai">Organize Workspace with Information for AI</a></li>
+<li>1.2. <a href="#12-semantic-naming-for-ai-understanding">Semantic Naming for AI Understanding</a></li>
+<li>1.3. <a href="#13-domain-concept-documentation">Domain Concept Documentation</a></li>
+<li>1.4. <a href="#14-code-patterns-and-conventions">Code Patterns and Conventions</a></li>
+<li>1.5. <a href="#15-effective-prompting-strategies">Effective Prompting Strategies</a></li>
+<li>1.6. <a href="#16-code-annotations-for-ai-tools">Code Annotations for AI Tools</a></li>
 </ul></li>
 <li><a href="#2-medium-impact">Medium Impact</a>
 <ul>
@@ -316,129 +317,142 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="most-impactful-strategies" class="level2">
 <h2 class="anchored" data-anchor-id="most-impactful-strategies">1. Most Impactful Strategies</h2>
 <p>These strategies have the most direct and immediate impact on GitHub Copilot’s ability to understand your code context and generate relevant suggestions.</p>
-<section id="add-strategic-code-comments" class="level3">
-<h3 class="anchored" data-anchor-id="add-strategic-code-comments">1.1. Add Strategic Code Comments</h3>
-<p><strong>What you can do:</strong> Add strategic comments that provide business context, domain constraints, and architectural decisions that help Copilot understand not just what the code does, but why it does it.</p>
-<p><strong>Why this improves Copilot understanding:</strong> Strategic comments provide context that isn’t visible from the code structure alone. Comments explaining business rules, domain constraints, and architectural decisions help Copilot understand not just what the code does, but why it does it and under what business/system constraints it operates.</p>
-<p><strong>Impact on suggestion relevance:</strong> Strategic business and domain context enables Copilot to suggest code that respects business rules, performance constraints, and architectural decisions, leading to suggestions that are contextually appropriate for your specific domain rather than generic solutions.</p>
-<section id="strategic-business-and-domain-context" class="level4">
-<h4 class="anchored" data-anchor-id="strategic-business-and-domain-context">1.1.1. Strategic Business and Domain Context</h4>
-<p><strong>Focus on what Copilot cannot infer:</strong> While Copilot can generate standard XML documentation, it cannot understand your specific business rules, performance constraints, or domain-specific patterns. Focus your comments on providing this unique context.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Processes telemetry data batch with instrumentation and error handling</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;remarks&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">/// BUSINESS RULE: Must maintain telemetry correlation across service boundaries</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">/// PERFORMANCE CONSTRAINT: Processing &gt;1000 events/sec requires sampling (cost control)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">/// DIGINSIGHT PATTERN: Always use ActivitySource for distributed tracing compliance</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">/// ANTI-PATTERN: Never log sensitive customer data in telemetry tags</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/remarks&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task<span class="op">&lt;</span>ProcessingResult<span class="op">&gt;</span> <span class="fu">ProcessTelemetryDataAsync</span><span class="op">(</span>TelemetryBatch batch<span class="op">)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// BUSINESS LOGIC: Correlation ID required for cross-service tracing</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="dt">var</span> activity <span class="op">=</span> _activitySource<span class="op">.</span><span class="fu">StartActivity</span><span class="op">(</span><span class="st">"ProcessTelemetryData"</span><span class="op">);</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"batch.size"</span><span class="op">,</span> batch<span class="op">.</span><span class="fu">Items</span><span class="op">.</span><span class="fu">Count</span><span class="op">);</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">try</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">// DOMAIN CONSTRAINT: Log structured data for observability dashboard</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogInformation</span><span class="op">(</span><span class="st">"Processing telemetry batch with {ItemCount} items"</span><span class="op">,</span> batch<span class="op">.</span><span class="fu">Items</span><span class="op">.</span><span class="fu">Count</span><span class="op">);</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> result <span class="op">=</span> await _telemetryProcessor<span class="op">.</span><span class="fu">ProcessAsync</span><span class="op">(</span>batch<span class="op">);</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">// COMPLIANCE: Success tracking required for SLA reporting</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"processing.success"</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> result<span class="op">;</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">catch</span> <span class="op">(</span>Exception ex<span class="op">)</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">// MONITORING: Error correlation essential for incident response</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetStatus</span><span class="op">(</span>ActivityStatusCode<span class="op">.</span><span class="fu">Error</span><span class="op">,</span> ex<span class="op">.</span><span class="fu">Message</span><span class="op">);</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogError</span><span class="op">(</span>ex<span class="op">,</span> <span class="st">"Failed to process telemetry batch"</span><span class="op">);</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="kw">throw</span><span class="op">;</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="method-overview-comments" class="level4">
-<h4 class="anchored" data-anchor-id="method-overview-comments">1.1.2. Method Overview Comments</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// DOMAIN: This method handles period selection for data aggregation</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">// The aggregation range is determined based on the time period:</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">// - Today/Yesterday: Hourly aggregation</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">// - Week/Month: Daily aggregation</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">// - Semester/Year: Monthly aggregation</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">// The range directly affects data resolution and API performance</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="op">(</span>AggregationRange range<span class="op">,</span> <span class="dt">string</span> format<span class="op">)</span> <span class="fu">ConfigurePeriodFormats</span><span class="op">(</span><span class="dt">string</span> periodType<span class="op">)</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Implementation...</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
 <section id="organize-workspace-with-information-for-ai" class="level3">
-<h3 class="anchored" data-anchor-id="organize-workspace-with-information-for-ai">1.2. Organize Workspace with information for AI</h3>
-<p><strong>What you can do:</strong> Structure your project files and documentation in a way that maximizes Copilot’s ability to understand your project architecture, patterns, and domain knowledge.</p>
-<p><strong>Why this improves Copilot understanding:</strong> Workspace organization is the foundational strategy that encompasses all aspects of structuring your project for AI comprehension. This includes file organization, documentation placement, architecture documentation, and dedicated context files that maximize Copilot’s ability to understand your project’s structure, patterns, and domain knowledge.</p>
+<h3 class="anchored" data-anchor-id="organize-workspace-with-information-for-ai">1.1. Organize Workspace with Information for AI</h3>
+<p><strong>What we can do:</strong> Structure our <strong>project files, documentation, and code comments</strong> in a way that maximizes Copilot’s ability to understand our project architecture, patterns, and domain knowledge.</p>
+<p><strong>Why this improves Copilot understanding:</strong> Workspace organization is the foundational strategy that encompasses all aspects of structuring your project for AI comprehension. This includes code comments, documentation placement, specialized AI-guidance files, and strategic organization that maximizes Copilot’s ability to understand your project’s context and domain knowledge.</p>
 <p><strong>Impact on suggestion relevance:</strong> Proper workspace organization has the highest impact because it provides the structural foundation for all other AI understanding techniques. When your workspace is organized for AI comprehension, Copilot can access and correlate information across multiple sources, leading to more contextually appropriate and architecturally sound suggestions.</p>
-<section id="strategic-file-structure" class="level4">
-<h4 class="anchored" data-anchor-id="strategic-file-structure">1.2.1. Strategic File Structure</h4>
-<p>Organize files and directories to maximize AI comprehension:</p>
-<pre><code>/Diginsight.Telemetry/
-├── .copilot/                   # Dedicated context files
-│   ├── architecture.md         # High-level system design
-│   ├── patterns.md             # Common code patterns
-│   └── troubleshooting.md      # Common issues and solutions
-├── docs/                       # Generated HTML documentation (Quarto output)
-│   ├── index.html
-│   └── site_libs/
+<section id="method-overview-comments" class="level4">
+<h4 class="anchored" data-anchor-id="method-overview-comments">1.1.1. Method Overview Comments</h4>
+<p>Provide domain context and decision-making rules to help Copilot understand your business logic:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// DOMAIN: This method handles period selection for data aggregation</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">// The aggregation range is determined based on the time period:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// - Today/Yesterday: Hourly aggregation</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">// - Week/Month: Daily aggregation</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">// - Semester/Year: Monthly aggregation</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">// The range directly affects data resolution and API performance</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="op">(</span>AggregationRange range<span class="op">,</span> <span class="dt">string</span> format<span class="op">)</span> <span class="fu">ConfigurePeriodFormats</span><span class="op">(</span><span class="dt">string</span> periodType<span class="op">)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Implementation...</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="strategic-code-comments" class="level4">
+<h4 class="anchored" data-anchor-id="strategic-code-comments">1.1.2. Strategic Code Comments</h4>
+<p><strong>Focus on what Copilot cannot infer:</strong> While Copilot can generate standard XML documentation, it cannot understand your specific business rules, performance constraints, or domain-specific patterns. Focus your comments on providing this unique context.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Processes telemetry data batch with instrumentation and error handling</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;remarks&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">/// BUSINESS RULE: Must maintain telemetry correlation across service boundaries</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">/// PERFORMANCE CONSTRAINT: Processing &gt;1000 events/sec requires sampling (cost control)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">/// DIGINSIGHT PATTERN: Always use ActivitySource for distributed tracing compliance</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">/// ANTI-PATTERN: Never log sensitive customer data in telemetry tags</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/remarks&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task<span class="op">&lt;</span>ProcessingResult<span class="op">&gt;</span> <span class="fu">ProcessTelemetryDataAsync</span><span class="op">(</span>TelemetryBatch batch<span class="op">)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// BUSINESS LOGIC: Correlation ID required for cross-service tracing</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="dt">var</span> activity <span class="op">=</span> _activitySource<span class="op">.</span><span class="fu">StartActivity</span><span class="op">(</span><span class="st">"ProcessTelemetryData"</span><span class="op">);</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"batch.size"</span><span class="op">,</span> batch<span class="op">.</span><span class="fu">Items</span><span class="op">.</span><span class="fu">Count</span><span class="op">);</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">try</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">// DOMAIN CONSTRAINT: Log structured data for observability dashboard</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogInformation</span><span class="op">(</span><span class="st">"Processing telemetry batch with {ItemCount} items"</span><span class="op">,</span> batch<span class="op">.</span><span class="fu">Items</span><span class="op">.</span><span class="fu">Count</span><span class="op">);</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> result <span class="op">=</span> await _telemetryProcessor<span class="op">.</span><span class="fu">ProcessAsync</span><span class="op">(</span>batch<span class="op">);</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">// COMPLIANCE: Success tracking required for SLA reporting</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"processing.success"</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> result<span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">catch</span> <span class="op">(</span>Exception ex<span class="op">)</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">// MONITORING: Error correlation essential for incident response</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetStatus</span><span class="op">(</span>ActivityStatusCode<span class="op">.</span><span class="fu">Error</span><span class="op">,</span> ex<span class="op">.</span><span class="fu">Message</span><span class="op">);</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogError</span><span class="op">(</span>ex<span class="op">,</span> <span class="st">"Failed to process telemetry batch"</span><span class="op">);</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="kw">throw</span><span class="op">;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="directive-comments" class="level4">
+<h4 class="anchored" data-anchor-id="directive-comments">1.1.3. Directive Comments</h4>
+<p>Add explicit directives that guide Copilot’s code generation with prefixes like “COPILOT”:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// COPILOT: Standard Diginsight telemetry instrumentation pattern for service methods</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">// PATTERN: Activity creation with proper scoping and error handling</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">// DEPENDENCIES: Requires ActivitySource, ILogger&lt;T&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">// PERFORMANCE: Minimal overhead - activity creation is lightweight</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task<span class="op">&lt;</span>ProcessingResult<span class="op">&gt;</span> <span class="fu">ProcessTelemetryDataAsync</span><span class="op">(</span>TelemetryRequest request<span class="op">)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// COPILOT: Always start with activity creation before any processing</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="dt">var</span> activity <span class="op">=</span> _activitySource<span class="op">.</span><span class="fu">StartActivity</span><span class="op">(</span><span class="st">"ProcessTelemetryData"</span><span class="op">);</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"request.type"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Type</span><span class="op">);</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Method implementation...</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="dedicated-ai-context-files" class="level4">
+<h4 class="anchored" data-anchor-id="dedicated-ai-context-files">1.1.4. Dedicated AI Context Files</h4>
+<p>Create a layered documentation structure that places relevant information close to where developers work:</p>
+<p><strong>Recommended Structure:</strong></p>
+<pre class="text"><code>/MyProject/
+├── .copilot/                          # Project-wide AI context
+│   ├── architecture.md
+│   └── patterns.md
 ├── src/
-│   ├── docs/                   # Source markdown documentation (AI-accessible)
+│   ├── docs/                          # Comprehensive documentation
 │   │   ├── api-reference.md
 │   │   └── domain-concepts.md
-│   ├── Diginsight.Core.copilot.md
-│   ├── Diginsight.Diagnostics.copilot.md
-│   └── examples/               # Reference implementations
-└── _quarto.yml                 # Quarto configuration</code></pre>
-<p><strong>Best Practice:</strong> Place markdown documentation in source directories (<code>src/docs/</code>) rather than generated output directories (<code>docs/</code>), as Copilot can access and analyze source files but not build outputs.</p>
-</section>
-</section>
-<section id="external-links-and-references" class="level3">
-<h3 class="anchored" data-anchor-id="external-links-and-references">External Links and References</h3>
-<p><strong>Important Limitation:</strong> Copilot cannot access external URLs, wikis, or online documentation during code generation. However, you can still reference them strategically:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># .copilot/architecture.md</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## External Documentation References</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">### OpenTelemetry Standards</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Specification**: https://opentelemetry.io/docs/specs/otel/</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Key Patterns**: Trace context propagation, semantic conventions</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Local Summary**: Always use W3C trace context headers for correlation</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">### Azure DevOps Wiki References  </span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Team Architecture Decisions**: https://dev.azure.com/yourorg/project/_wiki/wikis/Architecture</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Key Decisions**: Service mesh adoption, database partitioning strategy</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Local Summary**: Use event-driven patterns for telemetry aggregation</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">### Internal API Documentation</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**REST API Docs**: https://internal-docs.company.com/telemetry-api</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Key Endpoints**: /api/telemetry/batch, /api/metrics/query</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Local Summary**: Use batch endpoints for &gt;100 events, single for real-time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Best Practice for External References:</strong></p>
+│   ├── Services/
+│   │   ├── README.md                  # Services module overview
+│   │   ├── TelemetryService/
+│   │   │   ├── README.md              # TelemetryService specific docs
+│   │   │   ├── TelemetryService.cs
+│   │   │   └── ITelemetryService.cs
+│   │   └── LoggingService/
+│   │       ├── README.md              # LoggingService specific docs
+│   │       └── LoggingService.cs
+│   └── Models/
+│       ├── README.md                  # Data models overview
+│       └── TelemetryModels.cs
+└── README.md                          # Project root documentation</code></pre>
+<p><strong>Types of Documentation Files to Distribute:</strong></p>
 <ol type="1">
-<li><strong>Include the link</strong> for human developers</li>
-<li><strong>Summarize key information locally</strong> that Copilot can understand</li>
-<li><strong>Extract essential patterns</strong> into your local documentation</li>
-<li><strong>Copy critical code examples</strong> rather than linking to them</li>
+<li><strong>Project Root <code>README.md</code></strong>: High-level project overview, setup instructions, and quick Copilot prompts</li>
+<li><strong><code>.copilot/</code> Folder</strong>: Dedicated AI context files for architecture decisions, coding patterns, and troubleshooting guides</li>
+<li><strong><code>src/docs/</code> Folder</strong>: Comprehensive API references, domain concepts, and technical specifications</li>
+<li><strong>Module-Level <code>README.md</code></strong>: Overview of each major code module (Services/, Models/, etc.)</li>
+<li><strong>Component-Level <code>README.md</code></strong>: Specific documentation for individual services or components</li>
+<li><strong><code>.copilot.md</code> Files</strong>: Specialized AI guidance files next to major components (e.g., <code>TelemetryService.copilot.md</code>)</li>
 </ol>
-<section id="documentation-header-hierarchy" class="level4">
-<h4 class="anchored" data-anchor-id="documentation-header-hierarchy">1.2.5. Documentation Header Hierarchy</h4>
-<p>Use consistent header hierarchies to establish clear information structure:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Diginsight Telemetry System</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core Components</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data Retrieval Flow</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">#### ProcessTelemetryDataAsync Method</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This hierarchical structure helps Copilot understand the relationship between concepts and suggest code that follows the same organizational patterns.</p>
+<p><strong>Key Benefits:</strong></p>
+<ul>
+<li><strong>Layered Context</strong>: Copilot accesses the most relevant documentation based on where you’re working</li>
+<li><strong>Easy Maintenance</strong>: Documentation stays close to the code it describes</li>
+<li><strong>Focused Information</strong>: Each file addresses specific concerns without overwhelming detail</li>
+</ul>
+</section>
+<section id="component-specific-documentation" class="level4">
+<h4 class="anchored" data-anchor-id="component-specific-documentation">1.1.5. Component-Specific Documentation</h4>
+<p>Create targeted context files with the <code>.copilot.md</code> extension that provide domain-specific knowledge for individual components:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Diginsight.Telemetry.copilot.md</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>DATABASE: diginsightdb (CosmosDB)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>COLLECTIONS:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>data (projects, entities)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>data-sources (source types)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>KEY CONCEPTS:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Project ID 12345678-0c85-4592-8396-3f3e8656ed03 = "Diginsight Sample Project"</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Data Types: Activity Events, Telemetry, Configuration</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Period aggregation affects data granularity and API performance</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>ANTI-PATTERNS:</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Avoid dynamic activity names (high cardinality)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Don't use generic logger categories</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Never log sensitive data in telemetry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="architecture-documentation" class="level4">
-<h4 class="anchored" data-anchor-id="architecture-documentation">1.2.2. Architecture Documentation</h4>
+<h4 class="anchored" data-anchor-id="architecture-documentation">1.1.6. Architecture Documentation</h4>
 <p>Create comprehensive architecture documentation that provides system-level context:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># .copilot/architecture.md - Diginsight Telemetry System Architecture</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -473,29 +487,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Sampling Strategy</strong>: Cost control while maintaining visibility</li>
 </ul>
 </section>
-<section id="dedicated-context-files-.copilot.md" class="level4">
-<h4 class="anchored" data-anchor-id="dedicated-context-files-.copilot.md">1.2.3. Dedicated Context Files (.copilot.md)</h4>
-<p>Create targeted context files that provide domain-specific knowledge:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Diginsight.Telemetry.copilot.md</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>DATABASE: diginsightdb (CosmosDB)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>COLLECTIONS:</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>data (projects, entities)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>data-sources (source types)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>KEY CONCEPTS:</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Project ID 12345678-0c85-4592-8396-3f3e8656ed03 = "Diginsight Sample Project"</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Data Types: Activity Events, Telemetry, Configuration</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Period aggregation affects data granularity and API performance</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>ANTI-PATTERNS:</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Avoid dynamic activity names (high cardinality)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Don't use generic logger categories</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Never log sensitive data in telemetry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="documentation-header-hierarchy" class="level4">
+<h4 class="anchored" data-anchor-id="documentation-header-hierarchy">1.1.7. Documentation Header Hierarchy</h4>
+<p>Use consistent header hierarchies to establish clear information structure:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Diginsight Telemetry System</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core Components</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data Retrieval Flow</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">#### ProcessTelemetryDataAsync Method</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This hierarchical structure helps Copilot understand the relationship between concepts and suggest code that follows the same organizational patterns.</p>
 </section>
 <section id="readme-integration-strategy" class="level4">
-<h4 class="anchored" data-anchor-id="readme-integration-strategy">1.2.4. README Integration Strategy</h4>
-<p>Create AI-friendly project documentation:</p>
+<h4 class="anchored" data-anchor-id="readme-integration-strategy">1.1.8. README Integration Strategy</h4>
+<p>Create AI-friendly project documentation in your README files:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Diginsight Telemetry - AI Development Guide</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## For GitHub Copilot Users</span></span>
@@ -513,129 +516,247 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Add error handling to this method using our standard approach"</span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Create unit tests for telemetry methods with proper mocking"</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="external-references-strategy" class="level4">
+<h4 class="anchored" data-anchor-id="external-references-strategy">1.1.9. External References Strategy</h4>
+<p><strong>Important Limitation:</strong> Copilot cannot access external URLs, wikis, or online documentation during code generation. However, you can still reference them strategically:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># .copilot/architecture.md</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## External Documentation References</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">### OpenTelemetry Standards</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Specification**: https://opentelemetry.io/docs/specs/otel/</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Key Patterns**: Trace context propagation, semantic conventions</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Local Summary**: Always use W3C trace context headers for correlation</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">### Azure DevOps Wiki References  </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Team Architecture Decisions**: https://dev.azure.com/yourorg/project/_wiki/wikis/Architecture</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Key Decisions**: Service mesh adoption, database partitioning strategy</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Local Summary**: Use event-driven patterns for telemetry aggregation</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">### Internal API Documentation</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**REST API Docs**: https://internal-docs.company.com/telemetry-api</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Key Endpoints**: /api/telemetry/batch, /api/metrics/query</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Local Summary**: Use batch endpoints for &gt;100 events, single for real-time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Best Practice for External References:</strong></p>
+<ol type="1">
+<li><strong>Include the link</strong> for human developers</li>
+<li><strong>Summarize key information locally</strong> that Copilot can understand</li>
+<li><strong>Extract essential patterns</strong> into your local documentation</li>
+<li><strong>Copy critical code examples</strong> rather than linking to them</li>
+</ol>
+</section>
 </section>
 <section id="semantic-naming-for-ai-understanding" class="level3">
-<h3 class="anchored" data-anchor-id="semantic-naming-for-ai-understanding">1.3. Semantic Naming for AI Understanding</h3>
-<p><strong>What you can do:</strong> Use descriptive, hierarchical naming conventions for methods, classes, and variables that clearly convey intent and relationships within your codebase.</p>
+<h3 class="anchored" data-anchor-id="semantic-naming-for-ai-understanding">1.2. Semantic Naming for AI Understanding</h3>
+<p><strong>What we can do:</strong> Use descriptive, hierarchical naming conventions for methods, classes, and variables that clearly convey intent and relationships within our codebase.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Descriptive, hierarchical naming conventions help Copilot understand the intent and relationships within your codebase. When method names, class names, and variable names follow consistent patterns that convey meaning, Copilot can better predict what related code should look like and suggest appropriate completions.</p>
 <p><strong>Impact on suggestion relevance:</strong> Semantic naming enables Copilot to suggest code that follows your established patterns, maintains consistency across your codebase, and uses meaningful names that align with your domain terminology.</p>
 <section id="use-descriptive-hierarchical-naming" class="level4">
 <h4 class="anchored" data-anchor-id="use-descriptive-hierarchical-naming">Use Descriptive, Hierarchical Naming</h4>
-<div class="sourceCode" id="cb9"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// GOOD: Clear intent and hierarchy</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DiginsightTelemetryDataAggregationService</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> async Task<span class="op">&lt;</span>PeriodAggregatedData<span class="op">&gt;</span> <span class="fu">GetHourlyAggregatedTelemetryData</span><span class="op">(...)</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> async Task<span class="op">&lt;</span>PeriodAggregatedData<span class="op">&gt;</span> <span class="fu">GetDailyAggregatedTelemetryData</span><span class="op">(...)</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">// COPILOT understands this pattern and suggests similar methods</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DiginsightLogAnalysisService  </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Copilot will suggest: GetHourlyAggregatedLogData, GetDailyAggregatedLogData</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// GOOD: Clear intent and hierarchy</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DiginsightTelemetryDataAggregationService</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> async Task<span class="op">&lt;</span>PeriodAggregatedData<span class="op">&gt;</span> <span class="fu">GetHourlyAggregatedTelemetryData</span><span class="op">(...)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> async Task<span class="op">&lt;</span>PeriodAggregatedData<span class="op">&gt;</span> <span class="fu">GetDailyAggregatedTelemetryData</span><span class="op">(...)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">// COPILOT understands this pattern and suggests similar methods</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DiginsightLogAnalysisService  </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Copilot will suggest: GetHourlyAggregatedLogData, GetDailyAggregatedLogData</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="pattern-based-method-names" class="level4">
 <h4 class="anchored" data-anchor-id="pattern-based-method-names">Pattern-Based Method Names</h4>
-<div class="sourceCode" id="cb10"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// This comment helps Copilot understand the expected pattern</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task<span class="op">&lt;</span>ApiResponse<span class="op">&lt;</span>TelemetryMetrics<span class="op">&gt;&gt;</span> <span class="fu">GetHourlyTelemetryMetricsAsync</span><span class="op">(...)</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Copilot will now suggest GetDailyTelemetryMetricsAsync, GetWeeklyTelemetryMetricsAsync</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Domain context in variable names guides suggestions</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="dt">var</span> hourlyDataRetrieval <span class="op">=</span> <span class="kw">new</span> <span class="fu">TelemetryDataRetrieval</span><span class="op">();</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Copilot understands: dailyDataRetrieval, weeklyDataRetrieval should follow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// This comment helps Copilot understand the expected pattern</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task<span class="op">&lt;</span>ApiResponse<span class="op">&lt;</span>TelemetryMetrics<span class="op">&gt;&gt;</span> <span class="fu">GetHourlyTelemetryMetricsAsync</span><span class="op">(...)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Copilot will now suggest GetDailyTelemetryMetricsAsync, GetWeeklyTelemetryMetricsAsync</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Domain context in variable names guides suggestions</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="dt">var</span> hourlyDataRetrieval <span class="op">=</span> <span class="kw">new</span> <span class="fu">TelemetryDataRetrieval</span><span class="op">();</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Copilot understands: dailyDataRetrieval, weeklyDataRetrieval should follow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="domain-concept-documentation" class="level3">
-<h3 class="anchored" data-anchor-id="domain-concept-documentation">1.4. Domain Concept Documentation</h3>
-<p><strong>What you can do:</strong> Clearly define and document your domain-specific terminology, business concepts, and their relationships to help Copilot understand your business logic.</p>
+<h3 class="anchored" data-anchor-id="domain-concept-documentation">1.3. Domain Concept Documentation</h3>
+<p><strong>What we can do:</strong> Clearly define and document our domain-specific terminology, business concepts, and their relationships to help Copilot understand our business logic.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Domain-specific terminology and concepts are crucial for Copilot to understand your business logic. When you clearly define terms like “Data Sources,” “Groups,” and “Activity Events,” Copilot can better understand the context of your code and suggest domain-appropriate solutions rather than generic programming patterns.</p>
 <p><strong>Impact on suggestion relevance:</strong> With clear domain concepts, Copilot can suggest variable names, method signatures, and logic flows that align with your business domain, making suggestions more meaningful and reducing the need for manual corrections.</p>
 <section id="core-domain-concepts" class="level4">
 <h4 class="anchored" data-anchor-id="core-domain-concepts">Core Domain Concepts</h4>
-<div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Domain Concepts</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Sources</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>Types of data being processed (Telemetry, Logs, etc.). Each source has its own metrics.</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Groups</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>Collections of entities with data measurements. Can be:</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Runtime Group: System-defined grouping</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Custom Group: User-defined collection of entities</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Types</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>Measurements tracked for each source:</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Activity Events: Application activity logs</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Telemetry: Performance and usage data</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Configuration: Dynamic settings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Domain Concepts</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Sources</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>Types of data being processed (Telemetry, Logs, etc.). Each source has its own metrics.</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Groups</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>Collections of entities with data measurements. Can be:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Runtime Group: System-defined grouping</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Custom Group: User-defined collection of entities</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Types</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>Measurements tracked for each source:</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Activity Events: Application activity logs</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Telemetry: Performance and usage data</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Configuration: Dynamic settings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="example-usages" class="level4">
 <h4 class="anchored" data-anchor-id="example-usages">Example Usages</h4>
-<div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Common Usage Patterns</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Period Selection</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>// Period selection affects the data aggregation range</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>switch (settings.Period)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    case "Today":</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        // Uses hourly aggregation (24 data points)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        range = Diginsight.Common.Querying.AggregationRange.Hour;</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        break;</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    case "CurrentMonth":</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        // Uses daily aggregation (28-31 data points)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        range = Diginsight.Common.Querying.AggregationRange.Day;</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        break;</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Common Usage Patterns</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Period Selection</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>// Period selection affects the data aggregation range</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>switch (settings.Period)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    case "Today":</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        // Uses hourly aggregation (24 data points)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        range = Diginsight.Common.Querying.AggregationRange.Hour;</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        break;</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    case "CurrentMonth":</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        // Uses daily aggregation (28-31 data points)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        range = Diginsight.Common.Querying.AggregationRange.Day;</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        break;</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="code-patterns-and-conventions" class="level3">
-<h3 class="anchored" data-anchor-id="code-patterns-and-conventions">1.5. Code Patterns and Conventions</h3>
-<p><strong>What you can do:</strong> Establish and document consistent code patterns, naming conventions, error handling approaches, and architectural patterns that should be applied throughout your codebase.</p>
+<h3 class="anchored" data-anchor-id="code-patterns-and-conventions">1.4. Code Patterns and Conventions</h3>
+<p><strong>What we can do:</strong> Establish and document consistent code patterns, naming conventions, error handling approaches, and architectural patterns that should be applied throughout our codebase.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Establishing and documenting code patterns and conventions helps Copilot understand your team’s preferred approaches to common programming tasks. This includes naming conventions, error handling patterns, logging strategies, and architectural patterns that should be consistently applied.</p>
 <p><strong>Impact on suggestion relevance:</strong> Clear code patterns and conventions ensure that Copilot’s suggestions follow your established standards, maintain consistency across the codebase, and adhere to your team’s best practices, resulting in code that fits seamlessly into your existing project structure.</p>
 <section id="naming-conventions" class="level4">
 <h4 class="anchored" data-anchor-id="naming-conventions">Naming Conventions</h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Coding Standards</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Activity Names</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use hierarchical names: <span class="in">`Diginsight.Service.Method`</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include operation type: <span class="in">`Diginsight.Data.Query`</span>, <span class="in">`Diginsight.Http.Request`</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Avoid dynamic names that create high cardinality</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Logger Categories</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use class-based categories: <span class="in">`ILogger&lt;MyService&gt;`</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For static contexts: <span class="in">`ILogger&lt;Program&gt;`</span> or specific category names</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Avoid generic categories like "Application" or "System"</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Metric Names</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use dot notation: <span class="in">`diginsight.request.duration`</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include units: <span class="in">`diginsight.memory.bytes`</span>, <span class="in">`diginsight.duration.milliseconds`</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Follow OpenTelemetry semantic conventions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Coding Standards</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Activity Names</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use hierarchical names: <span class="in">`Diginsight.Service.Method`</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include operation type: <span class="in">`Diginsight.Data.Query`</span>, <span class="in">`Diginsight.Http.Request`</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Avoid dynamic names that create high cardinality</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Logger Categories</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use class-based categories: <span class="in">`ILogger&lt;MyService&gt;`</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For static contexts: <span class="in">`ILogger&lt;Program&gt;`</span> or specific category names</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Avoid generic categories like "Application" or "System"</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Metric Names</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use dot notation: <span class="in">`diginsight.request.duration`</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include units: <span class="in">`diginsight.memory.bytes`</span>, <span class="in">`diginsight.duration.milliseconds`</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Follow OpenTelemetry semantic conventions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="common-patterns" class="level4">
 <h4 class="anchored" data-anchor-id="common-patterns">Common Patterns</h4>
-<div class="sourceCode" id="cb14"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Standard method instrumentation pattern</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task<span class="op">&lt;</span>Result<span class="op">&gt;</span> <span class="fu">ProcessAsync</span><span class="op">(</span>Request request<span class="op">)</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="dt">var</span> activity <span class="op">=</span> _activitySource<span class="op">.</span><span class="fu">StartActivity</span><span class="op">();</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"request.id"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">try</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogInformation</span><span class="op">(</span><span class="st">"Processing request {RequestId}"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> result <span class="op">=</span> await <span class="fu">DoWorkAsync</span><span class="op">(</span>request<span class="op">);</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"result.status"</span><span class="op">,</span> <span class="st">"success"</span><span class="op">);</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> result<span class="op">;</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">catch</span> <span class="op">(</span>Exception ex<span class="op">)</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetStatus</span><span class="op">(</span>ActivityStatusCode<span class="op">.</span><span class="fu">Error</span><span class="op">,</span> ex<span class="op">.</span><span class="fu">Message</span><span class="op">);</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogError</span><span class="op">(</span>ex<span class="op">,</span> <span class="st">"Failed to process request {RequestId}"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        <span class="kw">throw</span><span class="op">;</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Standard method instrumentation pattern</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task<span class="op">&lt;</span>Result<span class="op">&gt;</span> <span class="fu">ProcessAsync</span><span class="op">(</span>Request request<span class="op">)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="dt">var</span> activity <span class="op">=</span> _activitySource<span class="op">.</span><span class="fu">StartActivity</span><span class="op">();</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"request.id"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">try</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogInformation</span><span class="op">(</span><span class="st">"Processing request {RequestId}"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> result <span class="op">=</span> await <span class="fu">DoWorkAsync</span><span class="op">(</span>request<span class="op">);</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"result.status"</span><span class="op">,</span> <span class="st">"success"</span><span class="op">);</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> result<span class="op">;</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">catch</span> <span class="op">(</span>Exception ex<span class="op">)</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetStatus</span><span class="op">(</span>ActivityStatusCode<span class="op">.</span><span class="fu">Error</span><span class="op">,</span> ex<span class="op">.</span><span class="fu">Message</span><span class="op">);</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogError</span><span class="op">(</span>ex<span class="op">,</span> <span class="st">"Failed to process request {RequestId}"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        <span class="kw">throw</span><span class="op">;</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="effective-prompting-strategies" class="level3">
+<h3 class="anchored" data-anchor-id="effective-prompting-strategies">1.5. Effective Prompting Strategies</h3>
+<p><strong>What we can do:</strong> Develop and document standardized prompting patterns that help developers leverage the documentation in our codebase when working with Copilot.</p>
+<p><strong>Why this improves Copilot understanding:</strong> While other strategies focus on making your codebase more understandable to Copilot, effective prompting strategies create a crucial feedback loop between your documentation and AI interaction. When developers know how to reference existing patterns, naming conventions, and architectural decisions in their prompts, Copilot can locate and apply this contextual information more effectively.</p>
+<p><strong>Impact on suggestion relevance:</strong> Strategic prompting dramatically improves Copilot’s ability to generate code that aligns with your established patterns and architectural constraints. By teaching developers how to prompt effectively, you create a multiplier effect that enhances the value of all your other documentation efforts.</p>
+<section id="reference-based-prompts" class="level4">
+<h4 class="anchored" data-anchor-id="reference-based-prompts">Reference-Based Prompts</h4>
+<p>Train your team to reference specific documentation in prompts:</p>
+<pre class="text"><code>// Example prompt: "Create a telemetry method following the patterns in Diginsight.Core.copilot.md"
+// Example prompt: "Add error handling similar to ProcessTelemetryDataAsync"</code></pre>
+</section>
+<section id="pattern-driven-prompts" class="level4">
+<h4 class="anchored" data-anchor-id="pattern-driven-prompts">Pattern-Driven Prompts</h4>
+<p>Create a “prompt dictionary” that developers can reference:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Effective Copilot Prompts</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## For Telemetry Instrumentation</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Create a method that processes <span class="co">[</span><span class="ot">data type</span><span class="co">]</span> with standard Diginsight telemetry instrumentation"</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Add proper activity tracking to this method following our distributed tracing pattern"</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## For Error Handling</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Implement our standard error handling pattern with proper activity status in this method"</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Update this method to include structured logging with our telemetry correlation pattern"</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="component-specific-prompts" class="level4">
+<h4 class="anchored" data-anchor-id="component-specific-prompts">Component-Specific Prompts</h4>
+<p>Document component-specific prompting patterns:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Telemetry Service Prompts</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>When working with telemetry services, use these specific prompts:</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Create a new telemetry processor that handles <span class="co">[</span><span class="ot">data type</span><span class="co">]</span> following our sampling pattern"</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Implement a batch processing method for telemetry data that follows our performance guidelines"</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Generate unit tests for this telemetry method with proper activity source mocking"</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="code-annotations-for-ai-tools" class="level3">
+<h3 class="anchored" data-anchor-id="code-annotations-for-ai-tools">1.6. Code Annotations for AI Tools</h3>
+<p><strong>What we can do:</strong> Implement a consistent annotation system specifically designed to guide AI tools like Copilot, using distinct markers that highlight patterns, constraints, and relationships.</p>
+<p><strong>Why this improves Copilot understanding:</strong> Standard comments are helpful, but specialized AI annotations create a targeted communication channel with Copilot. These annotations stand out from regular comments and provide structured guidance that Copilot can more easily identify and follow when generating suggestions.</p>
+<p><strong>Impact on suggestion relevance:</strong> AI-specific annotations dramatically improve Copilot’s ability to understand your code’s unique constraints, patterns, and relationships. They serve as clear signposts that help Copilot navigate your codebase and generate suggestions that align perfectly with your team’s expectations.</p>
+<section id="ai-directive-annotations" class="level4">
+<h4 class="anchored" data-anchor-id="ai-directive-annotations">AI Directive Annotations</h4>
+<p>Create standardized AI directive annotations:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:pattern - This class follows the Repository pattern with CosmosDB integration</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:constraint - This method must maintain correlation IDs across service boundaries</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:relationship - This service depends on IDataSourceRepository and IEntityAdapter</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DiginsightService</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// @ai:example - Standard constructor injection pattern</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">DiginsightService</span><span class="op">(</span>IDataSourceRepository repo<span class="op">,</span> IEntityAdapter adapter<span class="op">)</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Implementation...</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// @ai:pattern - Standard telemetry method with proper instrumentation</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// @ai:performance - Batch operations for &gt;100 items to reduce API calls</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> async Task<span class="op">&lt;</span>Result<span class="op">&gt;</span> <span class="fu">ProcessDataAsync</span><span class="op">(</span>Request request<span class="op">)</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Implementation...</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="schema-annotations" class="level4">
+<h4 class="anchored" data-anchor-id="schema-annotations">Schema Annotations</h4>
+<p>Add structured schema annotations to complex data models:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:schema - ProjectEntity schema</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:property id - GUID format, globally unique identifier</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:property name - User-visible project name, max 100 chars</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:property type - Must be "project", used for CosmosDB querying</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> ProjectEntity</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> Guid Id <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">string</span> Name <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">string</span> Type <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">"project"</span><span class="op">;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="relationship-annotations" class="level4">
+<h4 class="anchored" data-anchor-id="relationship-annotations">Relationship Annotations</h4>
+<p>Document component relationships with special annotations:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:depends-on - ILogger&lt;T&gt;, ActivitySource</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:consumed-by - TelemetryService, MetricsService</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">// @ai:implements - OpenTelemetry.ActivitySource pattern</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DiginsightActivitySource</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Implementation...</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 </section>
@@ -644,152 +765,152 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>These strategies provide substantial improvements to Copilot’s understanding, particularly for code structure, patterns, and domain-specific implementations.</p>
 <section id="ai-optimized-code-comments" class="level3">
 <h3 class="anchored" data-anchor-id="ai-optimized-code-comments">2.1. AI-Optimized Code Comments</h3>
-<p><strong>What you can do:</strong> Structure your code comments specifically to provide AI with tactical context about implementation details, dependencies, and performance considerations.</p>
+<p><strong>What we can do:</strong> Structure our code comments specifically to provide AI with tactical context about implementation details, dependencies, and performance considerations.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Strategic code comments provide tactical context that helps Copilot understand specific implementation details, dependencies, and performance considerations. While less impactful than architecture documentation, they provide valuable hints for method-level code generation.</p>
 <p><strong>Impact on suggestion relevance:</strong> AI-optimized comments help Copilot suggest code that follows your specific patterns and handles edge cases appropriately, though they primarily influence local code suggestions rather than system-wide architectural decisions.</p>
 <section id="structured-comments-for-ai" class="level4">
 <h4 class="anchored" data-anchor-id="structured-comments-for-ai">Structured Comments for AI</h4>
 <p>Structure comments specifically for AI understanding:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">// COPILOT: Standard Diginsight telemetry instrumentation pattern for service methods</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">// PATTERN: Activity creation with proper scoping and error handling</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">// DEPENDENCIES: Requires ActivitySource, ILogger&lt;T&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">// PERFORMANCE: Minimal overhead - activity creation is lightweight</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task<span class="op">&lt;</span>ProcessingResult<span class="op">&gt;</span> <span class="fu">ProcessTelemetryDataAsync</span><span class="op">(</span>TelemetryRequest request<span class="op">)</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// COPILOT: Standard Diginsight activity creation pattern</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="dt">var</span> activity <span class="op">=</span> _activitySource<span class="op">.</span><span class="fu">StartActivity</span><span class="op">(</span><span class="st">"ProcessTelemetryData"</span><span class="op">);</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"request.type"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Type</span><span class="op">);</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">try</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogInformation</span><span class="op">(</span><span class="st">"Processing telemetry request {RequestId}"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> result <span class="op">=</span> await _telemetryProcessor<span class="op">.</span><span class="fu">ProcessAsync</span><span class="op">(</span>request<span class="op">);</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"result.status"</span><span class="op">,</span> <span class="st">"success"</span><span class="op">);</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> result<span class="op">;</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">catch</span> <span class="op">(</span>Exception ex<span class="op">)</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetStatus</span><span class="op">(</span>ActivityStatusCode<span class="op">.</span><span class="fu">Error</span><span class="op">,</span> ex<span class="op">.</span><span class="fu">Message</span><span class="op">);</span></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogError</span><span class="op">(</span>ex<span class="op">,</span> <span class="st">"Failed to process telemetry request {RequestId}"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        <span class="kw">throw</span><span class="op">;</span></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">// COPILOT: Standard Diginsight telemetry instrumentation pattern for service methods</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">// PATTERN: Activity creation with proper scoping and error handling</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">// DEPENDENCIES: Requires ActivitySource, ILogger&lt;T&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">// PERFORMANCE: Minimal overhead - activity creation is lightweight</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task<span class="op">&lt;</span>ProcessingResult<span class="op">&gt;</span> <span class="fu">ProcessTelemetryDataAsync</span><span class="op">(</span>TelemetryRequest request<span class="op">)</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// COPILOT: Standard Diginsight activity creation pattern</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="dt">var</span> activity <span class="op">=</span> _activitySource<span class="op">.</span><span class="fu">StartActivity</span><span class="op">(</span><span class="st">"ProcessTelemetryData"</span><span class="op">);</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"request.type"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Type</span><span class="op">);</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">try</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogInformation</span><span class="op">(</span><span class="st">"Processing telemetry request {RequestId}"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">var</span> result <span class="op">=</span> await _telemetryProcessor<span class="op">.</span><span class="fu">ProcessAsync</span><span class="op">(</span>request<span class="op">);</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetTag</span><span class="op">(</span><span class="st">"result.status"</span><span class="op">,</span> <span class="st">"success"</span><span class="op">);</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> result<span class="op">;</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">catch</span> <span class="op">(</span>Exception ex<span class="op">)</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        activity<span class="op">?.</span><span class="fu">SetStatus</span><span class="op">(</span>ActivityStatusCode<span class="op">.</span><span class="fu">Error</span><span class="op">,</span> ex<span class="op">.</span><span class="fu">Message</span><span class="op">);</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>        _logger<span class="op">.</span><span class="fu">LogError</span><span class="op">(</span>ex<span class="op">,</span> <span class="st">"Failed to process telemetry request {RequestId}"</span><span class="op">,</span> request<span class="op">.</span><span class="fu">Id</span><span class="op">);</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>        <span class="kw">throw</span><span class="op">;</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="implementation-examples" class="level3">
 <h3 class="anchored" data-anchor-id="implementation-examples">2.2. Implementation Examples</h3>
-<p><strong>What you can do:</strong> Provide concrete implementation examples that demonstrate your preferred patterns and coding styles, serving as templates for Copilot to follow.</p>
+<p><strong>What we can do:</strong> Provide concrete implementation examples that demonstrate our preferred patterns and coding styles, serving as templates for Copilot to follow.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Concrete implementation examples show Copilot the preferred patterns and coding styles for your project. When Copilot sees how you handle period calculations or batch processing, it can suggest similar patterns for new functionality, maintaining consistency across your codebase.</p>
 <p><strong>Impact on suggestion relevance:</strong> Implementation examples serve as templates for Copilot to follow, ensuring that new code suggestions match your existing patterns, naming conventions, and architectural approaches, leading to more cohesive and maintainable code.</p>
 <section id="period-helper-methods" class="level4">
 <h4 class="anchored" data-anchor-id="period-helper-methods">Period Helper Methods</h4>
 <p>Extract common period calculation code:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Configures period formats and ranges based on the period type</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"periodType"</span><span class="kw">&gt;</span><span class="co">The selected period (Today, Yesterday, CurrentWeek, etc.)</span><span class="kw">&lt;/param&gt;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"projectLocalNow"</span><span class="kw">&gt;</span><span class="co">The current time in the project's local timezone</span><span class="kw">&lt;/param&gt;</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;returns&gt;</span><span class="co">Configuration for the selected period</span><span class="kw">&lt;/returns&gt;</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="op">(</span>Diginsight<span class="op">.</span><span class="fu">Common</span><span class="op">.</span><span class="fu">Querying</span><span class="op">.</span><span class="fu">AggregationRange</span> Range<span class="op">,</span> <span class="dt">string</span> Format<span class="op">,</span> <span class="dt">string</span> TitleFormat<span class="op">)</span> </span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ConfigurePeriod</span><span class="op">(</span><span class="dt">string</span> periodType<span class="op">,</span> DateTime projectLocalNow<span class="op">)</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">switch</span> <span class="op">(</span>periodType<span class="op">)</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> <span class="st">"Today"</span><span class="op">:</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> <span class="st">"Yesterday"</span><span class="op">:</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>            <span class="kw">return</span> <span class="op">(</span>Diginsight<span class="op">.</span><span class="fu">Common</span><span class="op">.</span><span class="fu">Querying</span><span class="op">.</span><span class="fu">AggregationRange</span><span class="op">.</span><span class="fu">Hour</span><span class="op">,</span> <span class="st">"HH:mm"</span><span class="op">,</span> <span class="st">"dd MMM yyyy - HH:mm"</span><span class="op">);</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Additional cases...</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Configures period formats and ranges based on the period type</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"periodType"</span><span class="kw">&gt;</span><span class="co">The selected period (Today, Yesterday, CurrentWeek, etc.)</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"projectLocalNow"</span><span class="kw">&gt;</span><span class="co">The current time in the project's local timezone</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;returns&gt;</span><span class="co">Configuration for the selected period</span><span class="kw">&lt;/returns&gt;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="op">(</span>Diginsight<span class="op">.</span><span class="fu">Common</span><span class="op">.</span><span class="fu">Querying</span><span class="op">.</span><span class="fu">AggregationRange</span> Range<span class="op">,</span> <span class="dt">string</span> Format<span class="op">,</span> <span class="dt">string</span> TitleFormat<span class="op">)</span> </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ConfigurePeriod</span><span class="op">(</span><span class="dt">string</span> periodType<span class="op">,</span> DateTime projectLocalNow<span class="op">)</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">switch</span> <span class="op">(</span>periodType<span class="op">)</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> <span class="st">"Today"</span><span class="op">:</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> <span class="st">"Yesterday"</span><span class="op">:</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>            <span class="kw">return</span> <span class="op">(</span>Diginsight<span class="op">.</span><span class="fu">Common</span><span class="op">.</span><span class="fu">Querying</span><span class="op">.</span><span class="fu">AggregationRange</span><span class="op">.</span><span class="fu">Hour</span><span class="op">,</span> <span class="st">"HH:mm"</span><span class="op">,</span> <span class="st">"dd MMM yyyy - HH:mm"</span><span class="op">);</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Additional cases...</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="data-source-batch-processing" class="level4">
 <h4 class="anchored" data-anchor-id="data-source-batch-processing">Data Source Batch Processing</h4>
-<div class="sourceCode" id="cb17"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Retrieves and processes all data sources for a project in a single batch operation</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"projectId"</span><span class="kw">&gt;</span><span class="co">The project ID</span><span class="kw">&lt;/param&gt;</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"group"</span><span class="kw">&gt;</span><span class="co">The entity group to analyze</span><span class="kw">&lt;/param&gt;</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"dateRange"</span><span class="kw">&gt;</span><span class="co">Date range for data retrieval</span><span class="kw">&lt;/param&gt;</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;returns&gt;</span><span class="co">Dictionary mapping source types to their data</span><span class="kw">&lt;/returns&gt;</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> async Task<span class="op">&lt;</span>Dictionary<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> GroupAggregation<span class="op">&lt;</span>AggregateValues<span class="op">&gt;&gt;&gt;</span> </span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">GetBatchData</span><span class="op">(</span>Guid projectId<span class="op">,</span> DiginsightClasses<span class="op">.</span><span class="fu">IGroup</span> group<span class="op">,</span> DateRange dateRange<span class="op">)</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Implementation that reduces API calls through batching</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Retrieves and processes all data sources for a project in a single batch operation</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"projectId"</span><span class="kw">&gt;</span><span class="co">The project ID</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"group"</span><span class="kw">&gt;</span><span class="co">The entity group to analyze</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"dateRange"</span><span class="kw">&gt;</span><span class="co">Date range for data retrieval</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="kw">&lt;returns&gt;</span><span class="co">Dictionary mapping source types to their data</span><span class="kw">&lt;/returns&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> async Task<span class="op">&lt;</span>Dictionary<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> GroupAggregation<span class="op">&lt;</span>AggregateValues<span class="op">&gt;&gt;&gt;</span> </span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">GetBatchData</span><span class="op">(</span>Guid projectId<span class="op">,</span> DiginsightClasses<span class="op">.</span><span class="fu">IGroup</span> group<span class="op">,</span> DateRange dateRange<span class="op">)</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Implementation that reduces API calls through batching</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="data-model-documentation" class="level3">
 <h3 class="anchored" data-anchor-id="data-model-documentation">2.3. Data Model Documentation</h3>
-<p><strong>What you can do:</strong> Document your data structures, relationships, and database schema to help Copilot understand how data flows through your application.</p>
+<p><strong>What we can do:</strong> Document our data structures, relationships, and database schema to help Copilot understand how data flows through our application.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Data models are the foundation of any application. When Copilot understands your data structures, relationships, and database schema, it can suggest appropriate CRUD operations, data transformations, and validation logic. This is especially critical for telemetry systems where data flows through multiple transformation stages.</p>
 <p><strong>Impact on suggestion relevance:</strong> With clear data model documentation, Copilot can suggest proper entity mappings, database queries, and data processing patterns that respect your schema constraints and business rules, reducing bugs and improving code quality.</p>
 <section id="key-data-models" class="level4">
 <h4 class="anchored" data-anchor-id="key-data-models">Key Data Models</h4>
-<div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Core Data Models</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## DiginsightData</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>Primary response model with hierarchical structure:</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>DiginsightData</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>DataQuality (validity warnings)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Detail</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Chart[] (time series data)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>DataGroup (aggregated values)</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>PeriodDate (date ranges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Core Data Models</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## DiginsightData</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>Primary response model with hierarchical structure:</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>DiginsightData</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>DataQuality (validity warnings)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Detail</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Chart[] (time series data)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>DataGroup (aggregated values)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>PeriodDate (date ranges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="database-structure" class="level4">
 <h4 class="anchored" data-anchor-id="database-structure">Database Structure</h4>
-<div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Database Structure</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Azure Cosmos DB (diginsightdb)</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Collection: data**</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Projects (key: id)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Example: "id": "12345678-0c85-4592-8396-3f3e8656ed03", "name": "Diginsight Sample Project"</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Entities (partitioned by projectId)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Groups (custom entity groups)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sample Documents</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"12345678-0c85-4592-8396-3f3e8656ed03"</span><span class="fu">,</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Diginsight Sample Project"</span><span class="fu">,</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"project"</span><span class="fu">,</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"_etag"</span><span class="fu">:</span> <span class="st">"</span><span class="ch">\"</span><span class="st">00000000-0000-0000-0000-000000000000</span><span class="ch">\"</span><span class="st">"</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Database Structure</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Azure Cosmos DB (diginsightdb)</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Collection: data**</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Projects (key: id)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Example: "id": "12345678-0c85-4592-8396-3f3e8656ed03", "name": "Diginsight Sample Project"</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Entities (partitioned by projectId)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Groups (custom entity groups)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sample Documents</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"12345678-0c85-4592-8396-3f3e8656ed03"</span><span class="fu">,</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Diginsight Sample Project"</span><span class="fu">,</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"project"</span><span class="fu">,</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"_etag"</span><span class="fu">:</span> <span class="st">"</span><span class="ch">\"</span><span class="st">00000000-0000-0000-0000-000000000000</span><span class="ch">\"</span><span class="st">"</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="api-and-interface-documentation" class="level3">
 <h3 class="anchored" data-anchor-id="api-and-interface-documentation">2.4. API and Interface Documentation</h3>
-<p><strong>What you can do:</strong> Document your API contracts, method signatures, and interface boundaries to help Copilot understand system contracts and expected behaviors.</p>
+<p><strong>What we can do:</strong> Document our API contracts, method signatures, and interface boundaries to help Copilot understand system contracts and expected behaviors.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Clear API and interface documentation helps Copilot understand the contracts and boundaries within your system. When Copilot knows the signatures, parameters, and expected behavior of your public APIs, it can suggest proper implementations and usage patterns.</p>
 <p><strong>Impact on suggestion relevance:</strong> API documentation enables Copilot to suggest code that correctly implements interfaces, respects method signatures, and follows your established patterns for API design and usage, reducing integration errors and improving code consistency.</p>
 </section>
 <section id="code-relationship-documentation" class="level3">
 <h3 class="anchored" data-anchor-id="code-relationship-documentation">2.5. Code Relationship Documentation</h3>
-<p><strong>What you can do:</strong> Document how different classes, services, and components interact with each other, including dependency flows and architectural patterns.</p>
+<p><strong>What we can do:</strong> Document how different classes, services, and components interact with each other, including dependency flows and architectural patterns.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Understanding how different classes, services, and components interact is crucial for Copilot to suggest appropriate design patterns and architectural solutions. When Copilot knows that <code>DiginsightService</code> depends on <code>IDataSourceRepository</code>, it can suggest proper dependency injection patterns and interface implementations.</p>
 <p><strong>Impact on suggestion relevance:</strong> Clear relationship documentation enables Copilot to suggest code that respects your architecture, follows dependency flow patterns, and maintains proper separation of concerns, leading to more maintainable and consistent code suggestions.</p>
 <section id="class-dependencies" class="level4">
 <h4 class="anchored" data-anchor-id="class-dependencies">Class Dependencies</h4>
-<div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Component Relationships</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Service Layer</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>DiginsightService </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  → IDataSourceRepository (CosmosDB data access)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  → IEntityAdapter (entity access)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  → IGroupAdapter (group management)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Flow</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Widget request → ProcessTelemetryDataAsync</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Period calculation and group resolution</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>For each data source type:</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Filter entities by data source</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Fetch data</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Process into chart format</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Component Relationships</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Service Layer</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>DiginsightService </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  → IDataSourceRepository (CosmosDB data access)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  → IEntityAdapter (entity access)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  → IGroupAdapter (group management)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Flow</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Widget request → ProcessTelemetryDataAsync</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Period calculation and group resolution</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>For each data source type:</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Filter entities by data source</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Fetch data</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Process into chart format</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="visual-documentation" class="level4">
 <h4 class="anchored" data-anchor-id="visual-documentation">Visual Documentation</h4>
-<pre><code>┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+<pre class="text"><code>┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 │ Data Sources    │────▶│ Entity Group    │────▶│ Data            │
 │ (Telemetry,     │     │ (Custom or      │     │ (Activity,      │
 │  Logs, etc.)    │     │  Runtime)       │     │  Telemetry)     │
@@ -798,20 +919,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="performance-considerations" class="level3">
 <h3 class="anchored" data-anchor-id="performance-considerations">Performance Considerations</h3>
-<p><strong>What you can do:</strong> Document performance constraints, bottlenecks, and optimization strategies that are specific to your application domain.</p>
+<p><strong>What we can do:</strong> Document performance constraints, bottlenecks, and optimization strategies that are specific to our application domain.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Performance constraints and optimization strategies are critical context for code generation. When Copilot understands that <code>ProcessTelemetryDataAsync</code> has performance considerations for batch processing, it can suggest optimizations like parallel processing, sampling, or async patterns that address these specific telemetry concerns.</p>
 <p><strong>Impact on suggestion relevance:</strong> Performance documentation helps Copilot suggest code that considers scalability, efficiency, and resource usage from the start, preventing performance issues rather than requiring later optimization.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Performance Considerations</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Current Bottlenecks</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ProcessTelemetryDataAsync processes telemetry batches with proper instrumentation</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Current load: ~20 calls/sec in production</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each data source creates a new filtered group object</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optimization Strategies</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Batch data source calls where possible</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cache filtered groups for reuse</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Implement more efficient filtering to reduce API calls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Performance Considerations</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Current Bottlenecks</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ProcessTelemetryDataAsync processes telemetry batches with proper instrumentation</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Current load: ~20 calls/sec in production</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each data source creates a new filtered group object</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optimization Strategies</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Batch data source calls where possible</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cache filtered groups for reuse</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Implement more efficient filtering to reduce API calls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="important-but-less-direct-impact" class="level2">
@@ -819,30 +940,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>These strategies provide foundational improvements that support overall code comprehension and long-term maintainability, though their impact on immediate code suggestions may be less direct.</p>
 <section id="configuration-and-environment-documentation" class="level3">
 <h3 class="anchored" data-anchor-id="configuration-and-environment-documentation">3.1. Configuration and Environment Documentation</h3>
-<p><strong>What you can do:</strong> Document your configuration structures, environment variables, and dependency injection patterns to help Copilot understand how your application behaves in different environments.</p>
+<p><strong>What we can do:</strong> Document our configuration structures, environment variables, and dependency injection patterns to help Copilot understand how our application behaves in different environments.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Configuration is critical for understanding how an application behaves in different environments. When Copilot understands your configuration structure, environment variables, and dependency injection patterns, it can suggest code that properly handles configuration changes and environment-specific behavior.</p>
 <p><strong>Impact on suggestion relevance:</strong> Configuration documentation enables Copilot to suggest code that properly accesses configuration values, handles environment differences, and follows your established patterns for dependency injection and service registration.</p>
 <section id="configuration-files-documentation" class="level4">
 <h4 class="anchored" data-anchor-id="configuration-files-documentation">Configuration Files Documentation</h4>
 <p>Document configuration patterns and environment-specific settings:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Configuration Management</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## appsettings.json Structure</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Diginsight"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Telemetry"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"DefaultLogLevel"</span><span class="fu">:</span> <span class="st">"Information"</span><span class="fu">,</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"EnableDynamicLogging"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"SamplingRate"</span><span class="fu">:</span> <span class="dv">0</span><span class="er">.</span><span class="dv">1</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"OpenTelemetry"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"ServiceName"</span><span class="fu">:</span> <span class="st">"Diginsight.Sample"</span><span class="fu">,</span></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"ServiceVersion"</span><span class="fu">:</span> <span class="st">"1.0.0"</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Configuration Management</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## appsettings.json Structure</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Diginsight"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Telemetry"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"DefaultLogLevel"</span><span class="fu">:</span> <span class="st">"Information"</span><span class="fu">,</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"EnableDynamicLogging"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"SamplingRate"</span><span class="fu">:</span> <span class="dv">0</span><span class="er">.</span><span class="dv">1</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"OpenTelemetry"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"ServiceName"</span><span class="fu">:</span> <span class="st">"Diginsight.Sample"</span><span class="fu">,</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"ServiceVersion"</span><span class="fu">:</span> <span class="st">"1.0.0"</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="environment-variables" class="level3">
@@ -854,142 +975,142 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="dependency-injection-patterns" class="level4">
 <h4 class="anchored" data-anchor-id="dependency-injection-patterns">Dependency Injection Patterns</h4>
-<div class="sourceCode" id="cb24"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Standard DI registration pattern for Diginsight Telemetry</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>services<span class="op">.</span><span class="fu">AddDiginsightTelemetry</span><span class="op">(</span>options <span class="op">=&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    options<span class="op">.</span><span class="fu">ServiceName</span> <span class="op">=</span> <span class="st">"MyService"</span><span class="op">;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    options<span class="op">.</span><span class="fu">EnableConsoleLogging</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    options<span class="op">.</span><span class="fu">EnableAzureMonitor</span> <span class="op">=</span> <span class="op">!</span>isDevelopment<span class="op">;</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="op">});</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Standard DI registration pattern for Diginsight Telemetry</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>services<span class="op">.</span><span class="fu">AddDiginsightTelemetry</span><span class="op">(</span>options <span class="op">=&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    options<span class="op">.</span><span class="fu">ServiceName</span> <span class="op">=</span> <span class="st">"MyService"</span><span class="op">;</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    options<span class="op">.</span><span class="fu">EnableConsoleLogging</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    options<span class="op">.</span><span class="fu">EnableAzureMonitor</span> <span class="op">=</span> <span class="op">!</span>isDevelopment<span class="op">;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="op">});</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="testing-strategy-and-error-patterns" class="level3">
 <h3 class="anchored" data-anchor-id="testing-strategy-and-error-patterns">3.2. Testing Strategy and Error Patterns</h3>
-<p><strong>What you can do:</strong> Document common error scenarios, testing patterns, and expected behaviors to help Copilot suggest robust code that handles edge cases appropriately.</p>
+<p><strong>What we can do:</strong> Document common error scenarios, testing patterns, and expected behaviors to help Copilot suggest robust code that handles edge cases appropriately.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Testing documentation and error patterns help Copilot understand expected behavior and common failure scenarios. This knowledge is crucial for suggesting robust code that handles edge cases and follows established testing patterns in your project.</p>
 <p><strong>Impact on suggestion relevance:</strong> With clear testing strategies and error patterns, Copilot can suggest code that includes appropriate error handling, follows your testing conventions, and anticipates common problems, leading to more reliable and testable code suggestions.</p>
 <section id="common-error-scenarios" class="level4">
 <h4 class="anchored" data-anchor-id="common-error-scenarios">Common Error Scenarios</h4>
 <p>Document typical error patterns and their solutions:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Common Error Patterns</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuration Errors</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Missing connection strings → Check appsettings.json</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Invalid service names → Verify OpenTelemetry configuration</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Permission issues → Check Azure RBAC settings</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance Issues</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>High memory usage → Check sampling rates</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Slow telemetry → Review batch export settings</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Missing traces → Verify instrumentation setup</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Testing Patterns</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use TestHost for integration tests</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mock ILogger&lt;T&gt; for unit tests</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use InMemoryExporter for telemetry validation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Common Error Patterns</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuration Errors</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Missing connection strings → Check appsettings.json</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Invalid service names → Verify OpenTelemetry configuration</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Permission issues → Check Azure RBAC settings</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance Issues</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>High memory usage → Check sampling rates</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Slow telemetry → Review batch export settings</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Missing traces → Verify instrumentation setup</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Testing Patterns</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use TestHost for integration tests</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mock ILogger&lt;T&gt; for unit tests</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use InMemoryExporter for telemetry validation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="test-examples" class="level4">
 <h4 class="anchored" data-anchor-id="test-examples">Test Examples</h4>
-<div class="sourceCode" id="cb26"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="op">[</span>Test<span class="op">]</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task <span class="fu">Should_Generate_Telemetry_For_Method_Execution</span><span class="op">()</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Arrange</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="dt">var</span> activity <span class="op">=</span> ActivitySource<span class="op">.</span><span class="fu">StartActivity</span><span class="op">(</span><span class="st">"test-operation"</span><span class="op">);</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Act</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> result <span class="op">=</span> await _service<span class="op">.</span><span class="fu">ProcessDataAsync</span><span class="op">();</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Assert</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    Assert<span class="op">.</span><span class="fu">IsNotNull</span><span class="op">(</span>activity<span class="op">);</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    Assert<span class="op">.</span><span class="fu">AreEqual</span><span class="op">(</span><span class="st">"test-operation"</span><span class="op">,</span> activity<span class="op">.</span><span class="fu">DisplayName</span><span class="op">);</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="op">[</span>Test<span class="op">]</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> async Task <span class="fu">Should_Generate_Telemetry_For_Method_Execution</span><span class="op">()</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Arrange</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="dt">var</span> activity <span class="op">=</span> ActivitySource<span class="op">.</span><span class="fu">StartActivity</span><span class="op">(</span><span class="st">"test-operation"</span><span class="op">);</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Act</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> result <span class="op">=</span> await _service<span class="op">.</span><span class="fu">ProcessDataAsync</span><span class="op">();</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Assert</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    Assert<span class="op">.</span><span class="fu">IsNotNull</span><span class="op">(</span>activity<span class="op">);</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    Assert<span class="op">.</span><span class="fu">AreEqual</span><span class="op">(</span><span class="st">"test-operation"</span><span class="op">,</span> activity<span class="op">.</span><span class="fu">DisplayName</span><span class="op">);</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="api-and-interface-documentation-1" class="level3">
 <h3 class="anchored" data-anchor-id="api-and-interface-documentation-1">API and Interface Documentation</h3>
-<p><strong>What you can do:</strong> Document public API contracts, method signatures, and interface behaviors to ensure Copilot suggests code that correctly implements your system’s contracts.</p>
+<p><strong>What we can do:</strong> Document public API contracts, method signatures, and interface behaviors to ensure Copilot suggests code that correctly implements our system’s contracts.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Clear API and interface documentation helps Copilot understand the contracts and boundaries within your system. When Copilot knows the signatures, parameters, and expected behavior of your public APIs, it can suggest proper implementations and usage patterns.</p>
 <p><strong>Impact on suggestion relevance:</strong> API documentation enables Copilot to suggest code that correctly implements interfaces, respects method signatures, and follows your established patterns for API design and usage, reducing integration errors and improving code consistency.</p>
 <section id="public-api-contracts" class="level4">
 <h4 class="anchored" data-anchor-id="public-api-contracts">Public API Contracts</h4>
-<div class="sourceCode" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Public APIs</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## IDiginsightTelemetryService</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>Primary interface for telemetry operations:</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="in">```csharp</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">interface</span> IDiginsightTelemetryService</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Starts a new activity with automatic telemetry collection</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"activityName"</span><span class="kw">&gt;</span><span class="co">Name of the activity</span><span class="kw">&lt;/param&gt;</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"tags"</span><span class="kw">&gt;</span><span class="co">Optional tags for the activity</span><span class="kw">&lt;/param&gt;</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;returns&gt;</span><span class="co">Disposable activity that ends when disposed</span><span class="kw">&lt;/returns&gt;</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    IDisposable <span class="fu">StartActivity</span><span class="op">(</span><span class="dt">string</span> activityName<span class="op">,</span> Dictionary<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">object</span><span class="op">&gt;?</span> tags <span class="op">=</span> <span class="kw">null</span><span class="op">);</span></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Logs structured data with telemetry correlation</span></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> LogStructured<span class="op">&lt;</span>T<span class="op">&gt;(</span>LogLevel level<span class="op">,</span> <span class="dt">string</span> message<span class="op">,</span> T data<span class="op">);</span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Public APIs</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## IDiginsightTelemetryService</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>Primary interface for telemetry operations:</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="in">```csharp</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">interface</span> IDiginsightTelemetryService</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Starts a new activity with automatic telemetry collection</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"activityName"</span><span class="kw">&gt;</span><span class="co">Name of the activity</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;param</span><span class="ot"> name=</span><span class="dt">"tags"</span><span class="kw">&gt;</span><span class="co">Optional tags for the activity</span><span class="kw">&lt;/param&gt;</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;returns&gt;</span><span class="co">Disposable activity that ends when disposed</span><span class="kw">&lt;/returns&gt;</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    IDisposable <span class="fu">StartActivity</span><span class="op">(</span><span class="dt">string</span> activityName<span class="op">,</span> Dictionary<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">object</span><span class="op">&gt;?</span> tags <span class="op">=</span> <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;summary&gt;</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Logs structured data with telemetry correlation</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// </span><span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> LogStructured<span class="op">&lt;</span>T<span class="op">&gt;(</span>LogLevel level<span class="op">,</span> <span class="dt">string</span> message<span class="op">,</span> T data<span class="op">);</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="extension-methods" class="level4">
 <h4 class="anchored" data-anchor-id="extension-methods">Extension Methods</h4>
-<div class="sourceCode" id="cb28"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Common extension patterns for telemetry</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">class</span> TelemetryExtensions</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> IServiceCollection <span class="fu">AddDiginsightTelemetry</span><span class="op">(</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span> IServiceCollection services<span class="op">,</span> </span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        Action<span class="op">&lt;</span>DiginsightOptions<span class="op">&gt;</span> configure<span class="op">)</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Configuration logic</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Common extension patterns for telemetry</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">class</span> TelemetryExtensions</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> IServiceCollection <span class="fu">AddDiginsightTelemetry</span><span class="op">(</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span> IServiceCollection services<span class="op">,</span> </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        Action<span class="op">&lt;</span>DiginsightOptions<span class="op">&gt;</span> configure<span class="op">)</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Configuration logic</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="architecture-decision-records" class="level3">
 <h3 class="anchored" data-anchor-id="architecture-decision-records">3.3. Architecture Decision Records</h3>
-<p><strong>What you can do:</strong> Create Architecture Decision Records (ADRs) that document why certain technical choices were made, providing historical context for architectural decisions.</p>
+<p><strong>What we can do:</strong> Create Architecture Decision Records (ADRs) that document why certain technical choices were made, providing historical context for architectural decisions.</p>
 <p><strong>Why this improves Copilot understanding:</strong> Architecture Decision Records (ADRs) provide context about why certain technical choices were made. This historical context helps Copilot understand not just what patterns to follow, but why they were chosen, enabling it to suggest solutions that align with your architectural philosophy and constraints.</p>
 <p><strong>Impact on suggestion relevance:</strong> ADRs help Copilot understand the reasoning behind architectural decisions, enabling it to suggest code that respects existing design choices, avoids previously rejected approaches, and aligns with your team’s architectural principles and trade-offs.</p>
 <section id="adr-template" class="level4">
 <h4 class="anchored" data-anchor-id="adr-template">ADR Template</h4>
-<div class="sourceCode" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># ADR-001: Use OpenTelemetry for Distributed Tracing</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Status</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>Accepted</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Context</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>Need standardized observability across microservices with vendor-neutral approach.</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Decision</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>Adopt OpenTelemetry as the primary telemetry framework for Diginsight.</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Consequences</span></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Positive**: Vendor-neutral, industry standard, rich ecosystem</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Negative**: Learning curve, additional complexity in configuration</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Neutral**: Migration effort from existing logging frameworks</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Implementation Notes</span></span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use OTLP exporters for data transmission</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Implement custom samplers for cost control</span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Maintain backward compatibility with existing ILogger patterns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># ADR-001: Use OpenTelemetry for Distributed Tracing</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Status</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>Accepted</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Context</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>Need standardized observability across microservices with vendor-neutral approach.</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Decision</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>Adopt OpenTelemetry as the primary telemetry framework for Diginsight.</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Consequences</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Positive**: Vendor-neutral, industry standard, rich ecosystem</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Negative**: Learning curve, additional complexity in configuration</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Neutral**: Migration effort from existing logging frameworks</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Implementation Notes</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use OTLP exporters for data transmission</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Implement custom samplers for cost control</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Maintain backward compatibility with existing ILogger patterns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="key-decisions" class="level4">
 <h4 class="anchored" data-anchor-id="key-decisions">Key Decisions</h4>
 <p>Document major architectural choices:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Architecture Decisions</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Telemetry Collection Strategy</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Decision**: Use push-based telemetry with batching</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Rationale**: Better performance, reduced network overhead</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Trade-offs**: Slight delay in telemetry visibility</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuration Management</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Decision**: Use strongly-typed configuration classes</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Rationale**: Compile-time safety, better IntelliSense support</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Implementation**: <span class="in">`IOptions&lt;T&gt;`</span> pattern with validation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Architecture Decisions</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Telemetry Collection Strategy</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Decision**: Use push-based telemetry with batching</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Rationale**: Better performance, reduced network overhead</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Trade-offs**: Slight delay in telemetry visibility</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuration Management</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Decision**: Use strongly-typed configuration classes</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Rationale**: Compile-time safety, better IntelliSense support</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Implementation**: <span class="in">`IOptions&lt;T&gt;`</span> pattern with validation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 </section>
