@@ -1,5 +1,5 @@
 ---
-title: "HowTo: Maximize GitHub Copilot's Code Understanding of your repository"
+title: "HowTo: Maximize GitHub Copilot's Code Understanding of our repositories"
 author: "Dario Airoldi"
 date: "2025-06-29"
 categories: [news, code, copilot, development]
@@ -21,37 +21,38 @@ Proper documentation techniques significantly improve Copilot's ability to gener
     - 1.4. [Code Patterns and Conventions](#14-code-patterns-and-conventions)
     - 1.5. [Effective Prompting Strategies](#15-effective-prompting-strategies)
     - 1.6. [Code Annotations for AI Tools](#16-code-annotations-for-ai-tools)
-
+<br><br>
 2. [Medium Impact](#2-medium-impact)
     - 2.1. [AI-Optimized Code Comments](#21-ai-optimized-code-comments)
     - 2.2. [Implementation Examples](#22-implementation-examples)
     - 2.3. [Data Model Documentation](#23-data-model-documentation)
     - 2.4. [API and Interface Documentation](#24-api-and-interface-documentation)
     - 2.5. [Code Relationship Documentation](#25-code-relationship-documentation)
-
+<br><br>
 3. [Important but Less Direct Impact](#3-important-but-less-direct-impact)
     - 3.1. [Configuration and Environment Documentation](#31-configuration-and-environment-documentation)
     - 3.2. [Testing Strategy and Error Patterns](#32-testing-strategy-and-error-patterns)
     - 3.3. [Architecture Decision Records](#33-architecture-decision-records)
-
+<br><br>
 4. [Best Practices Summary](#4-best-practices-summary)
+<br>
 5. [References](#5-references)
 
 ## 1. Most Impactful Strategies
 
-These strategies have the most direct and immediate impact on GitHub Copilot's ability to understand your code context and generate relevant suggestions.
+These strategies have the most direct and immediate impact on GitHub Copilot's ability to understand our code context and generate relevant suggestions.
 
 ### 1.1. Organize Workspace with Information for AI
 
 **What we can do:** Structure our **project files, documentation, and code comments** in a way that maximizes Copilot's ability to understand our project architecture, patterns, and domain knowledge.
 
-**Why this improves Copilot understanding:** Workspace organization is the foundational strategy that encompasses all aspects of structuring your project for AI comprehension. This includes code comments, documentation placement, specialized AI-guidance files, and strategic organization that maximizes Copilot's ability to understand your project's context and domain knowledge.
+**Why this improves Copilot understanding:** Workspace organization is the foundational strategy that encompasses all aspects of structuring our project for AI comprehension. This includes code comments, documentation placement, specialized AI-guidance files, and strategic organization that maximizes Copilot's ability to understand our project's context and domain knowledge.
 
-**Impact on suggestion relevance:** Proper workspace organization has the highest impact because it provides the structural foundation for all other AI understanding techniques. When your workspace is organized for AI comprehension, Copilot can access and correlate information across multiple sources, leading to more contextually appropriate and architecturally sound suggestions.
+**Impact on suggestion relevance:** Proper workspace organization has the highest impact because it provides the structural foundation for all other AI understanding techniques. When our workspace is organized for AI comprehension, Copilot can access and correlate information across multiple sources, leading to more contextually appropriate and architecturally sound suggestions.
 
 #### 1.1.1. Method Overview Comments
 
-Provide domain context and decision-making rules to help Copilot understand your business logic:
+Provide domain context and decision-making rules to help Copilot understand our business logic:
 
 ```csharp
 // DOMAIN: This method handles period selection for data aggregation
@@ -68,7 +69,7 @@ private (AggregationRange range, string format) ConfigurePeriodFormats(string pe
 
 #### 1.1.2. Strategic Code Comments
 
-**Focus on what Copilot cannot infer:** While Copilot can generate standard XML documentation, it cannot understand your specific business rules, performance constraints, or domain-specific patterns. Focus your comments on providing this unique context.
+**Focus on what Copilot cannot infer:** While Copilot can generate standard XML documentation, it cannot understand our specific business rules, performance constraints, or domain-specific patterns. Focus comments on providing this unique context.
 
 ```csharp
 /// <summary>
@@ -167,7 +168,7 @@ Create a layered documentation structure that places relevant information close 
 
 **Key Benefits:**
 
-- **Layered Context**: Copilot accesses the most relevant documentation based on where you're working
+- **Layered Context**: Copilot accesses the most relevant documentation based on where we're working
 - **Easy Maintenance**: Documentation stays close to the code it describes
 - **Focused Information**: Each file addresses specific concerns without overwhelming detail
 
@@ -246,7 +247,7 @@ This hierarchical structure helps Copilot understand the relationship between co
 
 #### 1.1.8. README Integration Strategy
 
-Create AI-friendly project documentation in your README files:
+Create AI-friendly project documentation in our README files:
 
 ```markdown
 # Diginsight Telemetry - AI Development Guide
@@ -269,7 +270,7 @@ This project uses OpenTelemetry for distributed tracing. Common patterns:
 
 #### 1.1.9. External References Strategy
 
-**Important Limitation:** Copilot cannot access external URLs, wikis, or online documentation during code generation. However, you can still reference them strategically:
+**Important Limitation:** Copilot cannot access external URLs, wikis, or online documentation during code generation. However, we can still reference them strategically:
 
 ```markdown
 # .copilot/architecture.md
@@ -282,7 +283,7 @@ This project uses OpenTelemetry for distributed tracing. Common patterns:
 - **Local Summary**: Always use W3C trace context headers for correlation
 
 ### Azure DevOps Wiki References  
-- **Team Architecture Decisions**: https://dev.azure.com/yourorg/project/_wiki/wikis/Architecture
+- **Team Architecture Decisions**: https://dev.azure.com/ourorg/project/_wiki/wikis/Architecture
 - **Key Decisions**: Service mesh adoption, database partitioning strategy
 - **Local Summary**: Use event-driven patterns for telemetry aggregation
 
@@ -296,16 +297,16 @@ This project uses OpenTelemetry for distributed tracing. Common patterns:
 
 1. **Include the link** for human developers
 2. **Summarize key information locally** that Copilot can understand
-3. **Extract essential patterns** into your local documentation
+3. **Extract essential patterns** into our local documentation
 4. **Copy critical code examples** rather than linking to them
 
 ### 1.2. Semantic Naming for AI Understanding
 
 **What we can do:** Use descriptive, hierarchical naming conventions for methods, classes, and variables that clearly convey intent and relationships within our codebase.
 
-**Why this improves Copilot understanding:** Descriptive, hierarchical naming conventions help Copilot understand the intent and relationships within your codebase. When method names, class names, and variable names follow consistent patterns that convey meaning, Copilot can better predict what related code should look like and suggest appropriate completions.
+**Why this improves Copilot understanding:** Descriptive, hierarchical naming conventions help Copilot understand the intent and relationships within our codebase. When method names, class names, and variable names follow consistent patterns that convey meaning, Copilot can better predict what related code should look like and suggest appropriate completions.
 
-**Impact on suggestion relevance:** Semantic naming enables Copilot to suggest code that follows your established patterns, maintains consistency across your codebase, and uses meaningful names that align with your domain terminology.
+**Impact on suggestion relevance:** Semantic naming enables Copilot to suggest code that follows our established patterns, maintains consistency across our codebase, and uses meaningful names that align with our domain terminology.
 
 #### Use Descriptive, Hierarchical Naming
 
@@ -340,9 +341,9 @@ var hourlyDataRetrieval = new TelemetryDataRetrieval();
 
 **What we can do:** Clearly define and document our domain-specific terminology, business concepts, and their relationships to help Copilot understand our business logic.
 
-**Why this improves Copilot understanding:** Domain-specific terminology and concepts are crucial for Copilot to understand your business logic. When you clearly define terms like "Data Sources," "Groups," and "Activity Events," Copilot can better understand the context of your code and suggest domain-appropriate solutions rather than generic programming patterns.
+**Why this improves Copilot understanding:** Domain-specific terminology and concepts are crucial for Copilot to understand our business logic. When we clearly define terms like "Data Sources," "Groups," and "Activity Events," Copilot can better understand the context of our code and suggest domain-appropriate solutions rather than generic programming patterns.
 
-**Impact on suggestion relevance:** With clear domain concepts, Copilot can suggest variable names, method signatures, and logic flows that align with your business domain, making suggestions more meaningful and reducing the need for manual corrections.
+**Impact on suggestion relevance:** With clear domain concepts, Copilot can suggest variable names, method signatures, and logic flows that align with our business domain, making suggestions more meaningful and reducing the need for manual corrections.
 
 #### Core Domain Concepts
 
@@ -389,9 +390,9 @@ switch (settings.Period)
 
 **What we can do:** Establish and document consistent code patterns, naming conventions, error handling approaches, and architectural patterns that should be applied throughout our codebase.
 
-**Why this improves Copilot understanding:** Establishing and documenting code patterns and conventions helps Copilot understand your team's preferred approaches to common programming tasks. This includes naming conventions, error handling patterns, logging strategies, and architectural patterns that should be consistently applied.
+**Why this improves Copilot understanding:** Establishing and documenting code patterns and conventions helps Copilot understand our team's preferred approaches to common programming tasks. This includes naming conventions, error handling patterns, logging strategies, and architectural patterns that should be consistently applied.
 
-**Impact on suggestion relevance:** Clear code patterns and conventions ensure that Copilot's suggestions follow your established standards, maintain consistency across the codebase, and adhere to your team's best practices, resulting in code that fits seamlessly into your existing project structure.
+**Impact on suggestion relevance:** Clear code patterns and conventions ensure that Copilot's suggestions follow our established standards, maintain consistency across the codebase, and adhere to our team's best practices, resulting in code that fits seamlessly into our existing project structure.
 
 #### Naming Conventions
 
@@ -445,13 +446,13 @@ public async Task<Result> ProcessAsync(Request request)
 
 **What we can do:** Develop and document standardized prompting patterns that help developers leverage the documentation in our codebase when working with Copilot.
 
-**Why this improves Copilot understanding:** While other strategies focus on making your codebase more understandable to Copilot, effective prompting strategies create a crucial feedback loop between your documentation and AI interaction. When developers know how to reference existing patterns, naming conventions, and architectural decisions in their prompts, Copilot can locate and apply this contextual information more effectively.
+**Why this improves Copilot understanding:** While other strategies focus on making our codebase more understandable to Copilot, effective prompting strategies create a crucial feedback loop between our documentation and AI interaction. When developers know how to reference existing patterns, naming conventions, and architectural decisions in their prompts, Copilot can locate and apply this contextual information more effectively.
 
-**Impact on suggestion relevance:** Strategic prompting dramatically improves Copilot's ability to generate code that aligns with your established patterns and architectural constraints. By teaching developers how to prompt effectively, you create a multiplier effect that enhances the value of all your other documentation efforts.
+**Impact on suggestion relevance:** Strategic prompting dramatically improves Copilot's ability to generate code that aligns with our established patterns and architectural constraints. By teaching developers how to prompt effectively, we create a multiplier effect that enhances the value of all our other documentation efforts.
 
 #### Reference-Based Prompts
 
-Train your team to reference specific documentation in prompts:
+Train the team to reference specific documentation in prompts:
 
 ```text
 // Example prompt: "Create a telemetry method following the patterns in Diginsight.Core.copilot.md"
@@ -494,7 +495,7 @@ When working with telemetry services, use these specific prompts:
 
 **Why this improves Copilot understanding:** Standard comments are helpful, but specialized AI annotations create a targeted communication channel with Copilot. These annotations stand out from regular comments and provide structured guidance that Copilot can more easily identify and follow when generating suggestions.
 
-**Impact on suggestion relevance:** AI-specific annotations dramatically improve Copilot's ability to understand your code's unique constraints, patterns, and relationships. They serve as clear signposts that help Copilot navigate your codebase and generate suggestions that align perfectly with your team's expectations.
+**Impact on suggestion relevance:** AI-specific annotations dramatically improve Copilot's ability to understand our code's unique constraints, patterns, and relationships. They serve as clear signposts that help Copilot navigate our codebase and generate suggestions that align perfectly with our team's expectations.
 
 #### AI Directive Annotations
 
@@ -562,7 +563,7 @@ These strategies provide substantial improvements to Copilot's understanding, pa
 
 **Why this improves Copilot understanding:** Strategic code comments provide tactical context that helps Copilot understand specific implementation details, dependencies, and performance considerations. While less impactful than architecture documentation, they provide valuable hints for method-level code generation.
 
-**Impact on suggestion relevance:** AI-optimized comments help Copilot suggest code that follows your specific patterns and handles edge cases appropriately, though they primarily influence local code suggestions rather than system-wide architectural decisions.
+**Impact on suggestion relevance:** AI-optimized comments help Copilot suggest code that follows our specific patterns and handles edge cases appropriately, though they primarily influence local code suggestions rather than system-wide architectural decisions.
 
 #### Structured Comments for AI
 
@@ -599,9 +600,9 @@ public async Task<ProcessingResult> ProcessTelemetryDataAsync(TelemetryRequest r
 
 **What we can do:** Provide concrete implementation examples that demonstrate our preferred patterns and coding styles, serving as templates for Copilot to follow.
 
-**Why this improves Copilot understanding:** Concrete implementation examples show Copilot the preferred patterns and coding styles for your project. When Copilot sees how you handle period calculations or batch processing, it can suggest similar patterns for new functionality, maintaining consistency across your codebase.
+**Why this improves Copilot understanding:** Concrete implementation examples show Copilot the preferred patterns and coding styles for our project. When Copilot sees how we handle period calculations or batch processing, it can suggest similar patterns for new functionality, maintaining consistency across our codebase.
 
-**Impact on suggestion relevance:** Implementation examples serve as templates for Copilot to follow, ensuring that new code suggestions match your existing patterns, naming conventions, and architectural approaches, leading to more cohesive and maintainable code.
+**Impact on suggestion relevance:** Implementation examples serve as templates for Copilot to follow, ensuring that new code suggestions match our existing patterns, naming conventions, and architectural approaches, leading to more cohesive and maintainable code.
 
 #### Period Helper Methods
 
@@ -648,9 +649,9 @@ private async Task<Dictionary<string, GroupAggregation<AggregateValues>>>
 
 **What we can do:** Document our data structures, relationships, and database schema to help Copilot understand how data flows through our application.
 
-**Why this improves Copilot understanding:** Data models are the foundation of any application. When Copilot understands your data structures, relationships, and database schema, it can suggest appropriate CRUD operations, data transformations, and validation logic. This is especially critical for telemetry systems where data flows through multiple transformation stages.
+**Why this improves Copilot understanding:** Data models are the foundation of any application. When Copilot understands our data structures, relationships, and database schema, it can suggest appropriate CRUD operations, data transformations, and validation logic. This is especially critical for telemetry systems where data flows through multiple transformation stages.
 
-**Impact on suggestion relevance:** With clear data model documentation, Copilot can suggest proper entity mappings, database queries, and data processing patterns that respect your schema constraints and business rules, reducing bugs and improving code quality.
+**Impact on suggestion relevance:** With clear data model documentation, Copilot can suggest proper entity mappings, database queries, and data processing patterns that respect our schema constraints and business rules, reducing bugs and improving code quality.
 
 #### Key Data Models
 
@@ -696,9 +697,9 @@ Primary response model with hierarchical structure:
 
 **What we can do:** Document our API contracts, method signatures, and interface boundaries to help Copilot understand system contracts and expected behaviors.
 
-**Why this improves Copilot understanding:** Clear API and interface documentation helps Copilot understand the contracts and boundaries within your system. When Copilot knows the signatures, parameters, and expected behavior of your public APIs, it can suggest proper implementations and usage patterns.
+**Why this improves Copilot understanding:** Clear API and interface documentation helps Copilot understand the contracts and boundaries within our system. When Copilot knows the signatures, parameters, and expected behavior of our public APIs, it can suggest proper implementations and usage patterns.
 
-**Impact on suggestion relevance:** API documentation enables Copilot to suggest code that correctly implements interfaces, respects method signatures, and follows your established patterns for API design and usage, reducing integration errors and improving code consistency.
+**Impact on suggestion relevance:** API documentation enables Copilot to suggest code that correctly implements interfaces, respects method signatures, and follows our established patterns for API design and usage, reducing integration errors and improving code consistency.
 
 ### 2.5. Code Relationship Documentation
 
@@ -706,7 +707,7 @@ Primary response model with hierarchical structure:
 
 **Why this improves Copilot understanding:** Understanding how different classes, services, and components interact is crucial for Copilot to suggest appropriate design patterns and architectural solutions. When Copilot knows that `DiginsightService` depends on `IDataSourceRepository`, it can suggest proper dependency injection patterns and interface implementations.
 
-**Impact on suggestion relevance:** Clear relationship documentation enables Copilot to suggest code that respects your architecture, follows dependency flow patterns, and maintains proper separation of concerns, leading to more maintainable and consistent code suggestions.
+**Impact on suggestion relevance:** Clear relationship documentation enables Copilot to suggest code that respects our architecture, follows dependency flow patterns, and maintains proper separation of concerns, leading to more maintainable and consistent code suggestions.
 
 #### Class Dependencies
 
@@ -768,9 +769,9 @@ These strategies provide foundational improvements that support overall code com
 
 **What we can do:** Document our configuration structures, environment variables, and dependency injection patterns to help Copilot understand how our application behaves in different environments.
 
-**Why this improves Copilot understanding:** Configuration is critical for understanding how an application behaves in different environments. When Copilot understands your configuration structure, environment variables, and dependency injection patterns, it can suggest code that properly handles configuration changes and environment-specific behavior.
+**Why this improves Copilot understanding:** Configuration is critical for understanding how an application behaves in different environments. When Copilot understands our configuration structure, environment variables, and dependency injection patterns, it can suggest code that properly handles configuration changes and environment-specific behavior.
 
-**Impact on suggestion relevance:** Configuration documentation enables Copilot to suggest code that properly accesses configuration values, handles environment differences, and follows your established patterns for dependency injection and service registration.
+**Impact on suggestion relevance:** Configuration documentation enables Copilot to suggest code that properly accesses configuration values, handles environment differences, and follows our established patterns for dependency injection and service registration.
 
 #### Configuration Files Documentation
 
@@ -819,9 +820,9 @@ services.AddDiginsightTelemetry(options =>
 
 **What we can do:** Document common error scenarios, testing patterns, and expected behaviors to help Copilot suggest robust code that handles edge cases appropriately.
 
-**Why this improves Copilot understanding:** Testing documentation and error patterns help Copilot understand expected behavior and common failure scenarios. This knowledge is crucial for suggesting robust code that handles edge cases and follows established testing patterns in your project.
+**Why this improves Copilot understanding:** Testing documentation and error patterns help Copilot understand expected behavior and common failure scenarios. This knowledge is crucial for suggesting robust code that handles edge cases and follows established testing patterns in our project.
 
-**Impact on suggestion relevance:** With clear testing strategies and error patterns, Copilot can suggest code that includes appropriate error handling, follows your testing conventions, and anticipates common problems, leading to more reliable and testable code suggestions.
+**Impact on suggestion relevance:** With clear testing strategies and error patterns, Copilot can suggest code that includes appropriate error handling, follows our testing conventions, and anticipates common problems, leading to more reliable and testable code suggestions.
 
 #### Common Error Scenarios
 
@@ -868,9 +869,9 @@ public async Task Should_Generate_Telemetry_For_Method_Execution()
 
 **What we can do:** Document public API contracts, method signatures, and interface behaviors to ensure Copilot suggests code that correctly implements our system's contracts.
 
-**Why this improves Copilot understanding:** Clear API and interface documentation helps Copilot understand the contracts and boundaries within your system. When Copilot knows the signatures, parameters, and expected behavior of your public APIs, it can suggest proper implementations and usage patterns.
+**Why this improves Copilot understanding:** Clear API and interface documentation helps Copilot understand the contracts and boundaries within our system. When Copilot knows the signatures, parameters, and expected behavior of our public APIs, it can suggest proper implementations and usage patterns.
 
-**Impact on suggestion relevance:** API documentation enables Copilot to suggest code that correctly implements interfaces, respects method signatures, and follows your established patterns for API design and usage, reducing integration errors and improving code consistency.
+**Impact on suggestion relevance:** API documentation enables Copilot to suggest code that correctly implements interfaces, respects method signatures, and follows our established patterns for API design and usage, reducing integration errors and improving code consistency.
 
 #### Public API Contracts
 
@@ -917,9 +918,9 @@ public static class TelemetryExtensions
 
 **What we can do:** Create Architecture Decision Records (ADRs) that document why certain technical choices were made, providing historical context for architectural decisions.
 
-**Why this improves Copilot understanding:** Architecture Decision Records (ADRs) provide context about why certain technical choices were made. This historical context helps Copilot understand not just what patterns to follow, but why they were chosen, enabling it to suggest solutions that align with your architectural philosophy and constraints.
+**Why this improves Copilot understanding:** Architecture Decision Records (ADRs) provide context about why certain technical choices were made. This historical context helps Copilot understand not just what patterns to follow, but why they were chosen, enabling it to suggest solutions that align with our architectural philosophy and constraints.
 
-**Impact on suggestion relevance:** ADRs help Copilot understand the reasoning behind architectural decisions, enabling it to suggest code that respects existing design choices, avoids previously rejected approaches, and aligns with your team's architectural principles and trade-offs.
+**Impact on suggestion relevance:** ADRs help Copilot understand the reasoning behind architectural decisions, enabling it to suggest code that respects existing design choices, avoids previously rejected approaches, and aligns with our team's architectural principles and trade-offs.
 
 #### ADR Template
 
@@ -1014,4 +1015,4 @@ Document major architectural choices:
 
 ---
 
-By implementing these specialized documentation practices, your team can significantly enhance Copilot's understanding of the Diginsight Telemetry system, leading to more accurate code suggestions that respect your domain-specific patterns and requirements.
+By implementing these specialized documentation practices, our team can significantly enhance Copilot's understanding of the Diginsight Telemetry system, leading to more accurate code suggestions that respect our domain-specific patterns and requirements.
