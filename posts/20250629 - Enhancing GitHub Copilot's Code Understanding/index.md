@@ -9,7 +9,7 @@ draft: false
 
 This document **analyzes some strategies we are using to enhance GitHub Copilot's understanding of our (Diginsight) codebases**.
 
-Proper techniques significantly improve Copilot's ability to generate contextually appropriate code suggestions and provide meaningful answers to code-related questions.
+Proper techniques significantly improve Copilot's code generation and answers to code-related questions.
 
 
 ## Table of Contents

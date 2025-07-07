@@ -11,7 +11,7 @@
     "href": "posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html",
     "title": "HowTo: Maximize GitHub Copilot’s Code Understanding of our repositories",
     "section": "",
-    "text": "This document analyzes some strategies we are using to enhance GitHub Copilot’s understanding of our (Diginsight) codebases.\nProper techniques significantly improve Copilot’s ability to generate contextually appropriate code suggestions and provide meaningful answers to code-related questions."
+    "text": "This document analyzes some strategies we are using to enhance GitHub Copilot’s understanding of our (Diginsight) codebases.\nProper techniques significantly improve Copilot’s code generation and answers to code-related questions."
   },
   {
     "objectID": "posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html#table-of-contents",
