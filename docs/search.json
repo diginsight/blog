@@ -11,7 +11,7 @@
     "href": "posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html",
     "title": "HowTo: Maximize GitHub Copilot’s Code Understanding of our repositories",
     "section": "",
-    "text": "This document analyzes some strategies we are using to enhance GitHub Copilot’s understanding of our Diginsight codebases.\nProper documentation techniques significantly improve Copilot’s ability to generate contextually appropriate code suggestions and provide meaningful answers to code-related questions."
+    "text": "This document analyzes some strategies we are using to enhance GitHub Copilot’s understanding of our (Diginsight) codebases.\nProper techniques significantly improve Copilot’s ability to generate contextually appropriate code suggestions and provide meaningful answers to code-related questions."
   },
   {
     "objectID": "posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html#table-of-contents",
@@ -137,7 +137,7 @@
     "href": "index.html",
     "title": "Diginsight blog",
     "section": "",
-    "text": "HowTo: Maximize GitHub Copilot’s Code Understanding of our repositories\n\n\n\n\n\n\nnews\n\n\ncode\n\n\ncopilot\n\n\ndevelopment\n\n\n\n\n\n\n\n\n\nJun 29, 2025\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nUse Risk-Driven Branching to mitigate the integration crunch\n\n\n\n\n\n\nnews\n\n\ncode\n\n\ndeelopment\n\n\n\n\n\n\n\n\n\nMar 31, 2025\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nHowTo: Manage Sensitive Configurations with Config Injection from Private Repositories\n\n\n\n\n\n\nnews\n\n\ncode\n\n\ndevelopment\n\n\n\n\n\n\n\n\n\nDec 14, 2024\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nSteps to add diginsight to SampleWebApi01\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nSep 29, 2024\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nSteps to add diginsight to DS.DevopsHelper.Api\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nSep 17, 2024\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nSteps to add diginsight to DS.DevopsHelper.Api\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nSep 17, 2024\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nAug 27, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To Diginsight Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nAug 25, 2024\n\n\nDario Airoldi\n\n\n\n\n\n\nNo matching items"
+    "text": "HowTo: Maximize GitHub Copilot’s Code Understanding of our repositories\n\n\n\n\n\n\nnews\n\n\ncode\n\n\ncopilot\n\n\ndevelopment\n\n\n\n\n\n\n\n\n\nJun 29, 2025\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nUse Risk-Driven Branching to mitigate the integration crunch\n\n\n\n\n\n\nnews\n\n\ncode\n\n\ndeelopment\n\n\n\n\n\n\n\n\n\nMar 31, 2025\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nHowTo: Manage Sensitive Configurations with Config Injection from Private Repositories\n\n\n\n\n\n\nnews\n\n\ncode\n\n\ndevelopment\n\n\n\n\n\n\n\n\n\nDec 14, 2024\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nSteps to add diginsight to SampleWebApi01\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nSep 29, 2024\n\n\nDario Airoldi\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To Diginsight Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nAug 25, 2024\n\n\nDario Airoldi\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
