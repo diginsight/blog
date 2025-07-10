@@ -16,11 +16,13 @@ Proper techniques significantly improve Copilot's code generation and answers to
 
 1. [Most Impactful Strategies](#1-most-impactful-strategies)
     - 1.1. [Organize Workspace with Information for AI](#11-organize-workspace-with-information-for-ai)
+        - 1.1.10. [Team-Shareable Prompt Templates](#1110-team-shareable-prompt-templates)
     - 1.2. [Semantic Naming for AI Understanding](#12-semantic-naming-for-ai-understanding)
     - 1.3. [Domain Concept Documentation](#13-domain-concept-documentation)
     - 1.4. [Code Patterns and Conventions](#14-code-patterns-and-conventions)
     - 1.5. [Effective Prompting Strategies](#15-effective-prompting-strategies)
     - 1.6. [Code Annotations for AI Tools](#16-code-annotations-for-ai-tools)
+    - 1.7. [Team-Shareable Prompt Templates](#17-team-shareable-prompt-templates)
 <br><br>
 2. [Medium Impact](#2-medium-impact)
     - 2.1. [AI-Optimized Code Comments](#21-ai-optimized-code-comments)
@@ -135,9 +137,19 @@ Create a layered documentation structure that places relevant information close 
 
 ```text
 /MyProject/
+├── .github/
+│   └── copilot/
+│       └── prompts/                   # Team-shareable prompt templates
+│           ├── telemetry-service.prompt       # Create telemetry services
+│           ├── error-handling.prompt          # Add error handling patterns
+│           ├── unit-tests.prompt             # Generate unit tests
+│           └── performance-optimization.prompt
 ├── .copilot/                          # Project-wide AI context
 │   ├── architecture.md
-│   └── patterns.md
+│   ├── patterns.md
+│   └── context/
+│       ├── images/                    # Visual context for AI
+│       └── examples/                  # Code examples and templates
 ├── src/
 │   ├── docs/                          # Comprehensive documentation
 │   │   ├── api-reference.md
@@ -164,11 +176,28 @@ Create a layered documentation structure that places relevant information close 
 **Types of Documentation Files to Distribute:**
 
 1. **Project Root `README.md`**: High-level project overview, setup instructions, and quick Copilot prompts
-2. **`.copilot/` Folder**: Dedicated AI context files for architecture decisions, coding patterns, and troubleshooting guides
-3. **`src/docs/` Folder**: Comprehensive API references, domain concepts, and technical specifications
-4. **Module-Level `README.md`**: Overview of each major code module (Services/, Models/, etc.)
-5. **Component-Level `README.md`**: Specific documentation for individual services or components
-6. **`.copilot.md` Files**: Specialized AI guidance files next to major components (e.g., `TelemetryService.copilot.md`)
+2. **`.github/copilot/prompts/` Folder**: Team-shareable prompt templates that appear in Copilot's Prompts panel
+3. **`.copilot/` Folder**: Dedicated AI context files for architecture decisions, coding patterns, and troubleshooting guides
+4. **`src/docs/` Folder**: Comprehensive API references, domain concepts, and technical specifications
+5. **Module-Level `README.md`**: Overview of each major code module (Services/, Models/, etc.)
+6. **Component-Level `README.md`**: Specific documentation for individual services or components
+7. **`.copilot.md` Files**: Specialized AI guidance files next to major components (e.g., `TelemetryService.copilot.md`)
+
+**Key Differences Between `.github/copilot/` and `.copilot/` Folders:**
+
+The two root directories serve distinct but complementary purposes in the GitHub Copilot ecosystem:
+
+- **`.github/copilot/prompts/` Directory**: 
+  - **Purpose**: Team-shareable Copilot configuration following GitHub conventions
+  - **Contents**: Reusable `.prompt` files that appear directly in Copilot's Prompts panel
+  - **Visibility**: These appear as selectable prompts in the Copilot UI for all team members
+  - **Use Case**: Standardized team workflows and common development tasks
+
+- **`.copilot/` Directory**: 
+  - **Purpose**: Local developer context and project-specific reference materials
+  - **Contents**: Documentation, images, code examples that help Copilot understand your codebase
+  - **Visibility**: These files provide background knowledge but don't appear directly in the Copilot UI
+  - **Use Case**: Contextual information that improves Copilot's understanding of your specific codebase
 
 **Key Benefits:**
 
@@ -556,6 +585,94 @@ public class DiginsightActivitySource
     // Implementation...
 }
 ```
+
+### 1.7. Team-Shareable Prompt Templates
+
+**Create standardized prompt templates** that appear in Copilot's Prompts panel for consistent team workflows:
+
+The `.github/copilot/prompts/` folder contains `.prompt` files that become available to all team members through Copilot's interface. These templates ensure consistent code generation patterns across the team.
+
+**Example: Telemetry Service Creation Template**
+
+Create `.github/copilot/prompts/telemetry-service.prompt`:
+
+```yaml
+name: "Create Diginsight Telemetry Service"
+description: "Generate a new telemetry service following Diginsight patterns"
+temperature: 0.3
+prompt: |
+  Create a new telemetry service class that follows Diginsight patterns with:
+  
+  1. Standard constructor injection with ILogger<T> and ActivitySource
+  2. Proper OpenTelemetry instrumentation using our activity creation pattern
+  3. Error handling with activity status setting and structured logging
+  4. Method naming following our hierarchical convention (e.g., ProcessTelemetryDataAsync)
+  5. XML documentation with BUSINESS RULE, PERFORMANCE CONSTRAINT, and DIGINSIGHT PATTERN remarks
+  6. Dependency injection registration helper method
+  
+  Use these imports:
+  - System.Diagnostics
+  - Microsoft.Extensions.Logging
+  - OpenTelemetry.Trace
+  
+  Follow the pattern shown in existing telemetry services in this codebase.
+```
+
+**Example: Error Handling Template**
+
+Create `.github/copilot/prompts/error-handling.prompt`:
+
+```yaml
+name: "Add Diginsight Error Handling"
+description: "Add standard error handling pattern to existing method"
+temperature: 0.2
+prompt: |
+  Add Diginsight standard error handling to the selected method:
+  
+  1. Wrap the method body in try-catch
+  2. Set activity status to Error on exceptions: activity?.SetStatus(ActivityStatusCode.Error, ex.Message)
+  3. Add structured logging: _logger.LogError(ex, "Failed to process {Operation}", operationName)
+  4. Ensure proper correlation ID tracking
+  5. Maintain existing return types and async patterns
+  6. Add activity tags for success/failure tracking
+  
+  Preserve all existing business logic while adding telemetry instrumentation.
+```
+
+**Example: Unit Test Generation Template**
+
+Create `.github/copilot/prompts/unit-tests.prompt`:
+
+```yaml
+name: "Generate Diginsight Unit Tests"
+description: "Create unit tests for telemetry methods with proper mocking"
+temperature: 0.4
+prompt: |
+  Generate comprehensive unit tests for the selected telemetry method:
+  
+  1. Use NUnit framework with [Test] attributes
+  2. Mock ILogger<T> using NSubstitute
+  3. Mock ActivitySource and verify activity creation
+  4. Test both success and error scenarios
+  5. Verify proper error handling and activity status setting
+  6. Include tests for telemetry correlation and structured logging
+  7. Follow AAA pattern (Arrange, Act, Assert)
+  8. Use meaningful test method names like Should_Generate_Activity_For_Successful_Processing
+  
+  Include setup for InMemoryExporter to validate telemetry output.
+```
+
+**Benefits of Team-Shareable Prompts:**
+
+- **Consistency**: All team members use the same patterns and conventions
+- **Efficiency**: Pre-built prompts reduce the need to write detailed instructions
+- **Onboarding**: New team members can quickly adopt established patterns
+- **Quality**: Standardized prompts ensure adherence to architectural decisions
+- **Discoverability**: Prompts appear directly in the Copilot UI, making them easy to find and use
+
+**Impact on Copilot Understanding:**
+
+Team-shareable prompts provide the highest impact for standardizing code generation across the team. They ensure that all developers, regardless of experience with the codebase, can generate code that follows established patterns and architectural decisions. This creates a multiplier effect where good practices are automatically distributed across the team through the AI tool itself.
 
 ## 2. Medium Impact
 
