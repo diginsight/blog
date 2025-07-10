@@ -144,15 +144,19 @@ Create a layered documentation structure that places relevant information close 
 │   │   └── domain-concepts.md
 │   ├── Services/
 │   │   ├── README.md                  # Services module overview
+│   │   ├── Services.copilot.md        # AI guidance for Services module
 │   │   ├── TelemetryService/
 │   │   │   ├── README.md              # TelemetryService specific docs
+│   │   │   ├── TelemetryService.copilot.md  # AI guidance for TelemetryService
 │   │   │   ├── TelemetryService.cs
 │   │   │   └── ITelemetryService.cs
 │   │   └── LoggingService/
 │   │       ├── README.md              # LoggingService specific docs
+│   │       ├── LoggingService.copilot.md    # AI guidance for LoggingService
 │   │       └── LoggingService.cs
 │   └── Models/
 │       ├── README.md                  # Data models overview
+│       ├── Models.copilot.md          # AI guidance for data models
 │       └── TelemetryModels.cs
 └── README.md                          # Project root documentation
 ```
