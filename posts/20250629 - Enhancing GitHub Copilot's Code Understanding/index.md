@@ -16,7 +16,6 @@ Proper techniques significantly improve Copilot's code generation and answers to
 
 1. [Most Impactful Strategies](#1-most-impactful-strategies)
     - 1.1. [Organize Workspace with Information for AI](#11-organize-workspace-with-information-for-ai)
-        - 1.1.10. [Team-Shareable Prompt Templates](#1110-team-shareable-prompt-templates)
     - 1.2. [Semantic Naming for AI Understanding](#12-semantic-naming-for-ai-understanding)
     - 1.3. [Domain Concept Documentation](#13-domain-concept-documentation)
     - 1.4. [Code Patterns and Conventions](#14-code-patterns-and-conventions)
