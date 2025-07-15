@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Diginsight blog – diginsight blog</title>
+<title>About – diginsight blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,17 +30,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-df23bac319c9a051477aacb69b4c1ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,65 +65,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -134,7 +73,7 @@ window.Quarto = {
 <body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -149,7 +88,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -178,7 +117,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Diginsight blog</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">About</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -188,23 +127,7 @@ window.Quarto = {
   </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Diginsight blog</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-body">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -246,217 +169,39 @@ window.Quarto = {
 <!--End mc_embed_signup-->
 </div></div>
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="YW5hbHlzaXM=">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Y29waWxvdA==">copilot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGVlbG9wbWVudA==">deelopment <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGV2ZWxvcG1lbnQ=">development <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bmV3cw==">news <span class="quarto-category-count">(5)</span></div></div></div>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-body" id="quarto-document-content">
+<div class="quarto-about-jolla">
+  <img src="profile.jpg" class="about-image
+  round " style="height: 15em; width: 15em;">
+ <header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">About</h1>
+</div>
+<div class="quarto-title-meta">
+  </div>
+</header><main class="content" id="quarto-document-content">
+<p>About this blog</p>
 
 
-
-
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="bmV3cyUyQ2NvZGUlMkNjb3BpbG90JTJDZGV2ZWxvcG1lbnQ=" data-listing-date-sort="1751180400000" data-listing-file-modified-sort="1751890394902" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="30" data-listing-word-count-sort="5835">
-<div class="thumbnail">
-<p><a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external"></a></p><a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/image.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external">HowTo: Maximize GitHub Copilot’s Code Understanding of our repositories</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29waWxvdA=='); return false;">
-copilot
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ZGV2ZWxvcG1lbnQ='); return false;">
-development
+</main> 
+  <hr class="about-sep">
+   <div class="about-links">
+  <a href="https://twitter.com" class="about-link" rel="" target="">
+    <i class="bi bi-twitter"></i>
+     <span class="about-link-text">Twitter</span>
+  </a>
+  <a href="https://linkedin.com" class="about-link" rel="" target="">
+    <i class="bi bi-linkedin"></i>
+     <span class="about-link-text">LinkedIn</span>
+  </a>
+  <a href="https://github.com" class="about-link" rel="" target="">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">Github</span>
+  </a>
 </div>
 </div>
-<div class="listing-description">
-<a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external">This document <strong>analyzes some strategies we are using to enhance GitHub Copilot’s understanding of our (Diginsight) codebases</strong>.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external">
-<div class="listing-date">
-Jun 29, 2025
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="bmV3cyUyQ2NvZGUlMkNkZWVsb3BtZW50" data-listing-date-sort="1743404400000" data-listing-file-modified-sort="1748541526283" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1101">
-<div class="thumbnail">
-<p><a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external"></a></p><a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/image.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external">Use Risk-Driven Branching to mitigate the integration crunch</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ZGVlbG9wbWVudA=='); return false;">
-deelopment
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external">In modern Agile Development, teams work in short iterations (<strong>sprints</strong>) to deliver incremental progress. This involves implementing features, fixing bugs, and <strong>integrating the…</strong></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external">
-<div class="listing-date">
-Mar 31, 2025
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="bmV3cyUyQ2NvZGUlMkNkZXZlbG9wbWVudA==" data-listing-date-sort="1734163200000" data-listing-file-modified-sort="1749570040704" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="792">
-<div class="thumbnail">
-<p><a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external"></a></p><a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/20241214 - Handling Private Configurations in Public Repositories/image.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external">HowTo: Manage Sensitive Configurations with Config Injection from Private Repositories</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ZGV2ZWxvcG1lbnQ='); return false;">
-development
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external">When developing applications in public repositories, handling sensitive configuration files (such as secrets, keys, or internal URLs) is a common challenge. Exposing these…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external">
-<div class="listing-date">
-Dec 14, 2024
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="bmV3cyUyQ2NvZGUlMkNhbmFseXNpcw==" data-listing-date-sort="1727593200000" data-listing-file-modified-sort="1742151207421" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2559">
-<div class="thumbnail">
-<p><a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external"></a></p><a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/20240929 - Steps to add diginsight to SampleWebApi01/image.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external">Steps to add diginsight to SampleWebApi01</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('YW5hbHlzaXM='); return false;">
-analysis
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external">Today I worked with some friends at <strong>integrating diginsight to a new web API</strong>.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external">
-<div class="listing-date">
-Sep 29, 2024
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="bmV3cw==" data-listing-date-sort="1724569200000" data-listing-file-modified-sort="1724829604565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="29">
-<div class="thumbnail">
-<p><a href="./posts/welcome/index.html" class="no-external"></a></p><a href="./posts/welcome/index.html" class="no-external">
-<p class="card-img-top"><img src="posts\welcome\diginsight.jpg"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/welcome/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/welcome/index.html" class="no-external">Welcome To Diginsight Blog</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/welcome/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/welcome/index.html" class="no-external"><strong>Welcome</strong>!<br> This is the first post in a <strong>Diginsight blog</strong>. <br></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/welcome/index.html" class="no-external">
-<div class="listing-date">
-Aug 25, 2024
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -477,13 +222,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
@@ -539,6 +277,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -649,6 +389,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

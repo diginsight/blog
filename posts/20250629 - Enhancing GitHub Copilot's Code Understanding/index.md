@@ -16,13 +16,21 @@ Proper techniques significantly improve Copilot's code generation and answers to
 
 1. [Most Impactful Strategies](#1-most-impactful-strategies)
     - 1.1. [Organize Workspace with Information for AI](#11-organize-workspace-with-information-for-ai)
-        - 1.1.10. [Team-Shareable Prompt Templates](#1110-team-shareable-prompt-templates)
+        - 1.1.1. [Method Overview Comments](#111-method-overview-comments)
+        - 1.1.2. [Strategic Code Comments](#112-strategic-code-comments)
+        - 1.1.3. [Directive Comments](#113-directive-comments)
+        - 1.1.4. [AI Context Files](#114-ai-context-files)
+        - 1.1.5. [Repository-Level Documents](#115-repository-level-documents)
+        - 1.1.6. [Component-Specific Documentation](#116-component-specific-documentation)
+        - 1.1.7. [Architecture Documentation](#117-architecture-documentation)
+        - 1.1.8. [Documentation Header Hierarchy](#118-documentation-header-hierarchy)
+        - 1.1.9. [README Integration Strategy](#119-readme-integration-strategy)
+        - 1.1.10. [External References Strategy](#1110-external-references-strategy)
     - 1.2. [Semantic Naming for AI Understanding](#12-semantic-naming-for-ai-understanding)
     - 1.3. [Domain Concept Documentation](#13-domain-concept-documentation)
     - 1.4. [Code Patterns and Conventions](#14-code-patterns-and-conventions)
     - 1.5. [Effective Prompting Strategies](#15-effective-prompting-strategies)
     - 1.6. [Code Annotations for AI Tools](#16-code-annotations-for-ai-tools)
-    - 1.7. [Team-Shareable Prompt Templates](#17-team-shareable-prompt-templates)
 <br><br>
 2. [Medium Impact](#2-medium-impact)
     - 2.1. [AI-Optimized Code Comments](#21-ai-optimized-code-comments)
@@ -48,7 +56,7 @@ These strategies have the most direct and immediate impact on GitHub Copilot's a
 
 **What we can do:** Structure our **project files, documentation, and code comments** in a way that maximizes Copilot's ability to understand our project architecture, patterns, and domain knowledge.
 
-**Why this improves Copilot understanding:** Workspace organization is the foundational strategy that encompasses all aspects of structuring our project for AI comprehension. This includes code comments, documentation placement, specialized AI-guidance files, and strategic organization that maximizes Copilot's ability to understand our project's context and domain knowledge.
+**Why this improves Copilot understanding:** Workspace organization is the foundational strategy that encompasses all aspects of structuring our project for AI comprehension. This includes **code comments**, **documentation placement**, specialized **AI-guidance files**, and strategic organization that maximizes Copilot's ability to understand our project's context and domain knowledge.
 
 **Impact on suggestion relevance:** Proper workspace organization has the highest impact because it provides the structural foundation for all other AI understanding techniques. When our workspace is organized for AI comprehension, Copilot can access and correlate information across multiple sources, leading to more contextually appropriate and architecturally sound suggestions.
 
@@ -129,21 +137,27 @@ public async Task<ProcessingResult> ProcessTelemetryDataAsync(TelemetryRequest r
 }
 ```
 
-#### 1.1.4. Dedicated AI Context Files
+#### 1.1.4. AI Context Files
 
-Create a layered documentation structure that places relevant information close to where developers work:
+Create documentation and context files across the repository that help AI understanding and choices:
 
 **Recommended Structure:**
-
+ 
 ```text
 /MyProject/
 ├── .github/
 │   └── copilot/
-│       └── prompts/                   # Team-shareable prompt templates
-│           ├── telemetry-service.prompt       # Create telemetry services
-│           ├── error-handling.prompt          # Add error handling patterns
-│           ├── unit-tests.prompt             # Generate unit tests
-│           └── performance-optimization.prompt
+│       ├── prompts/                   # Team-shareable prompt templates
+│       │   ├── telemetry-service.prompt       # Create telemetry services
+│       │   ├── error-handling.prompt          # Add error handling patterns
+│       │   ├── unit-tests.prompt             # Generate unit tests
+│       │   └── performance-optimization.prompt
+│       ├── knowledge/                 # Team-wide knowledge base
+│       │   ├── team-conventions.md    # Shared coding standards
+│       │   └── architecture-decisions.md
+│       └── examples/                  # Reference implementations
+│           ├── telemetry-patterns.cs
+│           └── error-handling-examples.cs
 ├── .copilot/                          # Project-wide AI context
 │   ├── architecture.md
 │   ├── patterns.md
@@ -176,28 +190,51 @@ Create a layered documentation structure that places relevant information close 
 **Types of Documentation Files to Distribute:**
 
 1. **Project Root `README.md`**: High-level project overview, setup instructions, and quick Copilot prompts
-2. **`.github/copilot/prompts/` Folder**: Team-shareable prompt templates that appear in Copilot's Prompts panel
-3. **`.copilot/` Folder**: Dedicated AI context files for architecture decisions, coding patterns, and troubleshooting guides
+2. **`.github/copilot/` Folder**: Team-shareable AI configuration following GitHub conventions, which can contain:
+   - **`prompts/` subfolder**: Reusable `.prompt` files that appear in Copilot's Prompts panel
+   - **`knowledge/` subfolder**: Team-wide context documents explaining domain concepts and business rules
+   - **`examples/` subfolder**: Reference implementations and pattern templates
+   - **Team convention files**: Shared coding standards, naming conventions, and AI instructions
+3. **`.copilot/` Folder**: AI context files including:
+   - **Documentation**: Architecture decisions, coding patterns, and troubleshooting guides
+   - **Code Examples**: Reference implementations and pattern templates
+   - **Configuration Files**: AI-specific settings and behavior guidelines
+   - **Visual Context**: Diagrams, images, and flowcharts that explain complex concepts
+   - **Data Files**: Sample data, schemas, and API responses for context
 4. **`src/docs/` Folder**: Comprehensive API references, domain concepts, and technical specifications
 5. **Module-Level `README.md`**: Overview of each major code module (Services/, Models/, etc.)
 6. **Component-Level `README.md`**: Specific documentation for individual services or components
 7. **`.copilot.md` Files**: Specialized AI guidance files next to major components (e.g., `TelemetryService.copilot.md`)
 
-**Key Differences Between `.github/copilot/` and `.copilot/` Folders:**
+#### 1.1.5. Repository-Level Documents
 
-The two root directories serve distinct but complementary purposes in the GitHub Copilot ecosystem:
+GitHub Copilot leverages **two root directories** for AI-enhanced development, each serving distinct but complementary purposes:
 
-- **`.github/copilot/prompts/` Directory**: 
-  - **Purpose**: Team-shareable Copilot configuration following GitHub conventions
-  - **Contents**: Reusable `.prompt` files that appear directly in Copilot's Prompts panel
-  - **Visibility**: These appear as selectable prompts in the Copilot UI for all team members
-  - **Use Case**: Standardized team workflows and common development tasks
+##### `.github/copilot/` Directory
 
-- **`.copilot/` Directory**: 
-  - **Purpose**: Local developer context and project-specific reference materials
-  - **Contents**: Documentation, images, code examples that help Copilot understand your codebase
-  - **Visibility**: These files provide background knowledge but don't appear directly in the Copilot UI
-  - **Use Case**: Contextual information that improves Copilot's understanding of your specific codebase
+This directory follows GitHub's official conventions for team-shareable Copilot configuration and can contain:
+
+- **Prompt Files** (`prompts/` subfolder): Reusable `.prompt` files that appear directly in Copilot's Prompts panel for all team members
+- **Knowledge Bases** (`knowledge/` subfolder): Team-wide context documents (`.md` files) explaining domain concepts, architecture decisions, and business rules
+- **Code Examples** (`examples/` subfolder): Reference implementations and pattern templates that demonstrate team coding standards
+- **Team Conventions** (`.md` files): Shared coding standards, naming conventions, and development practices
+- **AI Instructions** (`.md` files): Team-specific guidelines for how AI should assist with your codebase
+
+##### `.copilot/` Directory
+
+This directory serves as a local developer context repository containing project-specific reference materials:
+
+- **Architecture Documentation**: System design documents, component relationships, and technical specifications
+- **Troubleshooting Guides**: Common issues, debugging approaches, and solution patterns
+- **Domain Context**: Business logic explanations, workflow descriptions, and project-specific terminology
+- **Code Examples**: Project-specific implementation patterns and usage examples
+- **Images and Diagrams**: Visual documentation that helps explain complex concepts
+
+| Aspect | **`.github/copilot/`** | **`.copilot/`** |
+|--------|-------------------------|-----------------|
+| **Purpose** | Team-shareable AI configuration following GitHub conventions | Local developer context and project-specific reference materials |
+| **Visibility** | Prompt files appear in Copilot UI; other contents provide team-wide background knowledge | All contents provide background knowledge but don't appear directly in the Copilot UI |
+| **Scope** | Team-wide standards, shared workflows, and common development tasks | Project-specific context, architecture details, and local development guidance |
 
 **Key Benefits:**
 
@@ -205,7 +242,7 @@ The two root directories serve distinct but complementary purposes in the GitHub
 - **Easy Maintenance**: Documentation stays close to the code it describes
 - **Focused Information**: Each file addresses specific concerns without overwhelming detail
 
-#### 1.1.5. Component-Specific Documentation
+#### 1.1.6. Component-Specific Documentation
 
 Create targeted context files with the `.copilot.md` extension that provide domain-specific knowledge for individual components:
 
@@ -228,7 +265,7 @@ ANTI-PATTERNS:
 - Never log sensitive data in telemetry
 ```
 
-#### 1.1.6. Architecture Documentation
+#### 1.1.7. Architecture Documentation
 
 Create comprehensive architecture documentation that provides system-level context:
 
@@ -265,7 +302,7 @@ Diginsight Telemetry is a distributed observability platform built on OpenTeleme
 - **Structured Logging**: Correlation with distributed traces
 - **Sampling Strategy**: Cost control while maintaining visibility
 
-#### 1.1.7. Documentation Header Hierarchy
+#### 1.1.8. Documentation Header Hierarchy
 
 Use consistent header hierarchies to establish clear information structure:
 
@@ -278,7 +315,7 @@ Use consistent header hierarchies to establish clear information structure:
 
 This hierarchical structure helps Copilot understand the relationship between concepts and suggest code that follows the same organizational patterns.
 
-#### 1.1.8. README Integration Strategy
+#### 1.1.9. README Integration Strategy
 
 Create AI-friendly project documentation in our README files:
 
@@ -301,7 +338,7 @@ This project uses OpenTelemetry for distributed tracing. Common patterns:
 - "Create unit tests for telemetry methods with proper mocking"
 ```
 
-#### 1.1.9. External References Strategy
+#### 1.1.10. External References Strategy
 
 **Important Limitation:** Copilot cannot access external URLs, wikis, or online documentation during code generation. However, we can still reference them strategically:
 
@@ -585,94 +622,6 @@ public class DiginsightActivitySource
     // Implementation...
 }
 ```
-
-### 1.7. Team-Shareable Prompt Templates
-
-**Create standardized prompt templates** that appear in Copilot's Prompts panel for consistent team workflows:
-
-The `.github/copilot/prompts/` folder contains `.prompt` files that become available to all team members through Copilot's interface. These templates ensure consistent code generation patterns across the team.
-
-**Example: Telemetry Service Creation Template**
-
-Create `.github/copilot/prompts/telemetry-service.prompt`:
-
-```yaml
-name: "Create Diginsight Telemetry Service"
-description: "Generate a new telemetry service following Diginsight patterns"
-temperature: 0.3
-prompt: |
-  Create a new telemetry service class that follows Diginsight patterns with:
-  
-  1. Standard constructor injection with ILogger<T> and ActivitySource
-  2. Proper OpenTelemetry instrumentation using our activity creation pattern
-  3. Error handling with activity status setting and structured logging
-  4. Method naming following our hierarchical convention (e.g., ProcessTelemetryDataAsync)
-  5. XML documentation with BUSINESS RULE, PERFORMANCE CONSTRAINT, and DIGINSIGHT PATTERN remarks
-  6. Dependency injection registration helper method
-  
-  Use these imports:
-  - System.Diagnostics
-  - Microsoft.Extensions.Logging
-  - OpenTelemetry.Trace
-  
-  Follow the pattern shown in existing telemetry services in this codebase.
-```
-
-**Example: Error Handling Template**
-
-Create `.github/copilot/prompts/error-handling.prompt`:
-
-```yaml
-name: "Add Diginsight Error Handling"
-description: "Add standard error handling pattern to existing method"
-temperature: 0.2
-prompt: |
-  Add Diginsight standard error handling to the selected method:
-  
-  1. Wrap the method body in try-catch
-  2. Set activity status to Error on exceptions: activity?.SetStatus(ActivityStatusCode.Error, ex.Message)
-  3. Add structured logging: _logger.LogError(ex, "Failed to process {Operation}", operationName)
-  4. Ensure proper correlation ID tracking
-  5. Maintain existing return types and async patterns
-  6. Add activity tags for success/failure tracking
-  
-  Preserve all existing business logic while adding telemetry instrumentation.
-```
-
-**Example: Unit Test Generation Template**
-
-Create `.github/copilot/prompts/unit-tests.prompt`:
-
-```yaml
-name: "Generate Diginsight Unit Tests"
-description: "Create unit tests for telemetry methods with proper mocking"
-temperature: 0.4
-prompt: |
-  Generate comprehensive unit tests for the selected telemetry method:
-  
-  1. Use NUnit framework with [Test] attributes
-  2. Mock ILogger<T> using NSubstitute
-  3. Mock ActivitySource and verify activity creation
-  4. Test both success and error scenarios
-  5. Verify proper error handling and activity status setting
-  6. Include tests for telemetry correlation and structured logging
-  7. Follow AAA pattern (Arrange, Act, Assert)
-  8. Use meaningful test method names like Should_Generate_Activity_For_Successful_Processing
-  
-  Include setup for InMemoryExporter to validate telemetry output.
-```
-
-**Benefits of Team-Shareable Prompts:**
-
-- **Consistency**: All team members use the same patterns and conventions
-- **Efficiency**: Pre-built prompts reduce the need to write detailed instructions
-- **Onboarding**: New team members can quickly adopt established patterns
-- **Quality**: Standardized prompts ensure adherence to architectural decisions
-- **Discoverability**: Prompts appear directly in the Copilot UI, making them easy to find and use
-
-**Impact on Copilot Understanding:**
-
-Team-shareable prompts provide the highest impact for standardizing code generation across the team. They ensure that all developers, regardless of experience with the codebase, can generate code that follows established patterns and architectural decisions. This creates a multiplier effect where good practices are automatically distributed across the team through the AI tool itself.
 
 ## 2. Medium Impact
 
