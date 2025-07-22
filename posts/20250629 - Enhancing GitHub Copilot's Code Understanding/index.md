@@ -21,11 +21,13 @@ Proper techniques significantly improve Copilot's code generation and answers to
         - 1.1.3. [Directive Comments](#113-directive-comments)
         - 1.1.4. [AI Context Files](#114-ai-context-files)
         - 1.1.5. [Repository-Level Documents](#115-repository-level-documents)
-        - 1.1.6. [Component-Specific Documentation](#116-component-specific-documentation)
-        - 1.1.7. [Architecture Documentation](#117-architecture-documentation)
-        - 1.1.8. [Documentation Header Hierarchy](#118-documentation-header-hierarchy)
-        - 1.1.9. [README Integration Strategy](#119-readme-integration-strategy)
-        - 1.1.10. [External References Strategy](#1110-external-references-strategy)
+        - 1.1.6. [Copilot Context Folder](#116-copilot-context-folder)
+        - 1.1.7. [Data Schema Information](#117-data-schema-information)
+        - 1.1.8. [Component-Specific Documentation](#118-component-specific-documentation)
+        - 1.1.9. [Architecture Documentation](#119-architecture-documentation)
+        - 1.1.10. [Documentation Header Hierarchy](#1110-documentation-header-hierarchy)
+        - 1.1.11. [README Integration Strategy](#1111-readme-integration-strategy)
+        - 1.1.12. [External References Strategy](#1112-external-references-strategy)
     - 1.2. [Semantic Naming for AI Understanding](#12-semantic-naming-for-ai-understanding)
     - 1.3. [Domain Concept Documentation](#13-domain-concept-documentation)
     - 1.4. [Code Patterns and Conventions](#14-code-patterns-and-conventions)
@@ -162,8 +164,13 @@ Create documentation and context files across the repository that help AI unders
 │   ├── architecture.md
 │   ├── patterns.md
 │   └── context/
-│       ├── images/                    # Visual context for AI
-│       └── examples/                  # Code examples and templates
+│       ├── dataschemas/           # Data structure documentation
+│       ├── apis/                  # External API documentation  
+│       ├── patterns/              # Code patterns and examples
+│       ├── workflows/             # Business process flows
+│       ├── guidelines/            # Development standards
+│       ├── images/                # Visual context for AI
+│       └── examples/              # Code examples and templates
 ├── src/
 │   ├── docs/                          # Comprehensive documentation
 │   │   ├── api-reference.md
@@ -222,6 +229,47 @@ This directory follows GitHub's official conventions for team-shareable Copilot 
 
 ##### `.copilot/` Directory
 
+.copilot/ Directory has a **flexible structure**.
+This is not officially standardized by GitHub, so we have more flexibility in organizing it.
+
+Based on how Copilot processes workspace context, here are effective folder structures for the `.copilot/` directory:
+
+### Recommended `.copilot/` Structure:
+
+```text
+.copilot/
+├── architecture/           # System design documents
+│   ├── component-diagrams.md
+│   ├── data-flow.md
+│   └── system-overview.md
+├── context/               # Domain-specific knowledge
+│   ├── business-rules.md
+│   ├── domain-concepts.md
+│   └── terminology.md
+├── patterns/              # Code patterns and conventions
+│   ├── error-handling.md
+│   ├── logging-patterns.md
+│   └── naming-conventions.md
+├── troubleshooting/       # Common issues and solutions
+│   ├── debugging-guide.md
+│   ├── performance-issues.md
+│   └── common-errors.md
+├── examples/              # Project-specific code examples
+│   ├── service-templates/
+│   ├── configuration-samples/
+│   └── test-patterns/
+├── images/                # Visual documentation
+│   ├── diagrams/
+│   └── screenshots/
+├── data/                  # Sample data and schemas
+│   ├── sample-requests.json
+│   ├── api-responses.json
+│   └── database-schemas/
+└── reference/             # Quick reference materials
+    ├── api-endpoints.md
+    ├── configuration-options.md
+    └── dependencies.md
+```
 This directory serves as a local developer context repository containing project-specific reference materials:
 
 - **Architecture Documentation**: System design documents, component relationships, and technical specifications
@@ -235,6 +283,17 @@ This directory serves as a local developer context repository containing project
 | **Purpose** | Team-shareable AI configuration following GitHub conventions | Local developer context and project-specific reference materials |
 | **Visibility** | Prompt files appear in Copilot UI; other contents provide team-wide background knowledge | All contents provide background knowledge but don't appear directly in the Copilot UI |
 | **Scope** | Team-wide standards, shared workflows, and common development tasks | Project-specific context, architecture details, and local development guidance |
+| **Structure** | Standardized subfolders (prompts, knowledge, examples) | Flexible - you define the organization |
+
+**Best Practices for `.copilot/` Organization**:
+
+1. **Use descriptive folder names** that clearly indicate content type
+2. **Group related concepts** together (e.g., all architecture docs in `architecture/`)
+3. **Include visual aids** in an `images/` or `diagrams/` folder
+4. **Separate code examples** by domain or component type
+5. **Keep it shallow** - avoid deep nesting that makes content hard to find
+
+The flexibility of `.copilot/` allows you to structure it based on your specific project needs, while `.github/copilot/` should follow GitHub's established conventions for maximum compatibility with Copilot's features.
 
 **Key Benefits:**
 
@@ -242,7 +301,222 @@ This directory serves as a local developer context repository containing project
 - **Easy Maintenance**: Documentation stays close to the code it describes
 - **Focused Information**: Each file addresses specific concerns without overwhelming detail
 
-#### 1.1.6. Component-Specific Documentation
+#### 1.1.6. Copilot Context Folder
+
+**What we can do:** Leverage the `.copilot/context/` folder as a centralized repository for all AI-specific documentation, following GitHub's recommended approach for providing contextual information to Copilot.
+
+**Why this improves Copilot understanding:** The `.copilot/context/` folder serves as a dedicated space where GitHub Copilot automatically looks for contextual information about your project. This folder is specifically designed to help Copilot understand your project's unique aspects - from data schemas and business rules to architectural patterns and domain concepts.
+
+**Official GitHub Recognition:** The `.copilot/context/` directory provides several key advantages:
+
+1. **🔍 Automatic Discovery**: Copilot automatically scans this folder for relevant documentation when generating code suggestions
+2. **📚 Structured Context**: Organizes different types of project context (schemas, APIs, patterns, guidelines) in a predictable structure
+3. **🎯 Enhanced Relevance**: Content in this directory receives higher priority when Copilot determines contextual relevance
+4. **📋 Best Practice**: Following GitHub's established convention ensures maximum compatibility with Copilot's context discovery mechanisms
+
+## Recommended `.copilot/context/` Structure
+
+```text
+.copilot/context/
+├── dataschemas/           # Data structure documentation
+│   ├── entities/          # Business entity definitions
+│   ├── databases/         # Database schema documentation
+│   └── apis/              # API response/request schemas
+├── apis/                  # External API documentation
+│   ├── third-party/       # External service integrations
+│   ├── internal/          # Internal API contracts
+│   └── samples/           # Request/response examples
+├── patterns/              # Code patterns and examples
+│   ├── error-handling/    # Standard error handling approaches
+│   ├── logging/           # Logging and telemetry patterns
+│   └── testing/           # Testing strategies and examples
+├── workflows/             # Business process flows
+│   ├── user-journeys/     # End-to-end user workflows
+│   ├── data-flows/        # Data processing pipelines
+│   └── integration-flows/ # System integration patterns
+├── guidelines/            # Development standards
+│   ├── coding-standards/  # Style guides and conventions
+│   ├── architecture/      # Architectural principles
+│   └── security/          # Security requirements and patterns
+├── images/                # Visual context for AI
+│   ├── diagrams/          # Architecture and flow diagrams
+│   ├── screenshots/       # UI/UX context
+│   └── charts/            # Data visualization examples
+└── examples/              # Code examples and templates
+    ├── services/          # Service implementation examples
+    ├── configurations/    # Configuration templates
+    └── integrations/      # Integration code samples
+```
+
+**When GitHub Copilot Uses This Context:**
+
+GitHub Copilot will leverage this organized context when:
+
+1. **Code Generation**: Drawing from patterns and examples when creating new code
+2. **API Integration**: Referencing API documentation for proper service integration
+3. **Data Modeling**: Using schema information for entity creation and validation
+4. **Error Handling**: Applying documented error patterns and recovery strategies
+5. **Business Logic**: Understanding workflows and domain-specific requirements
+6. **Testing**: Following established testing patterns and strategies
+7. **Configuration**: Using documented configuration patterns and environment setups
+
+**Key Benefits of This Organized Approach:**
+
+- **Comprehensive Coverage**: All aspects of your project context are documented and accessible
+- **Logical Organization**: Related information is grouped together for easier discovery
+- **Scalable Structure**: Can grow with your project without becoming unwieldy
+- **Team Consistency**: Provides a standard location for all AI-relevant documentation
+- **Improved Suggestions**: Copilot can provide more accurate and context-aware code suggestions
+
+#### 1.1.7. Data Schema Information
+
+**What we can do:** Document our data schemas, database structures, and entity relationships in the `.copilot/context/` folder, which is **officially recognized** by GitHub Copilot as a source of workspace-specific context.
+
+**Why this improves Copilot understanding:** Since GitHub Copilot cannot access live databases or external data stores, providing comprehensive data schema documentation becomes critical for accurate code generation. When Copilot understands our entity structures, relationships, and query patterns, it can suggest appropriate data access code, validation logic, and API implementations that align with our actual data models.
+
+**Official GitHub Recognition:** The `.copilot/context/` folder provides several key advantages:
+
+1. **🔍 Automatic Discovery**: Copilot automatically scans `.copilot/context/` for relevant documentation
+2. **📚 Broader Context**: Can contain various types of context (schemas, APIs, patterns, guidelines)
+3. **🎯 Scoped Relevance**: Copilot gives higher weight to content in this directory
+4. **📋 Standard Practice**: Following GitHub's recommended convention
+
+**When GitHub Copilot Uses This Documentation:**
+
+GitHub Copilot will consider schema documentation when:
+
+1. **Code Generation**: When you're writing code that deals with these entities
+2. **Code Analysis**: When analyzing existing code patterns
+3. **Query Suggestions**: When writing repository methods or queries
+4. **Validation Logic**: When implementing business rules
+5. **API Development**: When creating endpoints that work with these models
+
+## Recommended Data Schema Organization
+
+### Option 1: Storage-Centric Structure (Recommended for Multi-Storage Applications)
+
+```text
+.copilot/context/
+├── dataschemas/
+│   ├── cosmosdb/
+│   │   ├── diginsight-telemetry/              # Database name
+│   │   │   ├── telemetry-events/              # Container name
+│   │   │   │   ├── ActivityEvent.md           # Entity documentation
+│   │   │   │   ├── ActivityEvent.json         # Sample document
+│   │   │   │   └── ActivityEvent.queries.sql # Common query patterns
+│   │   │   └── project-config/
+│   │   │       ├── ProjectEntity.md
+│   │   │       └── ProjectEntity.json
+│   │   └── user-preferences/
+│   │       └── UserSettings/
+│   ├── sqlserver/
+│   │   └── notifications/
+│   │       ├── SmsNotification.md
+│   │       └── SmsNotification.schema.sql
+│   └── redis/
+│       └── session-cache/
+│           └── UserSession.md
+└── integrations/
+    ├── external-apis/
+    │   ├── AzureMonitor.md
+    │   └── AzureMonitor.samples.json
+    └── message-queues/
+        └── TelemetryEvents.md
+```
+
+### Option 2: Entity-Centric Structure (Recommended for Domain-Rich Applications)
+
+```text
+.copilot/context/
+├── entities/
+│   ├── TelemetryEvent/
+│   │   ├── TelemetryEvent.md              # Complete entity documentation
+│   │   ├── TelemetryEvent.json            # Sample data structure
+│   │   ├── TelemetryEvent.queries.sql     # Common query patterns
+│   │   └── TelemetryEvent.validation.md   # Business rules and constraints
+│   ├── ProjectEntity/
+│   │   ├── ProjectEntity.md
+│   │   ├── ProjectEntity.json
+│   │   └── ProjectEntity.relationships.md  # Entity relationships
+│   └── UserSession/
+│       ├── UserSession.md
+│       └── UserSession.json
+└── storage-mappings/
+    ├── CosmosDB-mappings.md               # How entities map to Cosmos containers
+    ├── SqlServer-mappings.md              # How entities map to SQL tables
+    └── Redis-mappings.md                  # Caching strategies
+```
+
+### Sample Entity Documentation Structure
+
+```markdown
+# TelemetryEvent.md
+
+## Entity Overview
+Core telemetry event entity for distributed tracing and monitoring.
+
+## Storage Details
+- **Database**: diginsight-telemetry (CosmosDB)
+- **Container**: telemetry-events
+- **Partition Key**: /projectId
+- **TTL**: 90 days (2,592,000 seconds)
+
+## Schema
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "projectId": "12345678-0c85-4592-8396-3f3e8656ed03",
+  "activityId": "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+  "timestamp": "2025-01-15T10:30:00.000Z",
+  "level": "Information",
+  "message": "Processing telemetry batch",
+  "tags": {
+    "service.name": "Diginsight.TelemetryProcessor",
+    "batch.size": "150"
+  },
+  "type": "telemetry-event",
+  "_etag": "\"00000000-0000-0000-0000-000000000000\""
+}
+```
+
+## Business Rules
+
+- **projectId**: Must be valid GUID, references ProjectEntity
+- **activityId**: W3C trace context format required
+- **timestamp**: UTC timezone, ISO 8601 format
+- **level**: Must be one of: Trace, Debug, Information, Warning, Error, Critical
+- **tags**: Key-value pairs, keys must follow OpenTelemetry semantic conventions
+
+## Common Query Patterns
+
+```sql
+-- Get recent events for a project
+SELECT * FROM c 
+WHERE c.projectId = @projectId 
+  AND c.timestamp >= @startTime 
+ORDER BY c.timestamp DESC
+
+-- Count events by level
+SELECT c.level, COUNT(1) as count 
+FROM c 
+WHERE c.projectId = @projectId 
+GROUP BY c.level
+```
+
+## Relationships
+
+- **ProjectEntity**: Many telemetry events belong to one project
+- **UserSession**: Events may be associated with user sessions via tags
+
+**Key Benefits of This Approach:**
+
+1. **Improved Code Generation**: Copilot can suggest proper entity constructors, property assignments, and validation logic
+2. **Accurate Query Suggestions**: Common query patterns help Copilot suggest appropriate database operations
+3. **Business Rule Enforcement**: Documented constraints help Copilot generate validation code
+4. **Consistent API Design**: Schema knowledge leads to better REST API endpoint suggestions
+5. **Reduced Documentation Lookup**: Developers get context-aware suggestions without leaving their IDE
+
+#### 1.1.8. Component-Specific Documentation
 
 Create targeted context files with the `.copilot.md` extension that provide domain-specific knowledge for individual components:
 
@@ -265,7 +539,7 @@ ANTI-PATTERNS:
 - Never log sensitive data in telemetry
 ```
 
-#### 1.1.7. Architecture Documentation
+#### 1.1.9. Architecture Documentation
 
 Create comprehensive architecture documentation that provides system-level context:
 
@@ -302,7 +576,7 @@ Diginsight Telemetry is a distributed observability platform built on OpenTeleme
 - **Structured Logging**: Correlation with distributed traces
 - **Sampling Strategy**: Cost control while maintaining visibility
 
-#### 1.1.8. Documentation Header Hierarchy
+#### 1.1.10. Documentation Header Hierarchy
 
 Use consistent header hierarchies to establish clear information structure:
 
@@ -315,7 +589,7 @@ Use consistent header hierarchies to establish clear information structure:
 
 This hierarchical structure helps Copilot understand the relationship between concepts and suggest code that follows the same organizational patterns.
 
-#### 1.1.9. README Integration Strategy
+#### 1.1.11. README Integration Strategy
 
 Create AI-friendly project documentation in our README files:
 
@@ -338,7 +612,7 @@ This project uses OpenTelemetry for distributed tracing. Common patterns:
 - "Create unit tests for telemetry methods with proper mocking"
 ```
 
-#### 1.1.10. External References Strategy
+#### 1.1.12. External References Strategy
 
 **Important Limitation:** Copilot cannot access external URLs, wikis, or online documentation during code generation. However, we can still reference them strategically:
 
