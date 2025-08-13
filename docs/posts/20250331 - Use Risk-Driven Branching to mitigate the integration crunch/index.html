@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Dario Airoldi">
+<meta name="dcterms.date" content="2025-03-31">
 
-<title>Diginsight blog – diginsight blog</title>
+<title>Use Risk-Driven Branching to mitigate the integration crunch – diginsight blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-df23bac319c9a051477aacb69b4c1ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-df23bac319c9a051477aacb69b4c1ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,67 +68,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -138,7 +80,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">diginsight blog</span>
     </a>
   </div>
@@ -149,11 +91,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -178,7 +120,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Diginsight blog</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Use Risk-Driven Branching to mitigate the integration crunch</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -191,20 +133,37 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Diginsight blog</h1>
-                      </div>
+      <h1 class="title">Use Risk-Driven Branching to mitigate the integration crunch</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">news</div>
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">deelopment</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-body">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Dario Airoldi </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 31, 2025</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -245,260 +204,183 @@ window.Quarto = {
 
 <!--End mc_embed_signup-->
 </div></div>
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="YW5hbHlzaXM=">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Y29waWxvdA==">copilot <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZGVlbG9wbWVudA==">deelopment <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGV2ZWxvcG1lbnQ=">development <span class="quarto-category-count">(3)</span></div><div class="category" data-category="bmV3cw==">news <span class="quarto-category-count">(6)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#why-risk-driven-branching" id="toc-why-risk-driven-branching" class="nav-link" data-scroll-target="#why-risk-driven-branching">Why Risk-Driven Branching</a></li>
+  <li><a href="#core-principles-of-risk-driven-branching" id="toc-core-principles-of-risk-driven-branching" class="nav-link" data-scroll-target="#core-principles-of-risk-driven-branching">Core Principles of Risk-Driven Branching:</a></li>
+  <li><a href="#comparing-standard-integration-vs.-risk-driven-branching" id="toc-comparing-standard-integration-vs.-risk-driven-branching" class="nav-link" data-scroll-target="#comparing-standard-integration-vs.-risk-driven-branching">Comparing Standard Integration vs.&nbsp;Risk-Driven Branching</a></li>
+  <li><a href="#how-risk-driven-branching-applies-to-agile-methodologies" id="toc-how-risk-driven-branching-applies-to-agile-methodologies" class="nav-link" data-scroll-target="#how-risk-driven-branching-applies-to-agile-methodologies">How Risk-Driven Branching Applies to Agile Methodologies</a>
+  <ul class="collapse">
+  <li><a href="#trunk-based-development" id="toc-trunk-based-development" class="nav-link" data-scroll-target="#trunk-based-development">Trunk-Based Development</a></li>
+  <li><a href="#gitflow-strategy" id="toc-gitflow-strategy" class="nav-link" data-scroll-target="#gitflow-strategy">GitFlow Strategy</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-body" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>In modern Agile Development, teams work in short iterations (<strong>sprints</strong>) to deliver incremental progress. This involves implementing features, fixing bugs, and <strong>integrating the work of multiple developers by the end of the sprint</strong>.</p>
+<p>A common issue happens when multiple topics are managed by the team on parallel branches where work is integrated late into the sprint timeline.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image-1.png" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<p>With such organization, <strong>developers often work alone, on their branches, for most of the sprint duration</strong> and all the topics are tested with very limited integration with each other.<br> The “<strong>integration crunch</strong>” period usually brings high risk of breaking the application.<br> <strong>This normally happens late into the sprint</strong>, where only little time is left for the developer and test team to detect and solve issues.<br></p>
+<p>Things become even worse in case many topics are managed in short sprints (eg. Two weeks sprints), PR approval is mandatory and PR review is required before merging to master for all the changes.<br> <strong>In such cases, integration activities may be further delayed</strong> and <strong>the integration crunch is even more compressed and pushed to the end of sprint</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image-3.png" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<p>In such condition, <strong>sprint closure may become a complex time</strong> that jeopardizes the application stability.<br> Needless to say the “<strong>sprint demo</strong>” happening exactly in that moment may strongly suffer from that problem.</p>
+</section>
+<section id="why-risk-driven-branching" class="level1">
+<h1>Why Risk-Driven Branching</h1>
+<p>The idea of <strong>Risk-Driven Branching</strong> is to introduce a pragmatic solution to the problems of late integration and testing by adapting Agile workflows to focus on frequent and progressive integration.<br> This strategy can be applied across different branching models; the diagrams we are using are based on <strong>trunk-based development</strong>; we’ll later see that the same concepts perfectly apply to other branching strategis such as <strong>GitFlow</strong> or <strong>Github flow</strong>.</p>
+<p>With <strong>Risk-Driven Branching</strong> most topics development happens on a <strong>single branch dedicated to the sprint</strong> or <strong>directly on the integration branch</strong>.<br> Only for <strong>high breaking risk topics</strong> a dedicated branch is created.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image-4.png" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<p>In this case <strong>only one branch is used for all low breaking risk topics</strong> and <strong>dedicated branches are chosen for high braking risk topics</strong> (topic 3, in our example).</p>
+<p>The idea here is that for <strong>low breaking risk topics</strong>:<br></p>
+<ul>
+<li><strong>Integration happens immediately</strong> <strong>across the sprint</strong></li>
+<li>Sprint and integration branches are <strong>integrated with partial implementations across the sprint</strong></li>
+<li>All the <strong>developer team work together on all topics</strong></li>
+<li>All test <strong>team works on the environment with all in-progress topics</strong></li>
+</ul>
+<p>For this to work - <strong>Developers are responsible to commit non breaking changes</strong> to the sprint or integration branch<br> In case partial topics are committed <strong>Feature flags</strong> should be available to allow branch release in any moment, at least with partial or untested implementations disabled. - <strong>In case a breaking change is committed by mistake</strong> across the sprint, it should be <strong>all team priority detect and solve it</strong>.</p>
+<p>Keeping this development approach by “<strong>small non braking changes</strong>” is normally easy for most topics. In this case, most integration will already be done at sprint end and <strong>merge operations at the end of sprint may become almost irrelevant (and with low risk)</strong>.</p>
+</section>
+<section id="core-principles-of-risk-driven-branching" class="level1">
+<h1>Core Principles of Risk-Driven Branching:</h1>
+<p><strong>Core principles</strong> that guide the <strong>Risk-Driven Branching</strong> approach include:</p>
+<ol type="1">
+<li><strong>Early and Frequent Integration</strong>: Most integrations occur progressively throughout the sprint, keeping the codebase up-to-date and minimizing the risk of large-scale conflicts.</li>
+<li><strong>Focus on Non-Regression</strong>: Every development step emphasizes maintaining stability and avoiding regressions.</li>
+<li><strong>Continuous and anticipated Testing</strong>: Automated tests run on all changes from Day 1, providing instant feedback to developers and testers.</li>
+<li><strong>Shared Awareness</strong>: Developers and testers benefit from working on the latest integrated code, fostering collaboration and shared responsibility.</li>
+</ol>
+<p>This approach effectively mitigates the risks of late integration while enhancing team productivity and code quality.</p>
+<p><strong>Benefits</strong> of <strong>Risk-Driven Branching</strong> include: 1. <strong>Minimized Merge Conflicts</strong>: By integrating frequently, teams avoid the pile-up of changes that lead to complicated conflicts. 2. <strong>Early Feedback Loop</strong>: Continuous testing and integration ensure developers receive feedback on potential issues early in the sprint. 3. <strong>Improved Stability</strong>: Regular validation and non-regression testing ensure that the codebase remains stable throughout the sprint. 4. <strong>Enhanced Collaboration</strong>: Developers can immediately see the impact of others’ work, facilitating better coordination and reducing surprises. 5. <strong>(Last but not least) Boosted Test Team Productivity</strong>: Testing happens on progressively refined and later versions of the code, reducing redundancy and increasing efficiency.</p>
+<p>These advantages make Risk-Driven Branching a robust strategy for Agile teams seeking to balance velocity and reliability.</p>
+</section>
+<section id="comparing-standard-integration-vs.-risk-driven-branching" class="level1">
+<h1>Comparing Standard Integration vs.&nbsp;Risk-Driven Branching</h1>
+<p>The following table summarizes the differences between standard branching and Risk-Driven Branching:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Standard branching</th>
+<th>Risk-Driven Branching</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Integration Timing</td>
+<td>Happens near the end of the sprint</td>
+<td>Happens <strong>progressively throughout sprint</strong></td>
+</tr>
+<tr class="even">
+<td>Merge Conflicts</td>
+<td>High probability of significant conflicts</td>
+<td><strong>Minimal conflicts</strong> due to frequent merges</td>
+</tr>
+<tr class="odd">
+<td>Testing Timeline</td>
+<td>Minimal testing before sprint ends</td>
+<td>Early, continuous <strong>testing from Day 1</strong></td>
+</tr>
+<tr class="even">
+<td>Regression Risks</td>
+<td>High, due to rushed and incomplete testing</td>
+<td><strong>Lower</strong>, thanks to early validation</td>
+</tr>
+<tr class="odd">
+<td>Team Collaboration</td>
+<td>Limited visibility into others’ changes</td>
+<td><strong>Immediate feedback</strong> fosters collaboration</td>
+</tr>
+<tr class="even">
+<td><strong>Tester Productivity</strong></td>
+<td>Limited by late-stage changes</td>
+<td><strong>Boosted</strong> by working on refined versions</td>
+</tr>
+<tr class="odd">
+<td><strong>Developer Productivity</strong></td>
+<td>Limited by working alone on separate branches</td>
+<td><strong>Boosted</strong> early integration with other developers work</td>
+</tr>
+</tbody>
+</table>
+<p>Risk-Driven Branching reduces risks while enhancing collaboration and productivity for both developers and testers.</p>
+</section>
+<section id="how-risk-driven-branching-applies-to-agile-methodologies" class="level1">
+<h1>How Risk-Driven Branching Applies to Agile Methodologies</h1>
+<section id="trunk-based-development" class="level2">
+<h2 class="anchored" data-anchor-id="trunk-based-development">Trunk-Based Development</h2>
+<p>All diagram shown up to now applies to Trunk based development. In this case master branch works as the “Integration” branch where all developers work is integrated.</p>
+<p>According to release planning requirements, release branches are taken from master and refined until release conditions are met. <img src="image-5.png" class="img-fluid" alt="alt text"></p>
+<p>As discussed in the previous chapters, with trunk based development The “Integration crunch” can happen at the end of every sprint <img src="image-6.png" class="img-fluid" alt="alt text"></p>
+<p>As discussed, risk driven branching can reduce its complexity and risk for the benefit of the team sprint demos and the overall application stability. <img src="image-7.png" class="img-fluid" alt="alt text"></p>
+</section>
+<section id="gitflow-strategy" class="level2">
+<h2 class="anchored" data-anchor-id="gitflow-strategy">GitFlow Strategy</h2>
+<p>With Gitflow strategy the “integration” branch is normally named develop and after interation work releases are done to the master branch: <img src="image-11.png" class="img-fluid" alt="alt text"></p>
+<p>In the chart below you can see Gitflow can suffer from the “<strong>integration crunch</strong>” exactly as other Agile methodologies.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image-9.png" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+<p>As discussed, <strong>applying Risk-Driven Branching principles, GitFlow</strong> can benefit from early integration, early test and feedback loop, improved stability and boosted teams productivity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image-10.png" class="img-fluid figure-img"></p>
+<figcaption>alt text</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Risk-Driven Branching transforms traditional Agile workflows by addressing the critical risks of late integration and testing.<br></p>
+<p>It empowers teams to: - <strong>Integrate frequently and progressively</strong>, <strong>minimizing conflicts</strong> and <strong>improving stability</strong>. - <strong>Focus on non-regression</strong> and <strong>maintain a consistently testable and deployable codebase</strong>. - Enhance collaboration and <strong>productivity</strong> for both <strong>developers</strong> and <strong>testers</strong>.</p>
+<p>Whether applied to trunk-based development, GitFlow, or other strategies, <strong>Risk-Driven Branching offers a practical and adaptable framework for balancing agility and stability</strong> in modern software development.</p>
+</section>
+<section id="reference" class="level1">
+<h1>Reference</h1>
+<p><a href="https://medium.com/novai-devops-101/top-4-branching-strategies-and-their-comparison-a-guide-with-recommendations-21071e1c472a#id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyMWYzYmM2NmYwNzUxZjc4NDA2MDY3OTliMWFkZjllOWZiNjBkZmIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDcxNTg2NjkxODgzMjk5MzQzMjkiLCJlbWFpbCI6ImRhcmlvYWlyb2xkaTAwQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYmYiOjE3NDI5OTM4MTksIm5hbWUiOiJEYXJpbyBBaXJvbGRpIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0x0YkdZR2hLeDYxRHFoclpja1BrTmxhdUNpYjE3cTI2LXVFeDZCQWVEUS1OTXVhZWs9czk2LWMiLCJnaXZlbl9uYW1lIjoiRGFyaW8iLCJmYW1pbHlfbmFtZSI6IkFpcm9sZGkiLCJpYXQiOjE3NDI5OTQxMTksImV4cCI6MTc0Mjk5NzcxOSwianRpIjoiNjVkNzY4OTcxYzYzYTFmMGZkOWU4NjQwNzQ1ZDFiNGUxNzdjYzdlMiJ9.gHe-UAQiVuMYJHu2se_JjhrkirmsP66acZjJciBRmAA05Q2aq-esf7VAS19ZexnvsAeX3G8xe1lMOkgyh8R815pY0vPbbr9TEKobpo353PWgAxiO8evkSKCSkOOM5JQqRRfigmxJsBzhBXA23-zZ-fZIPyUinOY8E6ViTV5HISukKX2pxZo4bV56Xl6a-0gzKaCKib0R1zxWa4s6Ii-mokX4fBbhZZgYMTahTEgdf3hODnTu5KXPxz3huZmp0G0lVIwt_kBaNuWOgH7ZhksCTMk4w32K4IDFCpxOWXK-jKINLYRJZSQvYse4e9735-snG43zH8B2Gyze8PGybR7Uew">Top 4 Branching Strategies and Their Comparison: A Guide with Recommendations</a></p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="bmV3cyUyQ2NvZGUlMkNjb3BpbG90JTJDZGV2ZWxvcG1lbnQ=" data-listing-date-sort="1754982000000" data-listing-file-modified-sort="1755087276719" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2126">
-<div class="thumbnail">
-<p><a href="./posts/20250811 - Understanding metrics collection with diginsight/index.html" class="no-external"></a></p><a href="./posts/20250811 - Understanding metrics collection with diginsight/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/20250811 - Understanding metrics collection with diginsight/images/000.00 diginsight.span_duration.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/20250811 - Understanding metrics collection with diginsight/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/20250811 - Understanding metrics collection with diginsight/index.html" class="no-external">Understanding metrics collection, filtering, and enrichment with Diginsight</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/20250811 - Understanding metrics collection with diginsight/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29waWxvdA=='); return false;">
-copilot
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ZGV2ZWxvcG1lbnQ='); return false;">
-development
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/20250811 - Understanding metrics collection with diginsight/index.html" class="no-external">Diginsight automatically produces metrics such as:</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/20250811 - Understanding metrics collection with diginsight/index.html" class="no-external">
-<div class="listing-date">
-Aug 12, 2025
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="bmV3cyUyQ2NvZGUlMkNjb3BpbG90JTJDZGV2ZWxvcG1lbnQ=" data-listing-date-sort="1751180400000" data-listing-file-modified-sort="1755008545418" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="45" data-listing-word-count-sort="8840">
-<div class="thumbnail">
-<p><a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external"></a></p><a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/image.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external">HowTo: Maximize GitHub Copilot’s Code Understanding of our repositories</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29waWxvdA=='); return false;">
-copilot
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ZGV2ZWxvcG1lbnQ='); return false;">
-development
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external">This document <strong>analyzes some strategies we are using to enhance GitHub Copilot’s understanding of our (Diginsight) codebases</strong>.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/20250629 - Enhancing GitHub Copilot's Code Understanding/index.html" class="no-external">
-<div class="listing-date">
-Jun 29, 2025
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="bmV3cyUyQ2NvZGUlMkNkZWVsb3BtZW50" data-listing-date-sort="1743404400000" data-listing-file-modified-sort="1755008545416" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1101">
-<div class="thumbnail">
-<p><a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external"></a></p><a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/image.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external">Use Risk-Driven Branching to mitigate the integration crunch</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ZGVlbG9wbWVudA=='); return false;">
-deelopment
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external">In modern Agile Development, teams work in short iterations (<strong>sprints</strong>) to deliver incremental progress. This involves implementing features, fixing bugs, and <strong>integrating the…</strong></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/20250331 - Use Risk-Driven Branching to mitigate the integration crunch/index.html" class="no-external">
-<div class="listing-date">
-Mar 31, 2025
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="bmV3cyUyQ2NvZGUlMkNkZXZlbG9wbWVudA==" data-listing-date-sort="1734163200000" data-listing-file-modified-sort="1755008545406" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="792">
-<div class="thumbnail">
-<p><a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external"></a></p><a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/20241214 - Handling Private Configurations in Public Repositories/image.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external">HowTo: Manage Sensitive Configurations with Config Injection from Private Repositories</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ZGV2ZWxvcG1lbnQ='); return false;">
-development
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external">When developing applications in public repositories, handling sensitive configuration files (such as secrets, keys, or internal URLs) is a common challenge. Exposing these…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/20241214 - Handling Private Configurations in Public Repositories/index.html" class="no-external">
-<div class="listing-date">
-Dec 14, 2024
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="bmV3cyUyQ2NvZGUlMkNhbmFseXNpcw==" data-listing-date-sort="1727593200000" data-listing-file-modified-sort="1755008545400" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2559">
-<div class="thumbnail">
-<p><a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external"></a></p><a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/20240929 - Steps to add diginsight to SampleWebApi01/image.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external">Steps to add diginsight to SampleWebApi01</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('YW5hbHlzaXM='); return false;">
-analysis
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external">Today I worked with some friends at <strong>integrating diginsight to a new web API</strong>.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/20240929 - Steps to add diginsight to SampleWebApi01/index.html" class="no-external">
-<div class="listing-date">
-Sep 29, 2024
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="bmV3cw==" data-listing-date-sort="1724569200000" data-listing-file-modified-sort="1755008545429" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="29">
-<div class="thumbnail">
-<p><a href="./posts/welcome/index.html" class="no-external"></a></p><a href="./posts/welcome/index.html" class="no-external">
-<p class="card-img-top"><img src="posts\welcome\diginsight.jpg"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/welcome/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/welcome/index.html" class="no-external">Welcome To Diginsight Blog</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/welcome/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">
-news
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/welcome/index.html" class="no-external"><strong>Welcome</strong>!<br> This is the first post in a <strong>Diginsight blog</strong>. <br></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/welcome/index.html" class="no-external">
-<div class="listing-date">
-Aug 25, 2024
-</div>
-<div class="listing-author">
-Dario Airoldi
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

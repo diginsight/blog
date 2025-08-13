@@ -1,4 +1,4 @@
-qua---
+---
 title: "Understanding metrics collection, filtering, and enrichment with Diginsight"
 author: "Dario Airoldi"
 date: "2025-08-12"
