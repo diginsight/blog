@@ -9,6 +9,8 @@ listing:
     categories: [news, posts]
   sort-ui: false
   filter-ui: false
+  exclude:
+    draft: true
 page-layout: full
 title-block-banner: true
 ---
