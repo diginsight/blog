@@ -9,37 +9,79 @@ draft: false
 
 # Introduction
 
+**Diginsight** is a .NET observability framework that provides **automatic instrumentation for applications using OpenTelemetry**. 
+
+One of its key capabilities is the automatic collection of performance and operational metrics **without requiring manual instrumentation**.
+
 Diginsight automatically produces metrics such as:
 
 - **"diginsight.span_duration"**: latency of a span
-- **"diginsight.query_cost"**: RU cost of a CosmosDB query
+- **"diginsight.query_cost"**: RU cost of a CosmosDB query  
 - **"diginsight.request_size"**: request size of an HTTP request
 - **"diginsight.response_size"**: response size of an HTTP request
 
-In this article we'll learn:
+In this article we'll learn that:
+
 - Diginsight collects metrics using **OpenTelemetry** and **.NET Activity** classes.
 - **Metrics are collected** during the activity lifecycle.
 - Metrics are **filtered** and **enriched** before being sent to the OpenTelemetry collector, according to the application configuration.
 
 ## Table of Contents
 
-1. [Metric Collection](#metric-collection)
-2. [Metric Filtering and Tag Enrichment](#metric-filtering-and-tag-enrichment)
+1. [Why Automatic Metrics Collection Matters](#why-automatic-metrics-collection-matters)
+2. [Understanding .NET Activities and Metrics](#understanding-net-activities-and-metrics)
+3. [Metric Collection](#metric-collection)
+4. [Metric Filtering and Tag Enrichment](#metric-filtering-and-tag-enrichment)
    - [MetricRecordingNameBasedFilter service](#metricrecordingnamebasedfilter-service)
    - [MetricRecordingTagsEnricher service](#metricrecordingtagsenricher-service)
-3. [Startup Sequence Configuration](#startup-sequence-configuration)
-4. [Summary](#summary)
-5. [References](#references)
+5. [Startup Sequence Configuration](#startup-sequence-configuration)
+6. [Summary](#summary)
+7. [References](#references)
+
+## Why Automatic Metrics Collection Matters
+
+Manual metrics instrumentation can be:
+
+- **Time-consuming**: Requires developers to add instrumentation code throughout the application.
+- **Error-prone**: Easy to miss critical operations or add inconsistent measurements.
+- **Maintenance overhead**: Metrics code needs to be updated as business logic changes
+
+Diginsight solves these challenges by detecting and measuring key operations automatically, providing immediate observability insights with minimal configuration.
+
+## Understanding .NET Activities and Metrics
+
+Diginsight's metrics collection follows a four-step process within each metric recorder component:
+
+1. **Collection**: Metrics are automatically captured during .NET Activity lifecycles
+2. **Filtering**: Configurable filters determine which activities should generate metrics
+3. **Enrichment**: Additional contextual tags are added based on configuration
+4. **Export**: Processed metrics are sent to OpenTelemetry collectors
+
+This integrated approach ensures that you get meaningful metrics **without noise** or **performance impact**.
+
+**.NET Activities** represent units of work in your application (HTTP requests, database queries, method calls). Diginsight hooks into the Activity lifecycle events:
+
+- **ActivityStarted**: Sets up context for metric collection
+- **ActivityStopped**: Records duration and other measurements
+- **Activity Tags**: Provide context that becomes metric labels
+
+This automatic hooking means metrics are captured by OpenTelemetry, for any instrumented operation, without additional code.
 
 ## Metric Collection 
 
-Metrics are collected across the application flow during the Diginsight activities' lifetime.
+Metrics are collected across the application flow during the .NET Activities' lifetime.
 
 The image below shows the **`SpanDurationMetricRecorder`** that records the **`diginsight.span_duration`** metric, at the end of an activity lifecycle.
 
 ![alt text](<images/002.01 SpanDurationMetricRecorder recording span_duration metric.png>)
 
-The code snippet below shows the `Metric.Record` statement for metric `diginsight.span_duration` within `SpanDurationMetricRecorder`'s `IActivityListenerLogic.ActivityStopped` notification at the end of an activity lifecycle.
+The following code shows how the `SpanDurationMetricRecorder` handles the end of an activity lifecycle. 
+Notice how it:
+
+1. Checks if the metric should be recorded (filtering)
+2. Extracts basic tags like span name and status
+3. Adds enrichment tags from configuration
+4. Records the final metric with all tags
 
 ```csharp
 void IActivityListenerLogic.ActivityStopped(Activity activity)
@@ -66,6 +108,7 @@ void IActivityListenerLogic.ActivityStopped(Activity activity)
     }
 }
 ```
+
 The metric is only recorded **if the activity is not filtered out** by `metricFilter?.ShouldRecord(activity)`.
 
 Also, **the metric is enriched** with a set of tags such as `span_name` and `status`, and possibly additional tags extracted by `metricEnricher.ExtractTags(activity)`.
@@ -138,10 +181,7 @@ The image below shows the **`MetricRecordingNameBasedFilter`** implementation, w
       },
       {
         "MetricName": "diginsight.query_cost",
-        "MetricTags": [
-          "database",
-          "application_name"
-        ]
+        "MetricTags": [ "database", "application_name" ]
       }
     ]
   }
@@ -162,9 +202,10 @@ For the example case of `diginsight.query_cost`, the tag `database` is added to 
 > TODO: show query splitting cost by database or by application_name
 
 ## Startup Sequence Configuration
+
 The `MetricRecordingNameBasedFilter` and `MetricRecordingTagsEnricher` services are configured in the startup sequence, as shown in the code snippet below.
 
-In particular, SpanMeasuredActivityNames, MetricSpecificSpanMeasuredActivityNames, MetricTags, and MetricSpecificTags are read from the configuration.
+In particular, `SpanMeasuredActivityNames`, `MetricSpecificSpanMeasuredActivityNames`, `MetricTags`, and `MetricSpecificTags` are read from the configuration.
 
 Then, for any of the supported metrics, a **named configuration** is created (for example, `diginsight.span_duration`, `diginsight.query_cost`, etc.), and a **named singleton** is registered with the associated configuration.
 
@@ -182,9 +223,6 @@ if (openTelemetryOptions.EnableMetrics)
     var metricSpecificTags = diginsightConfig.GetSection("MetricSpecificTags").Get<MetricRecordingEnricherOptions[]>() ?? Array.Empty<MetricRecordingEnricherOptions>();
     logger.LogDebug("Found {Count} metric-specific tag configurations", metricSpecificTags.Length);
 
-    // MetricRecordingNameBasedFilter and MetricRecordingEnricher configurations
-    // services.TryAddSingleton<IMetricRecordingFilter, MetricRecordingNameBasedFilter>(); 
-    // services.TryAddSingleton<IMetricRecordingEnricher, MetricRecordingTagsEnricher>(); 
     var metricNames = new[] { "diginsight.span_duration", "diginsight.query_cost", "diginsight.request_size", "diginsight.response_size" };
     foreach (var metricName in metricNames)
     {
@@ -266,26 +304,23 @@ public SpanDurationMetricRecorder(
 
 ## Summary
 
-This article explores the comprehensive metrics collection system in Diginsight, a .NET observability framework that automatically generates performance and operational metrics for applications.
+Diginsight transforms metrics collection from a manual, error-prone process into an automatic, configurable system that provides immediate value with minimal effort.
 
-**Key takeaways:**
+**Key Benefits:**
 
-1. **Automatic Metrics Generation**: Diginsight automatically produces four essential metrics without requiring manual instrumentation:
-   - `diginsight.span_duration` - measures operation latency
-   - `diginsight.query_cost` - tracks CosmosDB RU consumption
-   - `diginsight.request_size` and `diginsight.response_size` - monitor HTTP payload sizes
+- **Zero-code metrics**: Get essential performance metrics without instrumentation code
+- **Production-ready**: Built-in error handling and performance optimizations
+- **Business-aware**: Rich tagging enables filtering by business dimensions
+- **Flexible**: Fine-grained control over what gets measured and how
 
-2. **OpenTelemetry Integration**: The framework leverages OpenTelemetry standards and .NET Activity classes to collect metrics during the natural lifecycle of application operations, ensuring minimal performance overhead.
+**Best Practices:**
 
-3. **Smart Filtering**: The `MetricRecordingNameBasedFilter` service provides fine-grained control over which activities generate metrics, allowing developers to focus on critical operations and reduce noise. Configuration can be global or metric-specific.
+1. Start with default settings to get immediate value
+2. Gradually add business-specific tags as observability needs mature
+3. Use metric-specific configurations to optimize for different operation types
+4. Leverage filtering to focus on critical business operations
 
-4. **Rich Tag Enrichment**: The `MetricRecordingTagsEnricher` service adds contextual metadata to metrics, enabling powerful filtering and grouping capabilities in observability platforms. Tags can include business context like `plant_id`, `category_name`, or technical details like `database`.
-
-5. **Flexible Configuration**: The system uses a sophisticated configuration approach with named services and options, allowing different filtering and enrichment rules for each metric type while maintaining clean separation of concerns.
-
-6. **Production-Ready Design**: The implementation includes proper error handling, lazy initialization, and dependency injection patterns, making it suitable for high-throughput production environments.
-
-This approach enables teams to gain deep insights into application performance and behavior with minimal code changes, while maintaining the flexibility to customize metrics collection based on specific operational needs.
+This approach enables teams to achieve comprehensive observability with minimal development overhead while maintaining the flexibility to evolve their monitoring strategy as applications scale.
 
 ## References
 
