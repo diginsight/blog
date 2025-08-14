@@ -321,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Enrichment</strong>: Additional contextual tags are added based on configuration</li>
 <li><strong>Export</strong>: Processed metrics are sent to OpenTelemetry collectors</li>
 </ol>
-<p>This integrated approach ensures that you get meaningful metrics <strong>without noise</strong> or <strong>performance impact</strong>.</p>
+<p>This integrated approach ensures that <strong>only</strong> meaningful metrics are sent, <strong>without noise</strong> or <strong>performance impact</strong>.</p>
 <p><strong>.NET Activities</strong> represent units of work in your application (HTTP requests, database queries, method calls). Diginsight hooks into the Activity lifecycle events:</p>
 <ul>
 <li><strong>ActivityStarted</strong>: Sets up context for metric collection</li>
@@ -344,7 +344,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Checks if the metric should be recorded (filtering)</li>
 <li>Extracts basic tags like span name and status</li>
-<li>Adds enrichment tags from configuration</li>
+<li>Adds enrichment tags from configuration (enrichment)</li>
 <li>Records the final metric with all tags</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> IActivityListenerLogic<span class="op">.</span><span class="fu">ActivityStopped</span><span class="op">(</span>Activity activity<span class="op">)</span></span>
@@ -545,6 +545,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">var</span> metricEnricher <span class="op">=</span> serviceProvider<span class="op">.</span><span class="fu">GetNamedService</span><span class="op">&lt;</span>IMetricRecordingEnricher<span class="op">&gt;(</span>metricName<span class="op">);</span></span>
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="fu">metricEnricher</span> <span class="op">=</span> metricEnricher <span class="op">??</span> serviceProvider<span class="op">.</span><span class="fu">GetRequiredService</span><span class="op">&lt;</span>IMetricRecordingEnricher<span class="op">&gt;();</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After dependencies registration is complete <code>AddSpanDurationMetricRecorder</code> can be called to register the real <code>SpanDurationMetricRecorder</code> service.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>services<span class="op">.</span><span class="fu">AddSpanDurationMetricRecorder</span><span class="op">();</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
