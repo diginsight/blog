@@ -57,7 +57,7 @@ Diginsight's metrics collection follows a four-step process within each metric r
 3. **Enrichment**: Additional contextual tags are added based on configuration
 4. **Export**: Processed metrics are sent to OpenTelemetry collectors
 
-This integrated approach ensures that you get meaningful metrics **without noise** or **performance impact**.
+This integrated approach ensures that **only** meaningful metrics are sent, **without noise** or **performance impact**.
 
 **.NET Activities** represent units of work in your application (HTTP requests, database queries, method calls). Diginsight hooks into the Activity lifecycle events:
 
@@ -80,7 +80,7 @@ Notice how it:
 
 1. Checks if the metric should be recorded (filtering)
 2. Extracts basic tags like span name and status
-3. Adds enrichment tags from configuration
+3. Adds enrichment tags from configuration (enrichment)
 4. Records the final metric with all tags
 
 ```csharp
@@ -301,6 +301,13 @@ public SpanDurationMetricRecorder(
     this.metricEnricher = metricEnricher ?? serviceProvider.GetRequiredService<IMetricRecordingEnricher>();
 
 ```
+
+After dependencies registration is complete `AddSpanDurationMetricRecorder` can be called to register the real `SpanDurationMetricRecorder` service.
+
+```csharp
+services.AddSpanDurationMetricRecorder(); 
+```
+
 
 ## Summary
 
