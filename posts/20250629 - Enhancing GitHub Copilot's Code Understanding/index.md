@@ -56,9 +56,16 @@ These strategies have the most direct and immediate impact on GitHub Copilot's a
 
 ### 1.1. Organize Workspace with Information for AI
 
-**What we can do:** Structure our **project files, documentation, and code comments** in a way that maximizes Copilot's ability to understand our project architecture, patterns, and domain knowledge.
+**What we can do:** Structure our:
 
-**Why this improves Copilot understanding:** Workspace organization is the foundational strategy that encompasses all aspects of structuring our project for AI comprehension. This includes **code comments**, **documentation placement**, specialized **AI-guidance files**, and strategic organization that maximizes Copilot's ability to understand our project's context and domain knowledge.
+- **project files**
+- **documentation**
+- **code comments** 
+
+to **maximizes Copilot's ability to understand** our **project architecture**, **patterns**, and **domain knowledge**.
+
+**Why this improves Copilot understanding**: the **workspace organization** is the foundation that enables all other AI understanding techniques.
+>When we organize our **code comments**, **documentation placement**, and **AI-guidance files**, we create a comprehensive information architecture that maximizes Copilot's ability to understand our project's context and domain knowledge.
 
 **Impact on suggestion relevance:** Proper workspace organization has the highest impact because it provides the structural foundation for all other AI understanding techniques. When our workspace is organized for AI comprehension, Copilot can access and correlate information across multiple sources, leading to more contextually appropriate and architecturally sound suggestions.
 
