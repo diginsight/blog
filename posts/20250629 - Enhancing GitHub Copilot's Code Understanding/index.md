@@ -2,6 +2,7 @@
 title: "HowTo: Maximize GitHub Copilot's Code Understanding of our repositories"
 author: "Dario Airoldi"
 date: "2025-06-29"
+date-modified: "2025-11-17"
 categories: [news, code, copilot, development]
 image: "image.jpg"
 draft: false
@@ -10,6 +11,36 @@ draft: false
 This document **analyzes some strategies we are using to enhance GitHub Copilot's understanding of our (Diginsight) codebases**.
 
 Proper techniques significantly improve Copilot's code generation and answers to code-related questions.
+
+## Understanding Official vs. Community Approaches
+
+Before diving into specific strategies, it's important to distinguish between **official GitHub Copilot features** and **community-recommended patterns**:
+
+### ✅ Official GitHub Copilot Features
+
+These are documented and supported by GitHub with specific behavior guarantees:
+
+| Feature | Location | Purpose |
+|---------|----------|---------|
+| **Prompt Files** | `.github/prompts/*.prompt.md` | Reusable prompts that become commands in Copilot Chat |
+| **Repository Instructions** | `.github/copilot-instructions.md` | Auto-applied guidance for all chat interactions |
+| **Path-Specific Instructions** | `.github/instructions/*.instructions.md` | Guidance applied to specific file patterns via `applyTo` |
+| **Custom Agents** | `.github/agents/*.agent.md` | Specialized AI personas (VS Code 1.106+ only) |
+
+### ⚠️ Community Patterns
+
+These are widely used but not officially documented by GitHub. They rely on Copilot's semantic search:
+
+| Pattern | Common Location | Purpose |
+|---------|----------------|---------|
+| **Context Documentation** | `.copilot/` or `.copilot/context/` | Project-specific reference materials |
+| **Component READMEs** | Throughout codebase | Module and component documentation |
+| **Schema Documentation** | `docs/schemas/` or similar | Data model and API documentation |
+| **Architecture Docs** | `docs/` or `.copilot/architecture/` | System design documentation |
+
+**Key Difference:** Official features provide guaranteed behavior (like prompt commands appearing in the UI), while community patterns rely on Copilot's semantic search to find and use the documentation.
+
+**Recommendation:** Use both approaches - official features for interactive capabilities, and well-organized documentation for comprehensive context.
 
 
 ## Table of Contents
@@ -67,7 +98,8 @@ to **maximizes Copilot's ability to understand** our **project architecture**, *
 **Why this improves Copilot understanding**: the **workspace organization** is the foundation that enables all other AI understanding techniques.
 >When we organize our **code comments**, **documentation placement**, and **AI-guidance files**, we create a comprehensive information architecture that maximizes Copilot's ability to understand our project's context and domain knowledge.
 
-**Impact on suggestion relevance:** Proper workspace organization has the highest impact because it provides the structural foundation for all other AI understanding techniques. When our workspace is organized for AI comprehension, Copilot can access and correlate information across multiple sources, leading to more contextually appropriate and architecturally sound suggestions.
+**Impact on suggestion relevance:** Proper workspace organization has the highest impact because it provides the structural foundation for all other AI understanding techniques.
+When our workspace is organized for AI comprehension, Copilot can access and correlate information across multiple sources, leading to more contextually appropriate and architecturally sound suggestions.
 
 #### 1.1.1. Method Overview Comments
 
@@ -148,159 +180,172 @@ public async Task<ProcessingResult> ProcessTelemetryDataAsync(TelemetryRequest r
 
 #### 1.1.4. AI Context Files
 
-Create documentation and context files across the repository that help AI understanding and choices:
+Create documentation and context files across the repository that help AI understanding and choices.
+
+**Prompt Files with YAML Frontmatter:**
+
+Prompt files (`.prompt.md`) in `.github/prompts/` can include YAML frontmatter to configure behavior:
+
+```markdown
+---
+name: create-telemetry-service
+description: Generate a telemetry service following Diginsight patterns
+agent: ask
+model: GPT-4
+tools: ['codebase', 'fetch']
+argument-hint: 'serviceName=MyService'
+---
+
+# Create Telemetry Service
+
+Generate a new telemetry service with the following characteristics:
+
+1. Use ActivitySource for distributed tracing
+2. Include structured logging with ILogger<T>
+3. Implement standard error handling patterns
+4. Add proper XML documentation
+
+## Service Name
+{{serviceName}}
+
+## Implementation Pattern
+[Rest of prompt content...]
+```
+
+**YAML Frontmatter Fields:**
+- `name`: Command name (defaults to filename if omitted)
+- `description`: Shown in Copilot Chat UI when selecting prompts
+- `agent`: Chat mode (`ask`, `edit`, `agent`, or custom agent name)
+- `model`: Preferred LLM (e.g., `GPT-4`, `GPT-3.5-Turbo`)
+- `tools`: Restricted tool access (e.g., `['codebase', 'fetch']`)
+- `argument-hint`: Suggests parameter format in the input field
+
+**Path-Specific Instructions with `applyTo` Patterns:**
+
+Instruction files in `.github/instructions/` use `applyTo` for targeting:
+
+```markdown
+---
+description: C# coding standards for services
+applyTo:
+  - "src/Services/**/*.cs"
+  - "**/Services/*Service.cs"
+---
+
+# Service Implementation Guidelines
+
+All service classes must:
+1. Implement dependency injection via constructor
+2. Use ILogger<T> for structured logging
+3. Include ActivitySource for distributed tracing
+4. Follow async/await patterns consistently
+```
 
 **Recommended Structure:**
  
 ```text
 /MyProject/
-├── .github/
-│   └── copilot/
-│       ├── prompts/                   # Team-shareable prompt templates
-│       │   ├── telemetry-service.prompt       # Create telemetry services
-│       │   ├── error-handling.prompt          # Add error handling patterns
-│       │   ├── unit-tests.prompt             # Generate unit tests
-│       │   └── performance-optimization.prompt
-│       ├── knowledge/                 # Team-wide knowledge base
-│       │   ├── team-conventions.md    # Shared coding standards
-│       │   └── architecture-decisions.md
-│       └── examples/                  # Reference implementations
-│           ├── telemetry-patterns.cs
-│           └── error-handling-examples.cs
-├── .copilot/                          # Project-wide AI context
+├── .github/                           # Official GitHub Copilot locations
+│   ├── prompts/                       # ✅ Official: Prompt files (VS Code & VS 17.10+)
+│   │   ├── telemetry-service.prompt.md    # Note: .prompt.md extension required
+│   │   ├── error-handling.prompt.md
+│   │   ├── unit-tests.prompt.md
+│   │   └── performance-optimization.prompt.md
+│   ├── copilot-instructions.md        # ✅ Official: Repo-level instructions
+│   ├── instructions/                  # ✅ Official: Path-specific instructions
+│   │   ├── csharp-conventions.instructions.md
+│   │   └── api-patterns.instructions.md
+│   └── agents/                        # ✅ Official: VS Code 1.106+ custom agents
+│       └── testing-specialist.agent.md
+├── .copilot/                          # ⚠️ Community pattern (not official)
 │   ├── architecture.md
 │   ├── patterns.md
-│   └── context/
-│       ├── dataschemas/           # Data structure documentation
-│       ├── apis/                  # External API documentation  
-│       ├── patterns/              # Code patterns and examples
-│       ├── workflows/             # Business process flows
-│       ├── guidelines/            # Development standards
-│       ├── images/                # Visual context for AI
-│       └── examples/              # Code examples and templates
+│   └── context/                       # Enhanced semantic search context
+│       ├── dataschemas/               # Data structure documentation
+│       ├── apis/                      # External API documentation  
+│       ├── patterns/                  # Code patterns and examples
+│       ├── workflows/                 # Business process flows
+│       ├── guidelines/                # Development standards
+│       └── examples/                  # Code examples and templates
 ├── src/
 │   ├── docs/                          # Comprehensive documentation
 │   │   ├── api-reference.md
 │   │   └── domain-concepts.md
 │   ├── Services/
 │   │   ├── README.md                  # Services module overview
-│   │   ├── Services.copilot.md        # AI guidance for Services module
 │   │   ├── TelemetryService/
 │   │   │   ├── README.md              # TelemetryService specific docs
-│   │   │   ├── TelemetryService.copilot.md  # AI guidance for TelemetryService
 │   │   │   ├── TelemetryService.cs
 │   │   │   └── ITelemetryService.cs
 │   │   └── LoggingService/
 │   │       ├── README.md              # LoggingService specific docs
-│   │       ├── LoggingService.copilot.md    # AI guidance for LoggingService
 │   │       └── LoggingService.cs
 │   └── Models/
 │       ├── README.md                  # Data models overview
-│       ├── Models.copilot.md          # AI guidance for data models
 │       └── TelemetryModels.cs
 └── README.md                          # Project root documentation
 ```
 
-**Types of Documentation Files to Distribute:**
+**Key Documentation Locations:**
 
-1. **Project Root `README.md`**: High-level project overview, setup instructions, and quick Copilot prompts
-2. **`.github/copilot/` Folder**: Team-shareable AI configuration following GitHub conventions, which can contain:
-   - **`prompts/` subfolder**: Reusable `.prompt` files that appear in Copilot's Prompts panel
-   - **`knowledge/` subfolder**: Team-wide context documents explaining domain concepts and business rules
-   - **`examples/` subfolder**: Reference implementations and pattern templates
-   - **Team convention files**: Shared coding standards, naming conventions, and AI instructions
-3. **`.copilot/` Folder**: AI context files including:
-   - **Documentation**: Architecture decisions, coding patterns, and troubleshooting guides
-   - **Code Examples**: Reference implementations and pattern templates
-   - **Configuration Files**: AI-specific settings and behavior guidelines
-   - **Visual Context**: Diagrams, images, and flowcharts that explain complex concepts
-   - **Data Files**: Sample data, schemas, and API responses for context
-4. **`src/docs/` Folder**: Comprehensive API references, domain concepts, and technical specifications
-5. **Module-Level `README.md`**: Overview of each major code module (Services/, Models/, etc.)
-6. **Component-Level `README.md`**: Specific documentation for individual services or components
-7. **`.copilot.md` Files**: Specialized AI guidance files next to major components (e.g., `TelemetryService.copilot.md`)
+1. **`.github/prompts/`** - ✅ **Official**: Workspace prompt files with `.prompt.md` extension that become commands in Copilot Chat
+2. **`.github/copilot-instructions.md`** - ✅ **Official**: Repository-level instructions automatically applied to all chat requests
+3. **`.github/instructions/`** - ✅ **Official**: Path-specific instruction files with `applyTo` glob patterns
+4. **`.github/agents/`** - ✅ **Official** (VS Code only): Custom agent definitions for specialized workflows
+5. **`.copilot/`** - ⚠️ **Community Pattern**: Project-specific context and documentation (not officially recognized but helps semantic search)
+6. **`README.md` Files**: Module and component-level documentation throughout the codebase
+7. **`src/docs/`**: Comprehensive technical documentation and API references
 
 #### 1.1.5. Repository-Level Documents
 
-GitHub Copilot leverages **two root directories** for AI-enhanced development, each serving distinct but complementary purposes:
+GitHub Copilot uses **standardized locations** within the `.github/` directory for AI-enhanced development:
 
-##### `.github/copilot/` Directory
+##### Official `.github/` Locations (Supported by GitHub Copilot)
 
-This directory follows GitHub's official conventions for team-shareable Copilot configuration and can contain:
+| Location | Purpose | Support Level |
+|----------|---------|---------------|
+| **`.github/prompts/`** | Workspace prompt files with `.prompt.md` extension that become slash commands (`/promptName` in VS Code) or hashtag commands (`#promptName` in Visual Studio 17.10+). Each file can include YAML frontmatter for metadata. | ✅ Official - VS Code & Visual Studio 17.10+ |
+| **`.github/copilot-instructions.md`** | Repository-level custom instructions automatically applied to all chat requests when enabled. Provides coding standards, conventions, and project-specific guidance. | ✅ Official - VS Code & Visual Studio 17.10+ |
+| **`.github/instructions/`** | Path-specific instruction files (`.instructions.md`) with YAML frontmatter using `applyTo` glob patterns (e.g., `**/*.cs`, `docs/**`) to target specific files or directories. | ✅ Official - VS Code & Visual Studio 17.10+ |
+| **`.github/agents/`** | Custom agent definitions (`.agent.md` files) for VS Code 1.106+ and Copilot CLI. Not supported in Visual Studio, which uses a separate AGENTS.md mechanism. | ✅ Official - VS Code 1.106+ only |
 
-- **Prompt Files** (`prompts/` subfolder): Reusable `.prompt` files that appear directly in Copilot's Prompts panel for all team members
-- **Knowledge Bases** (`knowledge/` subfolder): Team-wide context documents (`.md` files) explaining domain concepts, architecture decisions, and business rules
-- **Code Examples** (`examples/` subfolder): Reference implementations and pattern templates that demonstrate team coding standards
-- **Team Conventions** (`.md` files): Shared coding standards, naming conventions, and development practices
-- **AI Instructions** (`.md` files): Team-specific guidelines for how AI should assist with your codebase
+**Important:** The `.github/copilot/prompts/` structure mentioned in some community blogs is **not officially supported**. Prompt files must be placed directly in `.github/prompts/` to be recognized by Copilot.
 
-##### `.copilot/` Directory
+##### Community Pattern: `.copilot/` Directory
 
-.copilot/ Directory has a **flexible structure**.
-This is not officially standardized by GitHub, so we have more flexibility in organizing it.
-
-Based on how Copilot processes workspace context, here are effective folder structures for the `.copilot/` directory:
-
-### Recommended `.copilot/` Structure:
+The `.copilot/` directory is a **community-recommended pattern** (not an official GitHub feature) for organizing project-specific context that enhances Copilot's semantic search:
 
 ```text
 .copilot/
-├── architecture/           # System design documents
+├── context/               # Domain-specific knowledge (community pattern)
+│   ├── dataschemas/       # Data structure documentation
+│   ├── apis/              # External API documentation
+│   ├── patterns/          # Code patterns and examples
+│   ├── workflows/         # Business process flows
+│   └── guidelines/        # Development standards
+├── architecture/          # System design documents
 │   ├── component-diagrams.md
 │   ├── data-flow.md
 │   └── system-overview.md
-├── context/               # Domain-specific knowledge
-│   ├── business-rules.md
-│   ├── domain-concepts.md
-│   └── terminology.md
-├── patterns/              # Code patterns and conventions
-│   ├── error-handling.md
-│   ├── logging-patterns.md
-│   └── naming-conventions.md
 ├── troubleshooting/       # Common issues and solutions
 │   ├── debugging-guide.md
-│   ├── performance-issues.md
 │   └── common-errors.md
-├── examples/              # Project-specific code examples
-│   ├── service-templates/
-│   ├── configuration-samples/
-│   └── test-patterns/
-├── images/                # Visual documentation
-│   ├── diagrams/
-│   └── screenshots/
-├── data/                  # Sample data and schemas
-│   ├── sample-requests.json
-│   ├── api-responses.json
-│   └── database-schemas/
-└── reference/             # Quick reference materials
-    ├── api-endpoints.md
-    ├── configuration-options.md
-    └── dependencies.md
+└── examples/              # Code examples and templates
+    ├── service-templates/
+    └── test-patterns/
 ```
-This directory serves as a local developer context repository containing project-specific reference materials:
 
-- **Architecture Documentation**: System design documents, component relationships, and technical specifications
-- **Troubleshooting Guides**: Common issues, debugging approaches, and solution patterns
-- **Domain Context**: Business logic explanations, workflow descriptions, and project-specific terminology
-- **Code Examples**: Project-specific implementation patterns and usage examples
-- **Images and Diagrams**: Visual documentation that helps explain complex concepts
+**Status:** While not officially recognized by GitHub, Copilot's semantic search indexes markdown files in your workspace, so well-organized documentation in `.copilot/` can improve context awareness.
 
-| Aspect | **`.github/copilot/`** | **`.copilot/`** |
+| Aspect | **`.github/` Locations** | **`.copilot/` Directory** |
 |--------|-------------------------|-----------------|
-| **Purpose** | Team-shareable AI configuration following GitHub conventions | Local developer context and project-specific reference materials |
-| **Visibility** | Prompt files appear in Copilot UI; other contents provide team-wide background knowledge | All contents provide background knowledge but don't appear directly in the Copilot UI |
-| **Scope** | Team-wide standards, shared workflows, and common development tasks | Project-specific context, architecture details, and local development guidance |
-| **Structure** | Standardized subfolders (prompts, knowledge, examples) | Flexible - you define the organization |
+| **Official Support** | ✅ Yes - Documented by GitHub | ⚠️ No - Community pattern |
+| **Prompt Files** | ✅ Appear as commands in Copilot UI | ❌ Not supported |
+| **Instructions** | ✅ Auto-applied when enabled | ❌ Not auto-applied |
+| **Context Discovery** | ✅ Prioritized by Copilot | ⚠️ Relies on semantic search |
+| **Best Use** | Team-shared configuration, prompts, instructions | Project documentation, reference materials |
 
-**Best Practices for `.copilot/` Organization**:
-
-1. **Use descriptive folder names** that clearly indicate content type
-2. **Group related concepts** together (e.g., all architecture docs in `architecture/`)
-3. **Include visual aids** in an `images/` or `diagrams/` folder
-4. **Separate code examples** by domain or component type
-5. **Keep it shallow** - avoid deep nesting that makes content hard to find
-
-The flexibility of `.copilot/` allows you to structure it based on your specific project needs, while `.github/copilot/` should follow GitHub's established conventions for maximum compatibility with Copilot's features.
+**Recommendation:** Use `.github/` locations for all official Copilot features (prompts, instructions, agents), and `.copilot/` for supplementary documentation that helps semantic search.
 
 **Key Benefits:**
 
@@ -308,56 +353,67 @@ The flexibility of `.copilot/` allows you to structure it based on your specific
 - **Easy Maintenance**: Documentation stays close to the code it describes
 - **Focused Information**: Each file addresses specific concerns without overwhelming detail
 
-#### 1.1.6. Copilot Context Folder
+#### 1.1.6. Project Context Organization
 
-**What we can do:** Leverage the `.copilot/context/` folder as a centralized repository for all AI-specific documentation, following GitHub's recommended approach for providing contextual information to Copilot.
+**What we can do:** Leverage a well-organized project structure to centralize documentation, following both official GitHub Copilot features and community best practices for providing contextual information.
 
-**Why this improves Copilot understanding:** The `.copilot/context/` folder serves as a dedicated space where GitHub Copilot automatically looks for contextual information about your project. This folder is specifically designed to help Copilot understand your project's unique aspects - from data schemas and business rules to architectural patterns and domain concepts.
+**Why this improves Copilot understanding:** A well-structured documentation hierarchy helps GitHub Copilot's semantic search find relevant context when generating code suggestions. By organizing information logically and consistently, we make it easier for Copilot to locate and understand project-specific patterns, domain concepts, and architectural decisions.
 
-**Official GitHub Recognition:** The `.copilot/context/` directory provides several key advantages:
+**Official vs. Community Approaches:**
 
-1. **🔍 Automatic Discovery**: Copilot automatically scans this folder for relevant documentation when generating code suggestions
-2. **📚 Structured Context**: Organizes different types of project context (schemas, APIs, patterns, guidelines) in a predictable structure
-3. **🎯 Enhanced Relevance**: Content in this directory receives higher priority when Copilot determines contextual relevance
-4. **📋 Best Practice**: Following GitHub's established convention ensures maximum compatibility with Copilot's context discovery mechanisms
+GitHub Copilot officially supports specific locations for interactive features:
+- ✅ `.github/prompts/` for reusable prompt commands
+- ✅ `.github/copilot-instructions.md` for automatic instruction injection
+- ✅ `.github/instructions/` for path-specific guidance
 
-## Recommended `.copilot/context/` Structure
+For supplementary documentation, teams commonly use:
+- ⚠️ `.copilot/` or `.copilot/context/` as community patterns
+- ⚠️ `src/docs/` or `docs/` for technical documentation
+- ⚠️ Component-level `README.md` files throughout the codebase
+
+**Recommendation:** Combine both approaches - use official `.github/` locations for Copilot features, and organize reference documentation in a way that supports semantic search.
+
+## Recommended Project Context Structure
 
 ```text
-.copilot/context/
-├── dataschemas/           # Data structure documentation
-│   ├── entities/          # Business entity definitions
-│   ├── databases/         # Database schema documentation
-│   └── apis/              # API response/request schemas
-├── apis/                  # External API documentation
-│   ├── third-party/       # External service integrations
-│   ├── internal/          # Internal API contracts
-│   └── samples/           # Request/response examples
-├── patterns/              # Code patterns and examples
-│   ├── error-handling/    # Standard error handling approaches
-│   ├── logging/           # Logging and telemetry patterns
-│   └── testing/           # Testing strategies and examples
-├── workflows/             # Business process flows
-│   ├── user-journeys/     # End-to-end user workflows
-│   ├── data-flows/        # Data processing pipelines
-│   └── integration-flows/ # System integration patterns
-├── guidelines/            # Development standards
-│   ├── coding-standards/  # Style guides and conventions
-│   ├── architecture/      # Architectural principles
-│   └── security/          # Security requirements and patterns
-├── images/                # Visual context for AI
-│   ├── diagrams/          # Architecture and flow diagrams
-│   ├── screenshots/       # UI/UX context
-│   └── charts/            # Data visualization examples
-└── examples/              # Code examples and templates
-    ├── services/          # Service implementation examples
-    ├── configurations/    # Configuration templates
-    └── integrations/      # Integration code samples
+MyProject/
+├── .github/                        # Official Copilot features
+│   ├── prompts/                    # Workspace prompt files
+│   ├── copilot-instructions.md     # Repository instructions
+│   └── instructions/               # Path-specific instructions
+├── .copilot/                       # Community pattern for context
+│   ├── context/
+│   │   ├── dataschemas/            # Data structure documentation
+│   │   │   ├── entities/           # Business entity definitions
+│   │   │   ├── databases/          # Database schema documentation
+│   │   │   └── apis/               # API schemas
+│   │   ├── apis/                   # External API documentation
+│   │   │   ├── third-party/        # External service integrations
+│   │   │   ├── internal/           # Internal API contracts
+│   │   │   └── samples/            # Request/response examples
+│   │   ├── patterns/               # Code patterns and examples
+│   │   │   ├── error-handling/     # Standard error handling
+│   │   │   ├── logging/            # Logging patterns
+│   │   │   └── testing/            # Testing strategies
+│   │   ├── workflows/              # Business process flows
+│   │   │   ├── user-journeys/      # End-to-end workflows
+│   │   │   ├── data-flows/         # Data processing pipelines
+│   │   │   └── integration-flows/  # System integration patterns
+│   │   └── guidelines/             # Development standards
+│   │       ├── coding-standards/   # Style guides
+│   │       ├── architecture/       # Architectural principles
+│   │       └── security/           # Security requirements
+│   ├── architecture/               # System design documents
+│   ├── troubleshooting/            # Common issues and solutions
+│   └── examples/                   # Code examples and templates
+└── src/docs/                       # Technical documentation
+    ├── api-reference.md
+    └── domain-concepts.md
 ```
 
-**When GitHub Copilot Uses This Context:**
+**When Copilot Uses This Context:**
 
-GitHub Copilot will leverage this organized context when:
+Copilot's semantic search leverages this organized documentation when:
 
 1. **Code Generation**: Drawing from patterns and examples when creating new code
 2. **API Integration**: Referencing API documentation for proper service integration
@@ -365,93 +421,83 @@ GitHub Copilot will leverage this organized context when:
 4. **Error Handling**: Applying documented error patterns and recovery strategies
 5. **Business Logic**: Understanding workflows and domain-specific requirements
 6. **Testing**: Following established testing patterns and strategies
-7. **Configuration**: Using documented configuration patterns and environment setups
+7. **Configuration**: Using documented configuration patterns
 
-**Key Benefits of This Organized Approach:**
+**Key Benefits:**
 
-- **Comprehensive Coverage**: All aspects of your project context are documented and accessible
-- **Logical Organization**: Related information is grouped together for easier discovery
-- **Scalable Structure**: Can grow with your project without becoming unwieldy
-- **Team Consistency**: Provides a standard location for all AI-relevant documentation
-- **Improved Suggestions**: Copilot can provide more accurate and context-aware code suggestions
+- **Comprehensive Coverage**: All aspects of project context are documented and accessible
+- **Logical Organization**: Related information is grouped for easier discovery
+- **Scalable Structure**: Can grow with your project
+- **Team Consistency**: Standard location for AI-relevant documentation
+- **Improved Suggestions**: More accurate and context-aware code suggestions
 
 #### 1.1.7. Data Schema Information
 
-**What we can do:** Document our data schemas, database structures, and entity relationships in the `.copilot/context/` folder, which is **officially recognized** by GitHub Copilot as a source of workspace-specific context.
+**What we can do:** Document our data schemas, database structures, and entity relationships in well-organized markdown files that Copilot's semantic search can discover and use.
 
-**Why this improves Copilot understanding:** Since GitHub Copilot cannot access live databases or external data stores, providing comprehensive data schema documentation becomes critical for accurate code generation. When Copilot understands our entity structures, relationships, and query patterns, it can suggest appropriate data access code, validation logic, and API implementations that align with our actual data models.
+**Why this improves Copilot understanding:** Since GitHub Copilot cannot access live databases or external data stores, comprehensive data schema documentation is critical for accurate code generation. When Copilot understands our entity structures, relationships, and query patterns through documentation, it can suggest appropriate data access code, validation logic, and API implementations that align with our actual data models.
 
-**Official GitHub Recognition:** The `.copilot/context/` folder provides several key advantages:
+**How Copilot Finds Schema Documentation:**
 
-1. **🔍 Automatic Discovery**: Copilot automatically scans `.copilot/context/` for relevant documentation
-2. **📚 Broader Context**: Can contain various types of context (schemas, APIs, patterns, guidelines)
-3. **🎯 Scoped Relevance**: Copilot gives higher weight to content in this directory
-4. **📋 Standard Practice**: Following GitHub's recommended convention
+Copilot uses semantic search to index markdown documentation across your workspace. Placing schema documentation in logical locations helps Copilot find relevant context:
 
-**When GitHub Copilot Uses This Documentation:**
+- ✅ **Works well**: Markdown files anywhere in the repository (README.md, docs/, .copilot/, src/docs/)
+- ✅ **Works well**: Structured folders like `.copilot/context/dataschemas/` or `docs/schemas/`
+- ⚠️ **Less effective**: Binary formats (PDF, Word docs) or external wiki links
+- ❌ **Not accessible**: External databases, wikis, or URLs (Copilot cannot fetch during code generation)
 
-GitHub Copilot will consider schema documentation when:
+**When Copilot Uses Schema Documentation:**
 
-1. **Code Generation**: When you're writing code that deals with these entities
-2. **Code Analysis**: When analyzing existing code patterns
-3. **Query Suggestions**: When writing repository methods or queries
-4. **Validation Logic**: When implementing business rules
-5. **API Development**: When creating endpoints that work with these models
+Copilot considers schema documentation when:
+
+1. **Code Generation**: Writing code that deals with these entities
+2. **Code Analysis**: Analyzing existing code patterns
+3. **Query Suggestions**: Writing repository methods or queries
+4. **Validation Logic**: Implementing business rules
+5. **API Development**: Creating endpoints that work with these models
 
 ## Recommended Data Schema Organization
 
 ### Option 1: Storage-Centric Structure (Recommended for Multi-Storage Applications)
 
 ```text
-.copilot/context/
-├── dataschemas/
-│   ├── cosmosdb/
-│   │   ├── diginsight-telemetry/              # Database name
-│   │   │   ├── telemetry-events/              # Container name
-│   │   │   │   ├── ActivityEvent.md           # Entity documentation
-│   │   │   │   ├── ActivityEvent.json         # Sample document
-│   │   │   │   └── ActivityEvent.queries.sql # Common query patterns
-│   │   │   └── project-config/
-│   │   │       ├── ProjectEntity.md
-│   │   │       └── ProjectEntity.json
-│   │   └── user-preferences/
-│   │       └── UserSettings/
-│   ├── sqlserver/
-│   │   └── notifications/
-│   │       ├── SmsNotification.md
-│   │       └── SmsNotification.schema.sql
-│   └── redis/
-│       └── session-cache/
-│           └── UserSession.md
-└── integrations/
-    ├── external-apis/
-    │   ├── AzureMonitor.md
-    │   └── AzureMonitor.samples.json
-    └── message-queues/
-        └── TelemetryEvents.md
+docs/schemas/  (or .copilot/context/dataschemas/)
+├── cosmosdb/
+│   ├── diginsight-telemetry/              # Database name
+│   │   ├── telemetry-events/              # Container name
+│   │   │   ├── ActivityEvent.md           # Entity documentation
+│   │   │   ├── ActivityEvent.json         # Sample document
+│   │   │   └── ActivityEvent.queries.sql  # Common query patterns
+│   │   └── project-config/
+│   │       ├── ProjectEntity.md
+│   │       └── ProjectEntity.json
+│   └── user-preferences/
+│       └── UserSettings/
+├── sqlserver/
+│   └── notifications/
+│       ├── SmsNotification.md
+│       └── SmsNotification.schema.sql
+└── redis/
+    └── session-cache/
+        └── UserSession.md
 ```
 
 ### Option 2: Entity-Centric Structure (Recommended for Domain-Rich Applications)
 
 ```text
-.copilot/context/
-├── entities/
-│   ├── TelemetryEvent/
-│   │   ├── TelemetryEvent.md              # Complete entity documentation
-│   │   ├── TelemetryEvent.json            # Sample data structure
-│   │   ├── TelemetryEvent.queries.sql     # Common query patterns
-│   │   └── TelemetryEvent.validation.md   # Business rules and constraints
-│   ├── ProjectEntity/
-│   │   ├── ProjectEntity.md
-│   │   ├── ProjectEntity.json
-│   │   └── ProjectEntity.relationships.md  # Entity relationships
-│   └── UserSession/
-│       ├── UserSession.md
-│       └── UserSession.json
-└── storage-mappings/
-    ├── CosmosDB-mappings.md               # How entities map to Cosmos containers
-    ├── SqlServer-mappings.md              # How entities map to SQL tables
-    └── Redis-mappings.md                  # Caching strategies
+docs/entities/  (or .copilot/context/entities/)
+├── TelemetryEvent/
+│   ├── TelemetryEvent.md              # Complete entity documentation
+│   ├── TelemetryEvent.json            # Sample data structure
+│   ├── TelemetryEvent.queries.sql     # Common query patterns
+│   └── TelemetryEvent.validation.md   # Business rules and constraints
+├── ProjectEntity/
+│   ├── ProjectEntity.md
+│   ├── ProjectEntity.json
+│   └── ProjectEntity.relationships.md  # Entity relationships
+└── UserSession/
+    ├── UserSession.md
+    └── UserSession.json
 ```
 
 ### Sample Entity Documentation Structure
@@ -525,25 +571,95 @@ GROUP BY c.level
 
 #### 1.1.8. Component-Specific Documentation
 
-Create targeted context files with the `.copilot.md` extension that provide domain-specific knowledge for individual components:
+Create targeted documentation files that provide domain-specific knowledge for individual components. While there's no special `.copilot.md` extension recognized by GitHub, well-organized markdown documentation near components helps Copilot's semantic search:
+
+**Effective Approaches:**
+
+1. **README.md files**: Place detailed README files in component directories
+2. **docs/ folders**: Create component-specific documentation folders
+3. **Inline comments**: Use rich code comments with business context
+4. **Path-specific instructions**: Use `.github/instructions/` with `applyTo` patterns
+
+**Example Component Documentation:**
 
 ```markdown
-# Diginsight.Telemetry.copilot.md
+# Services/TelemetryService/README.md
 
-DATABASE: diginsightdb (CosmosDB)
-COLLECTIONS:
-- data (projects, entities)
-- data-sources (source types)
+## Telemetry Service Overview
 
-KEY CONCEPTS:
-- Project ID 12345678-0c85-4592-8396-3f3e8656ed03 = "Diginsight Sample Project"
-- Data Types: Activity Events, Telemetry, Configuration
-- Period aggregation affects data granularity and API performance
+### Database Configuration
+- **Database**: diginsightdb (CosmosDB)
+- **Collections**: 
+  - `data` - Projects and entities
+  - `data-sources` - Source type definitions
 
-ANTI-PATTERNS:
-- Avoid dynamic activity names (high cardinality)
-- Don't use generic logger categories
-- Never log sensitive data in telemetry
+### Key Concepts
+- **Project ID**: `12345678-0c85-4592-8396-3f3e8656ed03` = "Diginsight Sample Project"
+- **Data Types**: Activity Events, Telemetry, Configuration
+- **Period Aggregation**: Affects data granularity and API performance
+
+### Design Patterns
+- **Activity Sources**: Entry points for distributed tracing
+- **Structured Logging**: Correlation with distributed traces
+- **Batch Processing**: Optimization for >100 events
+
+### Anti-Patterns to Avoid
+- ❌ Dynamic activity names (creates high cardinality)
+- ❌ Generic logger categories (reduces traceability)
+- ❌ Logging sensitive data in telemetry tags
+- ❌ Synchronous calls in hot paths
+
+### Common Operations
+```csharp
+// Standard telemetry service method pattern
+public async Task<Result> ProcessAsync(Request request)
+{
+    using var activity = _activitySource.StartActivity("ProcessData");
+    activity?.SetTag("request.id", request.Id);
+    
+    try
+    {
+        _logger.LogInformation("Processing {RequestId}", request.Id);
+        var result = await _processor.ProcessAsync(request);
+        return result;
+    }
+    catch (Exception ex)
+    {
+        activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+        _logger.LogError(ex, "Failed processing {RequestId}", request.Id);
+        throw;
+    }
+}
+```
+```
+
+**Path-Specific Instructions Alternative:**
+
+For component-specific guidance that should always be applied, use `.github/instructions/`:
+
+```markdown
+# .github/instructions/telemetry-services.instructions.md
+---
+description: Telemetry service implementation guidelines
+applyTo:
+  - "**/TelemetryService/**/*.cs"
+  - "**/Services/*Telemetry*.cs"
+---
+
+## Telemetry Service Guidelines
+
+When working with telemetry services:
+
+1. Always use ActivitySource for distributed tracing
+2. Include structured logging with correlation IDs
+3. Set activity status on errors
+4. Use semantic tag names following OpenTelemetry conventions
+5. Implement batch processing for >100 events
+
+## Required Dependencies
+- ILogger<T> for structured logging
+- ActivitySource for distributed tracing
+- IOptions<TelemetryConfig> for configuration
 ```
 
 #### 1.1.9. Architecture Documentation
@@ -806,8 +922,9 @@ public async Task<Result> ProcessAsync(Request request)
 Train the team to reference specific documentation in prompts:
 
 ```text
-// Example prompt: "Create a telemetry method following the patterns in Diginsight.Core.copilot.md"
+// Example prompt: "Create a telemetry method following the patterns in Services/TelemetryService/README.md"
 // Example prompt: "Add error handling similar to ProcessTelemetryDataAsync"
+// Example prompt: "Generate a service following the architecture described in docs/architecture.md"
 ```
 
 #### Pattern-Driven Prompts
@@ -1318,52 +1435,133 @@ Document major architectural choices:
 
 ## 4. Best Practices Summary
 
-1. **Consistent Structure**: Use clear, hierarchical document organization
-2. **Domain Concepts**: Define all business-specific terms and relationships
-3. **Database Details**: Document database structure, collections, and example records
-4. **Component Relationships**: Show how classes and methods interconnect
-5. **Performance Notes**: Document current metrics and optimization opportunities
-6. **Strategic Comments**: Add context-rich comments at key decision points
-7. **Dedicated Copilot Files**: Create `.copilot.md` files for AI-specific documentation
-8. **Visual Representations**: Include diagrams where relationships are complex
-9. **Implementation Examples**: Show ideal code patterns and optimizations
-10. **Configuration Documentation**: Document all configuration files, environment variables, and setup patterns
-11. **Error Pattern Documentation**: Catalog common errors, their causes, and solutions
-12. **Testing Strategy**: Document test patterns, mocking strategies, and validation approaches
-13. **API Contracts**: Clearly document public interfaces, parameters, and return types
-14. **Architecture Decisions**: Record why technical choices were made using ADRs
-15. **Code Conventions**: Establish and document naming conventions, patterns, and standards
-16. **Reference Documentation**: Explicitly reference documentation in Copilot queries
-17. **Source vs. Generated Documentation**: Place AI-readable markdown in source directories (`src/docs/`) rather than generated output directories (`docs/`) - Copilot reads markdown files, not HTML
+### Official GitHub Copilot Features (Prioritize These)
+
+1. **Prompt Files** (`.github/prompts/*.prompt.md`): Create reusable prompts with YAML frontmatter that become chat commands
+2. **Repository Instructions** (`.github/copilot-instructions.md`): Define project-wide coding standards and conventions
+3. **Path-Specific Instructions** (`.github/instructions/*.instructions.md`): Apply guidance to specific files using `applyTo` glob patterns
+4. **Custom Agents** (`.github/agents/*.agent.md`): Define specialized AI workflows (VS Code 1.106+ only)
+5. **Proper File Extensions**: Use `.prompt.md` (not `.prompt`) and `.instructions.md` for official features
+
+### Documentation Organization (Community Best Practices)
+
+6. **Consistent Structure**: Use clear, hierarchical document organization throughout your codebase
+7. **Component READMEs**: Place detailed README.md files in every major component directory
+8. **Centralized Documentation**: Use `docs/` or `.copilot/` for comprehensive reference materials
+9. **Visual Representations**: Include diagrams and flowcharts where relationships are complex
+10. **Source vs. Generated**: Place markdown documentation in source directories (Copilot reads markdown, not generated HTML)
+
+### Code-Level Documentation
+
+11. **Domain Concepts**: Define all business-specific terms and relationships clearly
+12. **Strategic Comments**: Add context-rich comments explaining business rules, not obvious code
+13. **Directive Comments**: Use prefixes like "COPILOT:", "PATTERN:", "ANTI-PATTERN:" to guide AI
+14. **Data Model Documentation**: Document database structures, schemas, and example records
+15. **API Contracts**: Clearly document public interfaces, parameters, and return types
+
+### Architectural Context
+
+16. **Component Relationships**: Show how classes and methods interconnect
+17. **Architecture Decisions**: Record why technical choices were made using ADRs
+18. **Code Patterns and Conventions**: Establish and document naming conventions and standards
+19. **Implementation Examples**: Show ideal code patterns and optimizations
+20. **Performance Notes**: Document current metrics and optimization opportunities
+
+### Supporting Documentation
+
+21. **Configuration Documentation**: Document all configuration files, environment variables, and setup patterns
+22. **Error Pattern Documentation**: Catalog common errors, their causes, and solutions
+23. **Testing Strategy**: Document test patterns, mocking strategies, and validation approaches
+24. **External References**: Link to external docs but summarize key information locally (Copilot can't access URLs)
+25. **Effective Prompting**: Reference existing documentation and patterns in your Copilot queries
+
+### Critical Reminders
+
+- ✅ **DO**: Use `.github/prompts/` for prompt files with `.prompt.md` extension
+- ✅ **DO**: Enable custom instructions in your IDE settings to use instruction files
+- ✅ **DO**: Use `applyTo` patterns in instruction files for targeted guidance
+- ❌ **DON'T**: Use `.github/copilot/prompts/` - this location is not officially supported
+- ❌ **DON'T**: Expect Copilot to access external URLs, wikis, or databases
+- ❌ **DON'T**: Rely solely on generated HTML documentation - use markdown source files
 
 ## 5. References
 
----
+### Official GitHub Documentation
+
+- [Using Prompt Files with GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/using-prompt-files-with-github-copilot)
+  
+  Official GitHub documentation for creating reusable prompt files with `.prompt.md` extensions. Covers YAML frontmatter configuration, slash commands in VS Code, and hashtag commands in Visual Studio 17.10+.
+
+- [Using Instruction Files with GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/using-instruction-files)
+  
+  The authoritative guide to custom instructions, including repository-wide instructions (`.github/copilot-instructions.md`) and path-specific instructions (`.github/instructions/*.instructions.md`) with `applyTo` glob patterns.
 
 - [Getting Code Suggestions in Your IDE with GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot)
   
-  Official GitHub documentation covering how Copilot understands code context and generates suggestions. Includes specific guidance on improving code suggestions through comments, documentation, and code structure - directly applicable to telemetry system documentation strategies.
+  Official GitHub documentation covering how Copilot understands code context and generates suggestions. Includes specific guidance on improving code suggestions through comments, documentation, and code structure.
 
-- [Advanced GitHub Copilot: Domain-Specific Knowledge Transfer](https://github.blog/2022-09-07-research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/)
+### VS Code Documentation
+
+- [VS Code Copilot Chat Documentation](https://code.visualstudio.com/docs/copilot/copilot-chat)
   
-  Research on how Copilot learns domain-specific patterns and technical vocabularies. Includes case studies showing how specialized documentation improves Copilot's understanding of monitoring and telemetry systems.
+  Comprehensive guide to using Copilot Chat in VS Code, including chat participants, slash commands, and context variables like `#file` and `#fetch`.
+
+- [Creating Custom Prompts for GitHub Copilot in VS Code](https://code.visualstudio.com/docs/copilot/copilot-custom-prompts)
+  
+  VS Code-specific documentation for creating and using `.prompt.md` files, including YAML frontmatter options and workspace organization.
+
+- [Custom Agents in VS Code (Preview)](https://code.visualstudio.com/updates/v1_106#_custom-agents-preview)
+  
+  Preview documentation for creating custom agents using `.agent.md` files in `.github/agents/`. Explains specialized AI personas with specific tools and handoff capabilities.
+
+### Visual Studio Documentation
+
+- [GitHub Copilot in Visual Studio](https://learn.microsoft.com/en-us/visualstudio/ide/visual-studio-github-copilot-extension)
+  
+  Microsoft's official documentation for using GitHub Copilot in Visual Studio 2022 (version 17.10+). Covers hashtag commands, prompt files support, and custom instructions configuration.
+
+- [Prompt Files in Visual Studio](https://learn.microsoft.com/en-us/visualstudio/ide/copilot-chat-context#use-prompt-files)
+  
+  Details on how Visual Studio implements prompt files with hashtag command syntax and differences from VS Code's slash command approach.
+
+### Comprehensive Guides
+
+- [How GitHub Copilot Uses Markdown and Prompt Folders](https://darioairoldi.github.io/Learn/tech/PromptEngineering/01.%20how_github_copilot_uses_markdown_and_prompt_folders.html)
+  
+  Comprehensive guide explaining how Copilot consumes markdown and prompt files in VS Code and Visual Studio, with clarifications on official vs. community patterns.
+
+- [How to Name and Organize Prompt Files in Your GitHub Repository](https://darioairoldi.github.io/Learn/tech/PromptEngineering/02.%20how_to_name_and_organize_prompt_files.html)
+  
+  Best practices for organizing prompt files, instructions, and context documentation. Covers official `.github/` locations and community patterns like `.copilot/`.
+
+- [How to Structure Content for GitHub Copilot Prompt Files](https://darioairoldi.github.io/Learn/tech/PromptEngineering/03.%20how_to_structure_content_for_copilot_prompt_files.html)
+  
+  Detailed guidance on structuring prompt file content, including YAML frontmatter, role definitions, and environment-specific considerations.
+
+### OpenTelemetry and Observability
 
 - [OpenTelemetry Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/)
   
-  Comprehensive guide to documenting observability concepts, metrics, and telemetry flows using industry-standard semantic conventions. Essential for creating consistent, AI-understandable documentation in telemetry systems. Covers naming conventions, attribute definitions, and documentation patterns that help AI tools understand telemetry domain concepts.
+  Comprehensive guide to documenting observability concepts using industry-standard semantic conventions. Essential for creating consistent, AI-understandable telemetry documentation.
 
 - [.NET Observability with OpenTelemetry](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel)
   
-  Microsoft's official guide to implementing observability in .NET applications using OpenTelemetry. Demonstrates how to structure telemetry code, configuration, and documentation patterns that align with both human understanding and AI code comprehension in .NET telemetry systems.
+  Microsoft's official guide to implementing observability in .NET applications. Demonstrates telemetry code structure and documentation patterns for .NET systems.
+
+### Research and Best Practices
+
+- [Advanced GitHub Copilot: Domain-Specific Knowledge Transfer](https://github.blog/2022-09-07-research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/)
+  
+  Research on how Copilot learns domain-specific patterns and technical vocabularies. Includes case studies on specialized documentation effectiveness.
 
 - [ChatGPT versus Traditional Question Answering for Knowledge Graphs](https://arxiv.org/abs/2302.06466)
   
-  Academic research comparing conversational AI systems with traditional knowledge extraction systems. Provides insights into how AI tools like Copilot process and understand domain-specific knowledge structures, particularly relevant for complex technical domains like distributed tracing and observability systems.
+  Academic research comparing conversational AI systems with traditional knowledge extraction. Provides insights into how AI tools process domain-specific knowledge structures.
 
 - [Configuring GitHub Copilot in Your Environment](https://docs.github.com/en/copilot/configuring-github-copilot/configuring-github-copilot-in-your-environment)
   
-  Technical guide covering how to structure code comments and documentation to maximize AI comprehension of complex technical domains. Particularly valuable for telemetry systems with complex data flows and relationships.
+  Technical guide on structuring code comments and documentation to maximize AI comprehension of complex technical domains.
 
 ---
 
-By implementing these specialized documentation practices, our team can significantly enhance Copilot's understanding of the Diginsight Telemetry system, leading to more accurate code suggestions that respect our domain-specific patterns and requirements.
+By implementing these specialized documentation practices - focusing on official GitHub Copilot features while leveraging community patterns for comprehensive context - our team can significantly enhance Copilot's understanding of the Diginsight Telemetry system, leading to more accurate code suggestions that respect our domain-specific patterns and requirements.
